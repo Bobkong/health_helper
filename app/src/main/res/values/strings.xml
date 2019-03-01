@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">health_helper</string>
+    <string name="measure">测量</string>
+    <string name="chat">通讯</string>
+    <string name="news">资讯</string>
+    <string name="community">社区</string>
+    <string name="me">我的</string>
+</resources>
