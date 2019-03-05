@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="community_type">
+        <item>最新</item>
+        <item>热门</item>
+        <item>动态</item>
+    </array>
+</resources>

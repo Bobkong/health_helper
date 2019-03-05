@@ -12,6 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.bob.health_helper.Community.fragment.CommunityFragment;
+import com.example.bob.health_helper.Me.MeFragment;
+import com.example.bob.health_helper.News.NewsFragment;
+
 public class MainActivity extends AppCompatActivity {
 
 	private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 		BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
 		for (int i = 0; i < menuView.getChildCount(); i++) {
 			BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
-			itemView.setShiftingMode(false);
+			itemView.setShifting(false);
 			itemView.setChecked(false);
 		}
 		mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

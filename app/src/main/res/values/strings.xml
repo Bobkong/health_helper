@@ -5,4 +5,20 @@
     <string name="news">资讯</string>
     <string name="community">社区</string>
     <string name="me">我的</string>
+    <string name="qq_login">QQ登录</string>
+    <string name="weibo_login">微博登录</string>
+    <string name="logout">退出登录</string>
+    <string name="my_question">我的提问</string>
+    <string name="my_answer">我的回答</string>
+    <string name="my_favorite">我的收藏</string>
+    <string name="settings">应用设置</string>
+    <string name="share">应用分享</string>
+    <string name="search">搜索</string>
+    <string name="add_question_title">输入你的问题</string>
+    <string name="add_question_description">输入问题的描述，可以更快获得解答喔</string>
+    <string name="publish">发布</string>
+    <string name="full_text">全文</string>
+    <string name="show_less">收起</string>
+    <string name="comment">评论</string>
+    <string name="comment_input">输入你的评论</string>
 </resources>
