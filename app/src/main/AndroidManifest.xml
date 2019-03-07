@@ -25,17 +25,20 @@
         <activity android:name=".Me.UserAnswerActivity" />
         <activity android:name=".Me.EditUserInfoActivity" />
         <activity android:name=".Me.UserQuestionActivity" />
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".Community.activity.SearchActivity">
-        </activity>
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity" >
+        </activity>
+        <activity android:name=".Community.activity.SearchActivity">
+        </activity>
+
+        <activity android:name=".MainActivity" >
+        </activity>
 
         <!-- 新浪微博 -->
         <activity

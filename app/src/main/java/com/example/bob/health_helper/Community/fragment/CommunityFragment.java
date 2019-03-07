@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.example.bob.health_helper.Community.activity.SearchActivity;
 import com.example.bob.health_helper.Community.adapter.CommunityPagerAdapter;
 import com.example.bob.health_helper.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ import butterknife.ButterKnife;
  */
 
 public class CommunityFragment extends Fragment {
+	/*
 	private ArrayList<Fragment> fragments=new ArrayList<>();
 	@BindView(R.id.tool_bar)
 	Toolbar toolbar;
@@ -34,14 +36,15 @@ public class CommunityFragment extends Fragment {
 	TabLayout tabLayout;
 	@BindView(R.id.view_pager)
 	ViewPager viewPager;
+	*/
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-		View root=inflater.inflate(R.layout.fragment_community,null);
-		ButterKnife.bind(this,root);
+		View root=inflater.inflate(R.layout.fragment_news,container,false);
+		//ButterKnife.bind(this,root);
 		return root;
 	}
-
+	/*
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
@@ -65,4 +68,5 @@ public class CommunityFragment extends Fragment {
 			}
 		});
 	}
+	*/
 }

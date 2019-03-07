@@ -1,4 +1,4 @@
-package com.example.bob.health_helper.util;
+package com.example.bob.health_helper.Util;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

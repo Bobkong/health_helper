@@ -3,7 +3,7 @@ package com.example.bob.health_helper.Bean;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private int uid;
+    private String uid;
     private String name;
     private String gender;
     private String iconurl;
@@ -11,11 +11,11 @@ public class User implements Serializable {
     private String weight;//kg
     private String birth;
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

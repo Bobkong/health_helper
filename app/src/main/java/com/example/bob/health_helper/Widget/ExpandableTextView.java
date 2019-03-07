@@ -1,4 +1,4 @@
-package com.example.bob.health_helper.widget;
+package com.example.bob.health_helper.Widget;
 
 import android.content.Context;
 import android.os.Build;

@@ -4,25 +4,29 @@
     <item
         android:id="@+id/navigation_measure"
         android:icon="@drawable/health"
+        android:checked="true"
         android:title="@string/measure"/>
 
     <item
         android:id="@+id/navigation_chat"
         android:icon="@drawable/chat"
+        android:checked="false"
         android:title="@string/chat"/>
 
     <item
         android:id="@+id/navigation_news"
         android:icon="@drawable/news"
+        android:checked="false"
         android:title="@string/news"/>
-
     <item
         android:id="@+id/navigation_community"
         android:icon="@drawable/community"
+        android:checked="false"
         android:title="@string/community"/>
 
     <item
         android:id="@+id/navigation_me"
         android:icon="@drawable/me"
+        android:checked="false"
         android:title="@string/me"/>
 </menu>

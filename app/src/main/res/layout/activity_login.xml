@@ -20,19 +20,4 @@
         android:text="@string/weibo_login"
         android:layout_marginTop="20dp"/>
 
-    <Button
-        android:id="@+id/qq_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/logout"
-        android:layout_marginTop="20dp"/>
-
-    <Button
-        android:id="@+id/weibo_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/logout"
-        android:layout_marginTop="20dp"/>
-
-
 </LinearLayout>

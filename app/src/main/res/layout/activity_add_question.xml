@@ -37,6 +37,5 @@
             android:inputType="textMultiLine"
             android:imeOptions="actionDone"
             android:imeActionLabel="@string/publish"/>
-
     </LinearLayout>
 </ScrollView>

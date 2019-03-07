@@ -21,4 +21,12 @@
     <string name="show_less">收起</string>
     <string name="comment">评论</string>
     <string name="comment_input">输入你的评论</string>
+    <string name="height_input">请输入你的身高</string>
+    <string name="weight_input">请输入你的体重</string>
+    <string name="birth_input">请选择你的出生日期</string>
+    <string name="next">下一步</string>
+    <string name="finish">完成</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="logout_confirm">确定要退出吗？</string>
 </resources>

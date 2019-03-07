@@ -6,7 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bob.health_helper.R;
-import com.example.bob.health_helper.util.JsonParser;
+import com.example.bob.health_helper.Util.JsonParser;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerResult;
