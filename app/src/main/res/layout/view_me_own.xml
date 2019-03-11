@@ -18,7 +18,7 @@
             android:orientation="horizontal">
             <ImageView
                 style="@style/MeIconStyle"
-                android:src="@mipmap/my_question" />
+                android:src="@drawable/my_question" />
             <Button
                 android:id="@+id/my_question"
                 style="@style/MeButtonStyle"
@@ -33,7 +33,7 @@
             android:orientation="horizontal">
             <ImageView
                 style="@style/MeIconStyle"
-                android:src="@mipmap/my_answer" />
+                android:src="@drawable/my_answer" />
             <Button
                 android:id="@+id/my_answer"
                 style="@style/MeButtonStyle"
@@ -48,11 +48,26 @@
             android:orientation="horizontal">
             <ImageView
                 style="@style/MeIconStyle"
-                android:src="@mipmap/my_favorite" />
+                android:src="@drawable/my_favorite" />
             <Button
                 android:id="@+id/my_favorite"
                 style="@style/MeButtonStyle"
                 android:text="@string/my_favorite"/>
+        </LinearLayout>
+
+        <View style="@style/MeDividerStyle"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                style="@style/MeIconStyle"
+                android:src="@drawable/my_like" />
+            <Button
+                android:id="@+id/my_like"
+                style="@style/MeButtonStyle"
+                android:text="@string/my_like"/>
         </LinearLayout>
 
     </LinearLayout>

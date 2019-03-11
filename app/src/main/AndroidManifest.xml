@@ -19,66 +19,54 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Community.activity.AddAnswerActivity"></activity>
-        <activity android:name=".Community.activity.QuestionDetailActivity" ></activity>
+        <activity android:name=".News.activity.NewsDetailActivity">
+
+        </activity>
+        <activity android:name=".Me.activity.EditUserInfoActivity" />
+        <activity android:name=".Me.activity.SettingActivity" />
+        <activity
+            android:name=".Me.activity.UserLikeAnswerActivity"
+            android:label="@string/my_like" />
+        <activity
+            android:name=".Me.activity.UserFavoriteQuestionActivity"
+            android:label="@string/my_favorite" />
+        <activity
+            android:name=".Me.activity.UserAnswerActivity"
+            android:label="@string/my_answer" />
+        <activity
+            android:name=".Me.activity.UserQuestionActivity"
+            android:label="@string/my_question" />
+        <activity android:name=".Community.activity.CommentActivity" />
+        <activity android:name=".Community.activity.AddAnswerActivity" />
+        <activity android:name=".Community.activity.QuestionDetailActivity" />
         <activity android:name=".Community.activity.AddQuestionActivity" />
-        <activity android:name=".Me.UserAnswerActivity" />
-        <activity android:name=".Me.EditUserInfoActivity" />
-        <activity android:name=".Me.UserQuestionActivity" />
-        <activity android:name=".SplashActivity" >
+        <activity android:name=".Community.activity.SearchActivity" />
+        <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" >
-        </activity>
-        <activity android:name=".Community.activity.SearchActivity">
-        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity" />
 
-        <activity android:name=".MainActivity" >
-        </activity>
-
-        <!-- 新浪微博 -->
-        <activity
-            android:name="com.umeng.socialize.media.WBShareCallBackActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="com.sina.weibo.sdk.web.WeiboSdkWebActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="com.sina.weibo.sdk.share.WbShareTransActivity"
-            android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
-            <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <!-- qq -->
+        <!-- 注册QQ Activity -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="tencent101553511" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 

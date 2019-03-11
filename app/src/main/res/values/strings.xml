@@ -11,12 +11,18 @@
     <string name="my_question">我的提问</string>
     <string name="my_answer">我的回答</string>
     <string name="my_favorite">我的收藏</string>
+    <string name="my_like">我的点赞</string>
     <string name="settings">应用设置</string>
     <string name="share">应用分享</string>
     <string name="search">搜索</string>
-    <string name="add_question_title">输入你的问题</string>
+    <string name="add_question">提问</string>
+    <string name="add_question_title">输入你的问题并以问号结尾~</string>
     <string name="add_question_description">输入问题的描述，可以更快获得解答喔</string>
     <string name="publish">发布</string>
+    <string name="question_title_empty">问题不能为空</string>
+    <string name="question_title_endwith">问题要以问号结尾~</string>
+    <string name="publish_success">发布成功</string>
+    <string name="pubish_failed">发布失败</string>
     <string name="full_text">全文</string>
     <string name="show_less">收起</string>
     <string name="comment">评论</string>
@@ -29,4 +35,16 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
     <string name="logout_confirm">确定要退出吗？</string>
+    <string name="loading_more">正在加载更多……</string>
+    <string name="no_more">没有更多数据了</string>
+    <string name="network_error">加载遇到了点问题…</string>
+    <string name="reload">重新加载</string>
+    <string name="input_answer">输入你的回答</string>
+    <string name="answer">回答</string>
+    <string name="answer_empty">回答不能为空</string>
+    <string name="filter_by_hot">按热度排序</string>
+    <string name="filter_by_time">按时间排序</string>
+    <string name="load_comment_error">加载评论失败</string>
+    <string name="send_comment_success">发布评论成功</string>
+    <string name="send_comment_failed">发布评论失败</string>
 </resources>

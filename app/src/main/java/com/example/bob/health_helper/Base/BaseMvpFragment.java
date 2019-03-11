@@ -1,12 +1,13 @@
 package com.example.bob.health_helper.Base;
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 
 
-public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends Fragment implements BaseMvpView {
+
+public abstract class BaseMvpFragment<T extends BaseMvpContract.BasePresenter> extends BaseFragment
+        implements BaseMvpContract.BaseView {
     protected T mPresenter;
 
     protected abstract T bindPresenter();
@@ -26,11 +27,6 @@ public abstract class BaseMvpFragment<T extends BaseMvpPresenter> extends Fragme
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.dettachView();
-    }
-
-    public void navigateTo(Class to) {
-        Intent intent = new Intent(getActivity(), to);
-        startActivity(intent);
+        mPresenter.detachView();
     }
 }

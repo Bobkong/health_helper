@@ -1,11 +1,11 @@
 package com.example.bob.health_helper.Base;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
-public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends AppCompatActivity implements BaseMvpView {
+
+public abstract class BaseMvpActivity<T extends BaseMvpContract.BasePresenter> extends BaseActivity
+        implements BaseMvpContract.BaseView {
     protected T mPresenter;
 
     protected abstract T bindPresenter();
@@ -25,17 +25,6 @@ public abstract class BaseMvpActivity<T extends BaseMvpPresenter> extends AppCom
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.dettachView();
-    }
-
-    public void navigateForResultTo(Class to, int requestCode) {
-        Intent intent = new Intent(this, to);
-        startActivityForResult(intent, requestCode);
-    }
-
-    public void navigateTo(Class to) {
-        Intent intent = new Intent(this, to);
-        startActivity(intent);
-        finish();
+        mPresenter.detachView();
     }
 }

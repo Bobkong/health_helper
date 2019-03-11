@@ -2,7 +2,16 @@
 <resources>
     <array name="community_type">
         <item>最新</item>
-        <item>热门</item>
+        <item>热榜</item>
         <item>动态</item>
+    </array>
+
+    <array name="news_type">
+        <item>发现</item>
+        <item>高血压</item>
+        <item>糖尿病</item>
+        <item>高血脂</item>
+        <item>脑卒中</item>
+        <item>冠心病</item>
     </array>
 </resources>

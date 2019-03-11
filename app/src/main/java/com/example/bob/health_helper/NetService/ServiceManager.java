@@ -1,6 +1,5 @@
 package com.example.bob.health_helper.NetService;
 
-import com.blankj.utilcode.util.NetworkUtils;
 import com.example.bob.health_helper.MyApplication;
 
 import java.io.File;
@@ -48,6 +47,7 @@ public class ServiceManager {
             public Response intercept(Chain chain) throws IOException {
                 Request request=chain.request();
                 //没有网络连接时设为强制缓存
+                /**
                 if(!NetworkUtils.isConnected()){
                     request=request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
@@ -65,6 +65,8 @@ public class ServiceManager {
                             .removeHeader("Pragma")
                             .build();
                 }
+                 **/
+                Response response=chain.proceed(request);
                 return response;
             }
         };

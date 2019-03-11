@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:stateListAnimator="@null">
@@ -25,15 +26,28 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_collapseMode="pin">
 
-                <ImageButton
-                    android:id="@+id/favorite_question"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="end"
-                    android:layout_marginRight="16dp"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:padding="8dp"
-                    android:src="@drawable/favorite_selector" />
+                    android:layout_marginRight="16dp">
+                    <ImageButton
+                        android:id="@+id/favorite_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:padding="8dp"
+                        android:src="@drawable/favorite_selector" />
+                    <ImageButton
+                        android:id="@+id/filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:src="@drawable/filter"
+                        android:tint="@color/white"
+                        android:background="?selectableItemBackgroundBorderless"/>
+                </LinearLayout>
             </android.support.v7.widget.Toolbar>
 
             <LinearLayout
@@ -65,14 +79,26 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/answer_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@color/white"
         android:src="@mipmap/add"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom|end"/>
 
 </android.support.design.widget.CoordinatorLayout>

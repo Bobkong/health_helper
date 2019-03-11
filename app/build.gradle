@@ -1,16 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
-// Create a variable called keystorePropertiesFile, and initialize it to your
-// keystore.properties file, in the rootProject folder.
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-
-// Initialize a new Properties() object called keystoreProperties.
-def keystoreProperties = new Properties()
-
-// Load your keystore.properties file into the keystoreProperties object.
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -29,30 +19,11 @@ android {
         }
     }
 
-    buildTypes.each{
-        it.buildConfigField 'String','QQ_APPID',QQ_APPID
-        it.buildConfigField 'String','QQ_APPKEY',QQ_APPKEY
-        it.buildConfigField 'String','WEIBO_APPKEY',WEIBO_APPKEY
-        it.buildConfigField 'String','WEIBO_APPSECRET',WEIBO_APPSECRET
-        it.buildConfigField 'String','UM_APPKEY',UM_APPKEY
-        it.buildConfigField 'String','IFLYKE_APPID',IFLYKE_APPID
-    }
-
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
 
-    }
-
-    //signing added
-    signingConfigs {
-        debug {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
     }
 
     compileOptions {
@@ -85,19 +56,16 @@ dependencies {
     //logger
     implementation 'com.orhanobut:logger:2.2.0'
 
-    //util
-    implementation 'com.blankj:utilcode:1.23.6'
-
     //banner
     implementation 'com.youth.banner:banner:1.4.10'
 
     // Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //rxJava和rxAndroid
-    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    // 日志拦截器
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    // okhhtp3日志拦截器
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 }

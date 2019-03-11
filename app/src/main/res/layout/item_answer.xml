@@ -25,49 +25,58 @@
             android:layout_gravity="center_vertical" />
     </LinearLayout>
 
-    <TextView
+    <com.example.bob.health_helper.Widget.ExpandableTextView
         android:id="@+id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+    </com.example.bob.health_helper.Widget.ExpandableTextView>
+
+    <TextView
+        android:id="@+id/publish_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:maxLines="5"
-        android:minLines="1"
-        android:ellipsize="end"
-        android:text="Answer"/>
+        android:textColor="@color/primary_light"
+        android:text="publish date"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
-
-        <TextView
-            android:id="@+id/favour_count"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/favorite"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_thumb_up"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/primary_light"
-            android:text="0"/>
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_thumb_up"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/primary_light"
+                android:text="0"/>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/comment_count"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/comment"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:drawableLeft="@drawable/ic_comment"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/primary_light"
-            android:text="0"/>
-
-        <TextView
-            android:id="@+id/publish_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/primary_light"/>
-
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:drawableLeft="@drawable/ic_comment"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/primary_light"
+                android:text="0"/>
+        </LinearLayout>
     </LinearLayout>
+
 </LinearLayout>

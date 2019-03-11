@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/filter_time"
+        android:title="@string/filter_by_time"
+        android:visible="true"
+        app:showAsAction="ifRoom|withText"/>
+    <item
+        android:id="@+id/filter_hot"
+        android:title="@string/filter_by_hot"
+        android:visible="true"
+        app:showAsAction="ifRoom|withText"/>
+</menu>

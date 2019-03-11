@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import com.example.bob.health_helper.Community.fragment.CommunityFragment;
+import com.example.bob.health_helper.Community.CommunityFragment;
 import com.example.bob.health_helper.Event.LogoutEvent;
 import com.example.bob.health_helper.Me.MeFragment;
 import com.example.bob.health_helper.News.NewsFragment;
@@ -20,9 +20,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
-	private BottomNavigationView bottomNavigationView;
-	private ViewPager viewPager;
+	@BindView(R.id.main_navigation)
+	BottomNavigationView bottomNavigationView;
+	@BindView(R.id.main_content)
+	ViewPager viewPager;
 	private ArrayList<Fragment> fragments=new ArrayList<>(Arrays.asList(new MeasureFragment(),new ChatFragment(),
 			new NewsFragment(),new CommunityFragment(),new MeFragment()));
 	private MenuItem preMenuItem;
@@ -30,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		viewPager=findViewById(R.id.main_content);
-		bottomNavigationView=findViewById(R.id.main_navigation);
+		ButterKnife.bind(this);
 
 		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 			@Override

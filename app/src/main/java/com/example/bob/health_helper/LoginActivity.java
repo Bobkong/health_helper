@@ -9,15 +9,29 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
 import android.widget.Toast;
-import com.example.bob.health_helper.Bean.User;
-import com.example.bob.health_helper.Util.SharedPreferenceUtil;
-import com.orhanobut.logger.Logger;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import com.example.bob.health_helper.Base.AppConstant;
+import com.example.bob.health_helper.Bean.User;
+import com.example.bob.health_helper.Util.AgeUtil;
+import com.example.bob.health_helper.Util.SharedPreferenceUtil;
+import com.google.gson.JsonObject;
+import com.orhanobut.logger.Logger;
+import com.tencent.connect.UserInfo;
+import com.tencent.connect.auth.QQToken;
+import com.tencent.connect.common.Constants;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
+import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,87 +39,91 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
     private User user=new User();
+    private Tencent tencent;
+    private BaseUiListener uiListener;
+    private UserInfo mUserInfo;//qq登录得到的用户信息
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        tencent=MyApplication.getTencent();
     }
 
-    @OnClick({R.id.qq_login,R.id.weibo_login})
+    @OnClick(R.id.qq_login)
     public void onClicked(View view){
-        switch (view.getId()){
-            case R.id.qq_login:
-                UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.QQ,umAuthListener);
-                break;
-            case R.id.weibo_login:
-                UMShareAPI.get(this).getPlatformInfo(this, SHARE_MEDIA.SINA,umAuthListener);
-                break;
+        if(!tencent.checkSessionValid(AppConstant.QQ_APPID)){
+            uiListener=new BaseUiListener();
+            tencent.login(LoginActivity.this,"all",uiListener);
         }
     }
 
-    private UMAuthListener umAuthListener = new UMAuthListener() {
-        /**
-         * @desc 授权开始的回调
-         * @param platform 平台名称
-         */
+    private class BaseUiListener implements IUiListener{
         @Override
-        public void onStart(SHARE_MEDIA platform) {
+        public void onComplete(Object response) {
+            Toast.makeText(LoginActivity.this,"授权成功",Toast.LENGTH_SHORT).show();
+            JSONObject obj = (JSONObject) response;
+            try {
+                String openID = obj.getString("openid");
+                String accessToken = obj.getString("access_token");
+                String expires = obj.getString("expires_in");
+                tencent.setOpenId(openID);
+                tencent.setAccessToken(accessToken,expires);
+                QQToken qqToken = tencent.getQQToken();
+                mUserInfo = new UserInfo(getApplicationContext(),qqToken);
+                //用户uid
+                user.setUid(openID);
+                mUserInfo.getUserInfo(new IUiListener() {
+                    @Override
+                    public void onComplete(Object response) {
+                        if(response==null)
+                            return;
+                        Logger.e("获取用户信息成功");
+                        JSONObject jsonObject=(JSONObject) response;
+                        try{
+                            user.setName(jsonObject.getString("nickname"));
+                            user.setGender(jsonObject.getString("gender"));
+                            user.setIconurl(jsonObject.getString("figureurl_qq_2"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        showHeightInputDialog();
+                    }
+                    @Override
+                    public void onError(UiError uiError) {
+                        Logger.e("获取信息失败");
+                    }
 
+                    @Override
+                    public void onCancel() {
+                        Logger.e("取消");
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
-        /**
-         * @desc 授权成功的回调
-         * @param platform 平台名称
-         * @param action 行为序号
-         * @param data 用户资料返回
-         */
         @Override
-        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
-            Logger.d("授权成功");
-            //持久化保存登录方式
-            if(platform==SHARE_MEDIA.QQ)
-                SharedPreferenceUtil.saveBooleanKeyValue("isQQLogin",true);
-            else if(platform==SHARE_MEDIA.SINA)
-                SharedPreferenceUtil.saveBooleanKeyValue("isSinaLogin",true);
-            //获取用户信息
-            user.setUid(data.get("uid"));
-            user.setName(data.get("name"));
-            user.setGender(data.get("gender"));
-            user.setIconurl(data.get("iconurl"));
-            //弹出完善用户信息
-            Toast.makeText(LoginActivity.this, "成功了", Toast.LENGTH_SHORT).show();
-            showHeightInputDialog();
+        public void onError(UiError uiError) {
+            Toast.makeText(LoginActivity.this,"授权失败",Toast.LENGTH_SHORT).show();
         }
 
-        /**
-         * @desc 授权失败的回调
-         * @param platform 平台名称
-         * @param action 行为序号
-         * @param t 错误原因
-         */
         @Override
-        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
-            Toast.makeText(LoginActivity.this, "授权失败：" + t.getMessage(),Toast.LENGTH_LONG).show();
+        public void onCancel() {
+            Toast.makeText(LoginActivity.this,"授权取消",Toast.LENGTH_SHORT).show();
         }
+    }
 
-        /**
-         * @desc 授权取消的回调
-         * @param platform 平台名称
-         * @param action 行为序号
-         */
-        @Override
-        public void onCancel(SHARE_MEDIA platform, int action) {
-            Toast.makeText(LoginActivity.this, "授权取消", Toast.LENGTH_LONG).show();
-        }
-    };
-
-    //qq与新浪微博授权回调
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == Constants.REQUEST_LOGIN){
+            Tencent.onActivityResultData(requestCode,resultCode,data,uiListener);
+        }
         super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
+
 
     /**
      * 身高输入
@@ -126,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Logger.e(numberPicker.getValue()+"");
                 //保存用户身高信息
-                user.setHeight(numberPicker.getValue()+"cm");
+                user.setHeight(Integer.valueOf(numberPicker.getValue()));
                 showWeightInputDialog();
                 dialog.dismiss();
             }
@@ -159,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Logger.e(numberPicker1.getValue()+"."+numberPicker2.getValue());
                 //保存用户体重信息
-                user.setWeight(numberPicker1.getValue()+"."+numberPicker2.getValue()+"kg");
+                user.setWeight(Float.valueOf(numberPicker1.getValue()+"."+numberPicker2.getValue()));
                 showBirthInputDialog();
                 dialog.dismiss();
             }
@@ -187,8 +205,14 @@ public class LoginActivity extends AppCompatActivity {
         finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //保存用户出生信息xxxx-xx-xx
-                user.setBirth(datePicker.getYear()+"-"+(datePicker.getMonth()+1)+"-"+datePicker.getDayOfMonth());
+                //保存用户年龄
+                DateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
+                try{
+                    Date date=fmt.parse(datePicker.getYear()+"-"+(datePicker.getMonth()+1)+"-"+datePicker.getDayOfMonth());
+                    user.setAge(AgeUtil.getAgeFromDate(date));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 //持久化保存用户个人信息
                 SharedPreferenceUtil.saveUser(user);
                 dialog.dismiss();

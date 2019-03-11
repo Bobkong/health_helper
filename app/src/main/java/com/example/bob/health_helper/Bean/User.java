@@ -7,9 +7,9 @@ public class User implements Serializable {
     private String name;
     private String gender;
     private String iconurl;
-    private String height;//cm
-    private String weight;//kg
-    private String birth;
+    private int height;//cm
+    private float weight;//kg
+    private int age;
 
     public String getUid() {
         return uid;
@@ -43,27 +43,40 @@ public class User implements Serializable {
         this.iconurl = iconurl;
     }
 
-    public String getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
-    public String getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 
-    public String getBirth() {
-        return birth;
+    public int getAge() {
+        return age;
     }
 
-    public void setBirth(String birth) {
-        this.birth = birth;
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid='" + uid + '\'' +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", iconurl='" + iconurl + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", age=" + age +
+                '}';
     }
 }
