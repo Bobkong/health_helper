@@ -14,7 +14,6 @@ import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Bean.User;
 import com.example.bob.health_helper.Util.AgeUtil;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
-import com.google.gson.JsonObject;
 import com.orhanobut.logger.Logger;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
@@ -38,7 +37,7 @@ import butterknife.OnClick;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private User user=new User();
+    private User user=new User();//本地用户类
     private Tencent tencent;
     private BaseUiListener uiListener;
     private UserInfo mUserInfo;//qq登录得到的用户信息

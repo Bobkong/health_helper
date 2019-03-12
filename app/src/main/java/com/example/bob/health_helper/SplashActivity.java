@@ -1,21 +1,83 @@
 package com.example.bob.health_helper;
 
+import android.Manifest;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.widget.Toast;
 
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Base.BaseActivity;
 import com.orhanobut.logger.Logger;
 
+import java.util.List;
 
-public class SplashActivity extends BaseActivity {
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+
+
+public class SplashActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
     private Handler handler=new Handler();
     private static final int DELAY_TIME = 2000;
+
+    private static final String[] PERMISSIONS={Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO};
+    private static final int RC_PERM=123;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        //权限处理
+        checkpermissions();
+    }
+
+    private void checkpermissions() {
+        if(EasyPermissions.hasPermissions(this,PERMISSIONS))
+            processLogic();
+        else
+            EasyPermissions.requestPermissions(this,getString(R.string.require_permission), RC_PERM,PERMISSIONS);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        if(EasyPermissions.hasPermissions(this,PERMISSIONS))
+            processLogic();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        //用户勾选了不再询问且拒绝权限，跳转到设置界面手动开启
+        if(EasyPermissions.somePermissionPermanentlyDenied(this,perms)){
+            new AppSettingsDialog.Builder(this)
+                    .setTitle(getString(R.string.required_permission_denied_title))
+                    .setRationale(getString(R.string.required_permission_denied_content))
+                    .build().show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Logger.e("从setting回来");
+        if(requestCode==AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE)
+            checkpermissions();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.ECLAIR)
+    private void processLogic() {
         boolean isValid=MyApplication.getTencent().checkSessionValid(AppConstant.QQ_APPID);
         if(!isValid){
             Toast.makeText(this,"登录已过期，请重新登录",Toast.LENGTH_SHORT).show();

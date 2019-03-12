@@ -57,10 +57,8 @@ public class AddQuestionActivity extends BaseMvpActivity<AddQuestionContract.Pre
                 String title=questionTitle.getText().toString().trim();
                 if(title.length()==0)//问题标题为空判断
                     Snackbar.make(scrollView,R.string.question_title_empty,Snackbar.LENGTH_SHORT).show();
-                else if(!title.endsWith("?")||!title.endsWith("？"))//问题以问号结尾判断
-                    Snackbar.make(scrollView,R.string.question_title_endwith,Snackbar.LENGTH_SHORT).show();
                 else {
-                    String descrption=questionDescription.getText().toString().trim();
+                    String descrption=R.string.question_description+questionDescription.getText().toString().trim();
                     mPresenter.publishQuestion(title,descrption);
                 }
         }

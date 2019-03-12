@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.bob.health_helper.Base.AppConstant;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.tauth.Tencent;
@@ -19,7 +21,7 @@ public class MyApplication extends Application {
         //qq登录初始化
         tencent=Tencent.createInstance(AppConstant.QQ_APPID,context);
         //科大讯飞
-        //SpeechUtility.createUtility(this, SpeechConstant.APPID+"="+BuildConfig.IFLYKE_APPID);
+        SpeechUtility.createUtility(this, SpeechConstant.APPID+"="+AppConstant.IFLYKE_APPID);
         //Logger
         Logger.addLogAdapter(new AndroidLogAdapter());
     }

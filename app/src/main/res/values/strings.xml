@@ -20,7 +20,7 @@
     <string name="add_question_description">输入问题的描述，可以更快获得解答喔</string>
     <string name="publish">发布</string>
     <string name="question_title_empty">问题不能为空</string>
-    <string name="question_title_endwith">问题要以问号结尾~</string>
+    <string name="question_description">问题描述: </string>
     <string name="publish_success">发布成功</string>
     <string name="pubish_failed">发布失败</string>
     <string name="full_text">全文</string>
@@ -47,4 +47,8 @@
     <string name="load_comment_error">加载评论失败</string>
     <string name="send_comment_success">发布评论成功</string>
     <string name="send_comment_failed">发布评论失败</string>
+    <string name="search_hint">请输入搜索内容</string>
+    <string name="require_permission">为确保应用的正常运行，需要获取一些权限</string>
+    <string name="required_permission_denied_title">权限被拒绝</string>
+    <string name="required_permission_denied_content">如果不打开权限可能会影响应用的正常运行</string>
 </resources>
