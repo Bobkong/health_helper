@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,12 +13,15 @@ import android.widget.Toast;
 
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Bean.User;
+import com.example.bob.health_helper.NetService.TlsSigService;
 import com.example.bob.health_helper.Util.AgeUtil;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMManager;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -34,6 +38,7 @@ import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -41,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private Tencent tencent;
     private BaseUiListener uiListener;
     private UserInfo mUserInfo;//qq登录得到的用户信息
+    private final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +93,8 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        showHeightInputDialog();
+                        //注册腾讯云信
+                        registerIM(openID);
                     }
                     @Override
                     public void onError(UiError uiError) {
@@ -115,6 +122,31 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private void registerIM(String openID) {
+        TlsSigService.getTlsService().getSig(openID)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(tlsResp -> {
+                            if (tlsResp.getSuccess()){
+                                // identifier为用户名，userSig 为用户登录凭证
+                                TIMManager.getInstance().login(openID, tlsResp.getData(), new TIMCallBack() {
+                                    @Override
+                                    public void onError(int code, String desc) {
+                                        //错误码 code 和错误描述 desc，可用于定位请求失败原因
+                                        //错误码 code 列表请参见错误码表
+                                        Log.d(TAG, "login failed. code: " + code + " errmsg: " + desc);
+                                        Toast.makeText(LoginActivity.this, R.string.register_im_fail,Toast.LENGTH_SHORT).show();
+                                    }
+                                    @Override
+                                    public void onSuccess() {
+                                        showHeightInputDialog();
+                                        Log.d(TAG, "login succ");
+                                    }
+                                });
+                            }
+                        }
+                        , Throwable::printStackTrace);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == Constants.REQUEST_LOGIN){
@@ -138,16 +170,13 @@ public class LoginActivity extends AppCompatActivity {
         numberPicker.setWrapSelectorWheel(false);
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         AlertDialog dialog=builder.setView(view).create();
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Logger.e(numberPicker.getValue()+"");
-                //保存用户身高信息
-                user.setHeight(Integer.valueOf(numberPicker.getValue()));
-                showWeightInputDialog();
-                dialog.dismiss();
-            }
-        });
+        next.setOnClickListener(view1 -> {
+			Logger.e(numberPicker.getValue()+"");
+			//保存用户身高信息
+			user.setHeight(Integer.valueOf(numberPicker.getValue()));
+			showWeightInputDialog();
+			dialog.dismiss();
+		});
        dialog.show();
     }
 
@@ -171,16 +200,13 @@ public class LoginActivity extends AppCompatActivity {
         numberPicker1.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         numberPicker2.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         AlertDialog dialog=builder.setView(view).create();
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Logger.e(numberPicker1.getValue()+"."+numberPicker2.getValue());
-                //保存用户体重信息
-                user.setWeight(Float.valueOf(numberPicker1.getValue()+"."+numberPicker2.getValue()));
-                showBirthInputDialog();
-                dialog.dismiss();
-            }
-        });
+        next.setOnClickListener(view1 -> {
+			Logger.e(numberPicker1.getValue()+"."+numberPicker2.getValue());
+			//保存用户体重信息
+			user.setWeight(Float.valueOf(numberPicker1.getValue()+"."+numberPicker2.getValue()));
+			showBirthInputDialog();
+			dialog.dismiss();
+		});
         dialog.show();
     }
 
@@ -201,24 +227,21 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                 });
-        finish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //保存用户年龄
-                DateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
-                try{
-                    Date date=fmt.parse(datePicker.getYear()+"-"+(datePicker.getMonth()+1)+"-"+datePicker.getDayOfMonth());
-                    user.setAge(AgeUtil.getAgeFromDate(date));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                //持久化保存用户个人信息
-                SharedPreferenceUtil.saveUser(user);
-                dialog.dismiss();
-                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        finish.setOnClickListener(view1 -> {
+			//保存用户年龄
+			DateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
+			try{
+				Date date=fmt.parse(datePicker.getYear()+"-"+(datePicker.getMonth()+1)+"-"+datePicker.getDayOfMonth());
+				user.setAge(AgeUtil.getAgeFromDate(date));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			//持久化保存用户个人信息
+			SharedPreferenceUtil.saveUser(user);
+			dialog.dismiss();
+			Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+			startActivity(intent);
+		});
         dialog.show();
     }
 }

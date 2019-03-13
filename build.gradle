@@ -20,7 +20,23 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://jitpack.io' }
+        repositories {
+            flatDir {
+                dirs 'libs', '../tuikit/libs'
+            }
+        }
     }
+}
+
+ext {
+    compileSdkVersion = 28
+    minSdkVersion = 16
+    targetSdkVersion = 28
+    versionCode = 1
+    versionName = "1.0"
+    abiFilters = ['armeabi-v7a']//'arm64-v8a'，'armeabi-v7a', 'armeabi'
+    arguments = "-DANDROID_STL=c++_shared"
+    cppFlags = "-std=c++11"
 }
 
 task clean(type: Delete) {

@@ -51,4 +51,5 @@
     <string name="require_permission">为确保应用的正常运行，需要获取一些权限</string>
     <string name="required_permission_denied_title">权限被拒绝</string>
     <string name="required_permission_denied_content">如果不打开权限可能会影响应用的正常运行</string>
+    <string name="register_im_fail">腾讯云信注册失败！</string>
 </resources>
