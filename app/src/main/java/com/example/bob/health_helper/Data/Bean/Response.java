@@ -1,24 +1,21 @@
 package com.example.bob.health_helper.Data.Bean;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Response<T> {
-    private int code;
-    private String message;
+    @SerializedName("success")
+    private boolean success;
+    @SerializedName("err")
+    private Error err;
+    @SerializedName("data")
     private T data;
 
-    public int getCode() {
-        return code;
+    public boolean getSuccess() {
+        return success;
     }
 
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public Error getErr() {
+        return err;
     }
 
     public T getData() {

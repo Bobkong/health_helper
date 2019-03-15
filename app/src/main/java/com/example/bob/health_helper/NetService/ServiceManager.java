@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceManager {
     //域名
-    private static final String baseUrl="";
+    private static final String baseUrl="http://129.204.214.63:3000";
     //连接超时
     private static final int CONNECT_TIMEOUT=30;
     //读超时

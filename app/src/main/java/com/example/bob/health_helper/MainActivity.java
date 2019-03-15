@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+
+import com.example.bob.health_helper.Chat.fragment.ChatFragment;
 import com.example.bob.health_helper.Community.CommunityFragment;
 import com.example.bob.health_helper.Event.LogoutEvent;
 import com.example.bob.health_helper.Me.MeFragment;
