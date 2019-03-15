@@ -1,7 +1,7 @@
 package com.example.bob.health_helper.Me.activity;
 
 import android.os.Bundle;
-import com.example.bob.health_helper.Data.Bean.Question;
+import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.Me.adapter.UserQuestionAdapter;
 import com.example.bob.health_helper.R;
 

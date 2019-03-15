@@ -7,15 +7,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bob.health_helper.Base.BaseActivity;
 import com.example.bob.health_helper.Community.adapter.SearchHistoryAdapter;
 import com.example.bob.health_helper.Community.fragment.SearchResultFragment;
-import com.example.bob.health_helper.Data.Bean.SearchHistory;
-import com.example.bob.health_helper.Data.Dao.SearchHistoryDao;
+import com.example.bob.health_helper.Local.LocalBean.SearchHistory;
+import com.example.bob.health_helper.Local.Dao.SearchHistoryDao;
 import com.example.bob.health_helper.R;
 import com.example.bob.health_helper.Util.JsonParser;
 import com.example.bob.health_helper.Util.RandomColorUtil;

@@ -143,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         AlertDialog dialog=builder.setView(view).create();
         next.setOnClickListener(view1 -> {
-			Logger.e(numberPicker.getValue()+"");
 			//保存用户身高信息
 			user.setHeight(Integer.valueOf(numberPicker.getValue()));
 			showWeightInputDialog();
@@ -173,7 +172,6 @@ public class LoginActivity extends AppCompatActivity {
         numberPicker2.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         AlertDialog dialog=builder.setView(view).create();
         next.setOnClickListener(view1 -> {
-			Logger.e(numberPicker1.getValue()+"."+numberPicker2.getValue());
 			//保存用户体重信息
 			user.setWeight(Float.valueOf(numberPicker1.getValue()+"."+numberPicker2.getValue()));
 			showBirthInputDialog();

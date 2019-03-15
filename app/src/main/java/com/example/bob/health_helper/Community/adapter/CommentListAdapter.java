@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.bob.health_helper.Data.Bean.Comment;
+import com.example.bob.health_helper.Bean.Comment;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
 import com.orhanobut.logger.Logger;

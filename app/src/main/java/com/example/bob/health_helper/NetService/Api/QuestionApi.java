@@ -1,7 +1,7 @@
 package com.example.bob.health_helper.NetService.Api;
 
-import com.example.bob.health_helper.Data.Bean.Answer;
-import com.example.bob.health_helper.Data.Bean.Question;
+import com.example.bob.health_helper.Local.LocalBean.Answer;
+import com.example.bob.health_helper.Bean.Question;
 
 import java.util.List;
 

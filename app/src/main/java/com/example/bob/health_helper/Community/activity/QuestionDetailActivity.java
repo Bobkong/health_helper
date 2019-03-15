@@ -16,19 +16,19 @@ import android.widget.TextView;
 
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Base.BaseMvpActivity;
-import com.example.bob.health_helper.Data.Bean.Answer;
-import com.example.bob.health_helper.Data.Bean.Favorite;
-import com.example.bob.health_helper.Data.Bean.Question;
+import com.example.bob.health_helper.Bean.Answer;
+import com.example.bob.health_helper.Local.LocalBean.Favorite;
+import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.Community.adapter.AnswerListAdapter;
 import com.example.bob.health_helper.Community.contract.QuestionDetailContract;
 import com.example.bob.health_helper.Community.presenter.QuestionDetailPresenter;
-import com.example.bob.health_helper.Data.Dao.FavoriteDao;
+import com.example.bob.health_helper.Local.Dao.FavoriteDao;
 import com.example.bob.health_helper.R;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

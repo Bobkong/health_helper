@@ -1,9 +1,9 @@
-package com.example.bob.health_helper.Data.Dao;
+package com.example.bob.health_helper.Local.Dao;
 
 import android.content.Context;
 
-import com.example.bob.health_helper.Data.Bean.Favorite;
-import com.example.bob.health_helper.Data.DatabaseHelper;
+import com.example.bob.health_helper.Local.LocalBean.Favorite;
+import com.example.bob.health_helper.Local.DatabaseHelper;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;

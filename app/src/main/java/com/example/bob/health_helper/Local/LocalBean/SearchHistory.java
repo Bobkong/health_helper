@@ -1,4 +1,4 @@
-package com.example.bob.health_helper.Data.Bean;
+package com.example.bob.health_helper.Local.LocalBean;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;

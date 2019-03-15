@@ -1,11 +1,11 @@
-package com.example.bob.health_helper.Data;
+package com.example.bob.health_helper.Local;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.bob.health_helper.Data.Bean.Favorite;
-import com.example.bob.health_helper.Data.Bean.Like;
-import com.example.bob.health_helper.Data.Bean.SearchHistory;
+import com.example.bob.health_helper.Local.LocalBean.Favorite;
+import com.example.bob.health_helper.Local.LocalBean.Like;
+import com.example.bob.health_helper.Local.LocalBean.SearchHistory;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;

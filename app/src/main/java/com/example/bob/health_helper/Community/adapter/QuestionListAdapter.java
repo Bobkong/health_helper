@@ -11,11 +11,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.bob.health_helper.Data.Bean.Question;
+import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.Community.activity.QuestionDetailActivity;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 import butterknife.BindView;

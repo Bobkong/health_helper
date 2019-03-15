@@ -1,7 +1,7 @@
 package com.example.bob.health_helper.Community.contract;
 
 import com.example.bob.health_helper.Base.BaseMvpContract;
-import com.example.bob.health_helper.Data.Bean.Answer;
+import com.example.bob.health_helper.Bean.Answer;
 
 import java.util.List;
 

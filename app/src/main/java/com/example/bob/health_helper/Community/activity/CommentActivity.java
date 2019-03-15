@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Base.BaseMvpActivity;
-import com.example.bob.health_helper.Data.Bean.Comment;
+import com.example.bob.health_helper.Bean.Comment;
 import com.example.bob.health_helper.Community.adapter.CommentListAdapter;
 import com.example.bob.health_helper.Community.contract.CommentContract;
 import com.example.bob.health_helper.Community.presenter.CommentPresenter;

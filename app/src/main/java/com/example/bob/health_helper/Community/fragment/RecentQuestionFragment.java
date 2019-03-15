@@ -1,11 +1,10 @@
 package com.example.bob.health_helper.Community.fragment;
-import com.example.bob.health_helper.Data.Bean.Question;
+import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
 import com.example.bob.health_helper.Community.adapter.QuestionListAdapter;
 import com.example.bob.health_helper.Community.contract.RecentQuestionContract;
 import com.example.bob.health_helper.Community.presenter.RecentQuestionPresenter;
 import com.example.bob.health_helper.R;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

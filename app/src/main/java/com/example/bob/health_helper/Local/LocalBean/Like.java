@@ -1,23 +1,23 @@
-package com.example.bob.health_helper.Data.Bean;
+package com.example.bob.health_helper.Local.LocalBean;
 
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "Favorite")
-public class Favorite {
+@DatabaseTable(tableName = "like")
+public class Like {
     @DatabaseField(useGetSet = true,columnName = "id",dataType = DataType.INTEGER,generatedId = true)
     private int id;
     @DatabaseField(useGetSet = true,columnName = "uid",dataType = DataType.STRING,canBeNull = false)
     private String uid;
-    @DatabaseField(useGetSet = true,columnName = "questionId",dataType = DataType.INTEGER,canBeNull = false)
-    private int questionId;
+    @DatabaseField(useGetSet = true,columnName = "answerId",dataType = DataType.INTEGER,canBeNull = false)
+    private int answerId;
 
-    public Favorite(){}
+    public Like(){}
 
-    public Favorite(String uid, int questionId) {
+    public Like(String uid, int answerId) {
         this.uid = uid;
-        this.questionId = questionId;
+        this.answerId = answerId;
     }
 
     public int getId() {
@@ -36,11 +36,11 @@ public class Favorite {
         this.uid = uid;
     }
 
-    public int getQuestionId() {
-        return questionId;
+    public int getAnswerId() {
+        return answerId;
     }
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
+    public void setAnswerId(int answerId) {
+        this.answerId = answerId;
     }
 }

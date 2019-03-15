@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bob.health_helper.Data.Bean.SearchHistory;
+import com.example.bob.health_helper.Local.LocalBean.SearchHistory;
 import com.example.bob.health_helper.R;
 
 import java.util.List;

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bob.health_helper.Data.Bean.Answer;
+import com.example.bob.health_helper.Local.LocalBean.Answer;
 import com.example.bob.health_helper.R;
 import com.example.bob.health_helper.Widget.ExpandableTextView;
 

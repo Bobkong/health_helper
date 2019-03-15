@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bob.health_helper.Data.Bean.News;
+
+import com.example.bob.health_helper.Bean.News;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
 import com.example.bob.health_helper.R;
 

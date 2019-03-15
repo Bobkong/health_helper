@@ -1,11 +1,10 @@
-package com.example.bob.health_helper.Data.Dao;
+package com.example.bob.health_helper.Local.Dao;
 
 import android.content.Context;
 
-import com.example.bob.health_helper.Data.Bean.SearchHistory;
-import com.example.bob.health_helper.Data.DatabaseHelper;
+import com.example.bob.health_helper.Local.LocalBean.SearchHistory;
+import com.example.bob.health_helper.Local.DatabaseHelper;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 import java.util.List;

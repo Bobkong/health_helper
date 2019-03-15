@@ -1,6 +1,7 @@
 package com.example.bob.health_helper.Community.fragment;
 
-import com.example.bob.health_helper.Data.Bean.Answer;
+
+import com.example.bob.health_helper.Bean.Answer;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
 import com.example.bob.health_helper.Community.adapter.NewAnsweredQuestionListAdapter;
 import com.example.bob.health_helper.Community.contract.NewAnsweredQuestionContract;

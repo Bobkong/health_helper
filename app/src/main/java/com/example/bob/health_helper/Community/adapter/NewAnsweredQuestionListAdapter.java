@@ -10,15 +10,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bob.health_helper.Bean.Answer;
 import com.example.bob.health_helper.Community.activity.CommentActivity;
-import com.example.bob.health_helper.Data.Bean.Answer;
-import com.example.bob.health_helper.Data.Bean.Like;
-import com.example.bob.health_helper.Data.Dao.LikeDao;
+import com.example.bob.health_helper.Local.LocalBean.Like;
+import com.example.bob.health_helper.Local.Dao.LikeDao;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.example.bob.health_helper.Widget.ExpandableTextView;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 

@@ -1,19 +1,17 @@
 package com.example.bob.health_helper.NetService.Api;
 
-import com.example.bob.health_helper.Data.Bean.Answer;
-import com.example.bob.health_helper.Data.Bean.Response;
+import com.example.bob.health_helper.Local.LocalBean.Answer;
+import com.example.bob.health_helper.Bean.Response;
 
 import java.util.List;
 
 
 import io.reactivex.Observable;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 

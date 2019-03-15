@@ -1,13 +1,14 @@
 package com.example.bob.health_helper.Community.contract;
 
 import com.example.bob.health_helper.Base.BaseMvpContract;
-import com.example.bob.health_helper.Data.Bean.Comment;
+import com.example.bob.health_helper.Bean.Comment;
+
 
 import java.util.List;
 
 public interface CommentContract extends BaseMvpContract {
     interface View extends BaseView{
-        void onLoadCommentsSuccess(List<Comment> comments,boolean hasMore);
+        void onLoadCommentsSuccess(List<Comment> comments, boolean hasMore);
         void onLoadCommentFailed();
 
         void onLoadMoreCommentsSuccess(List<Comment> comments,boolean hasMore);

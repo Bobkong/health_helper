@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.bob.health_helper.Data.Bean.News;
+import com.example.bob.health_helper.Bean.News;
 import com.example.bob.health_helper.News.fragment.NewsPieceFragment;
 
 public class NewsPagerAdapter extends FragmentPagerAdapter {

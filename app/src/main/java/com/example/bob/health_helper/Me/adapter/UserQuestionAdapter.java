@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.bob.health_helper.Community.activity.QuestionDetailActivity;
-import com.example.bob.health_helper.Data.Bean.Question;
+import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.R;
 
 import java.util.List;

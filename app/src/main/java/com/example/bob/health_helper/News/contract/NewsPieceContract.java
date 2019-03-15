@@ -1,13 +1,13 @@
 package com.example.bob.health_helper.News.contract;
 
 import com.example.bob.health_helper.Base.BaseMvpContract;
-import com.example.bob.health_helper.Data.Bean.News;
+import com.example.bob.health_helper.Bean.News;
 
 import java.util.List;
 
 public interface NewsPieceContract extends BaseMvpContract {
     interface View extends BaseView {
-        void onLoadNewsSuccess(List<News> datas,boolean hasMore);
+        void onLoadNewsSuccess(List<News> datas, boolean hasMore);
         void onLoadNewsFailed();
         void onLoadMoreNewsSuccess(List<News> datas,boolean hasMore);
         void onLoadMoreNewsFailed();

@@ -3,7 +3,7 @@ package com.example.bob.health_helper.News.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.example.bob.health_helper.Data.Bean.News;
+import com.example.bob.health_helper.Bean.News;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
 import com.example.bob.health_helper.Community.fragment.BaseRefreshableListFragment;
 import com.example.bob.health_helper.News.adapter.NewsListAdapter;
