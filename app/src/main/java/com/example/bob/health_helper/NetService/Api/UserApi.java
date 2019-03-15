@@ -8,6 +8,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface UserApi {
-    @POST("api/user")
-    Observable<Response<String>> addUser(@Body User user);
+    @POST("/register")
+    Observable<Response> addUser(@Body User user);
 }

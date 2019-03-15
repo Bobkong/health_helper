@@ -13,15 +13,13 @@ import android.widget.Toast;
 
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Bean.User;
-import com.example.bob.health_helper.NetService.TlsSigService;
+import com.example.bob.health_helper.NetService.Api.UserService;
 import com.example.bob.health_helper.Util.AgeUtil;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
-import com.tencent.imsdk.TIMCallBack;
-import com.tencent.imsdk.TIMManager;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -93,8 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        //注册腾讯云信
-                        registerIM(openID);
+                        showHeightInputDialog();
                     }
                     @Override
                     public void onError(UiError uiError) {
@@ -120,31 +117,6 @@ public class LoginActivity extends AppCompatActivity {
         public void onCancel() {
             Toast.makeText(LoginActivity.this,"授权取消",Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void registerIM(String openID) {
-        TlsSigService.getTlsService().getSig(openID)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(tlsResp -> {
-                            if (tlsResp.getSuccess()){
-                                // identifier为用户名，userSig 为用户登录凭证
-                                TIMManager.getInstance().login(openID, tlsResp.getData(), new TIMCallBack() {
-                                    @Override
-                                    public void onError(int code, String desc) {
-                                        //错误码 code 和错误描述 desc，可用于定位请求失败原因
-                                        //错误码 code 列表请参见错误码表
-                                        Log.d(TAG, "login failed. code: " + code + " errmsg: " + desc);
-                                        Toast.makeText(LoginActivity.this, R.string.register_im_fail,Toast.LENGTH_SHORT).show();
-                                    }
-                                    @Override
-                                    public void onSuccess() {
-                                        showHeightInputDialog();
-                                        Log.d(TAG, "login succ");
-                                    }
-                                });
-                            }
-                        }
-                        , Throwable::printStackTrace);
     }
 
     @Override
@@ -241,7 +213,21 @@ public class LoginActivity extends AppCompatActivity {
 			dialog.dismiss();
 			Intent intent=new Intent(LoginActivity.this,MainActivity.class);
 			startActivity(intent);
+            addUser2Server();
 		});
         dialog.show();
+    }
+
+    private void addUser2Server() {
+        UserService.getUserService().addUser(user)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                            if (response.getSuccess()){
+                                Log.d(TAG,"add user success : user = " + user.toString());
+                            }else {
+                                Log.d(TAG,"add user failed : err = " + response.getErr().toString());
+                            }
+                        }
+                        , Throwable::printStackTrace);
     }
 }

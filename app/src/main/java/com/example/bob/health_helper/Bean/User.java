@@ -1,14 +1,23 @@
 package com.example.bob.health_helper.Bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
+    @SerializedName("uid")
     private String uid;
+    @SerializedName("name")
     private String name;
+    @SerializedName("gender")
     private String gender;
+    @SerializedName("iconUrl")
     private String iconurl;
+    @SerializedName("height")
     private int height;//cm
+    @SerializedName("weight")
     private float weight;//kg
+    @SerializedName("age")
     private int age;
 
     public String getUid() {
