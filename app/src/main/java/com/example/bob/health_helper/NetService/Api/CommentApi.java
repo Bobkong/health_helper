@@ -2,44 +2,31 @@ package com.example.bob.health_helper.NetService.Api;
 
 
 
-import com.example.bob.health_helper.Bean.Comment;
+import com.example.bob.health_helper.Data.Bean.Comment;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface CommentApi {
     //获取某个回答的所有评论
     @GET("api/comments")
     Observable<Response<List<Comment>>> getCommentsByAnswerId(
-            @Query("answer_id") String answerId
+            @Query("answer_id") int answerId,
+            @Query("start") int start
     );
-    //获取某个用户的所有评论
-    @GET("api/comments")
-    Observable<Response<List<Comment>>> getCommentsByUserId(
-            @Query("user_id") String user_id
-    );
+    //对某个回答发表评论
     @POST("api/comments")
+    @FormUrlEncoded
     Observable<Response<String>> publishComment(
-            @Body Comment comment
-    );
-    //更新某个评论内容
-    @PUT("api/comments/{id}")
-    Observable<Response<String>> updateCommentContentById(
-            @Path("id") String commentId,
-            @Query("content") String content
-    );
-    //删除某个评论
-    @DELETE("api/comments/{id}")
-    Observable<Response<String>> deleteCommentById(
-            @Path("id") String commentId
+            @Field("comment") String comment,
+            @Field("uid") String uid,
+            @Field("answer_id") int answerId
     );
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -57,10 +58,15 @@ public abstract class LoadingMoreAdapter<T> extends RecyclerView.Adapter<Recycle
         if(getItemViewType(position)==ITEM_NORMAL_TYPE)
             onBindNormalViewHolder(viewHolder,position);//子类根据具体情况实现
         else{
-            if(hasMore==true)//还有数据
+            if(hasMore==true){
                 ((LoadingViewHolder)viewHolder).tips.setText(R.string.loading_more);
-            else//没有更多数据
+                Logger.e("bind load more");
+            }
+            else{
                 ((LoadingViewHolder)viewHolder).tips.setText(R.string.no_more);
+                Logger.e("bind no more");
+            }
+
         }
 
     }

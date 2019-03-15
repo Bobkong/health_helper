@@ -8,8 +8,7 @@ public class AddQuestionPresenter extends BaseMvpPresenter<AddQuestionContract.V
         implements AddQuestionContract.Presenter {
 
     @Override
-    public void publishQuestion(String title, String descriiption) {
-        SharedPreferenceUtil.getUser().getUid();
+    public void publishQuestion(String title, String descriiption,String uid) {
 
 
     }

@@ -12,8 +12,10 @@ import com.example.bob.health_helper.Base.BaseMvpActivity;
 import com.example.bob.health_helper.Community.contract.AddAnswerContract;
 import com.example.bob.health_helper.Community.presenter.AddAnswerPresenter;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class AddAnswerActivity extends BaseMvpActivity<AddAnswerContract.Presenter>
             implements AddAnswerContract.View{
@@ -22,6 +24,8 @@ public class AddAnswerActivity extends BaseMvpActivity<AddAnswerContract.Present
     EditText answerInput;
     @BindView(R.id.scroll_view)
     ScrollView scrollView;
+
+    private int questionId;
 
     @Override
     protected AddAnswerContract.Presenter bindPresenter() {
@@ -32,10 +36,15 @@ public class AddAnswerActivity extends BaseMvpActivity<AddAnswerContract.Present
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_answer);
+        ButterKnife.bind(this);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);//显示返回键
-        actionBar.setTitle(R.string.answer);
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);//显示返回键
+            actionBar.setTitle(R.string.answer);
+        }
+
+        questionId=getIntent().getIntExtra("question_id",0);
     }
 
     @Override
@@ -55,9 +64,7 @@ public class AddAnswerActivity extends BaseMvpActivity<AddAnswerContract.Present
                 if(answer.length()==0)
                     Snackbar.make(scrollView,R.string.answer_empty,Snackbar.LENGTH_SHORT);
                 else{
-                    /**
-                     * to do
-                     */
+                    mPresenter.publishAnswer(answer,questionId, SharedPreferenceUtil.getUser().getUid());
                 }
 
         }

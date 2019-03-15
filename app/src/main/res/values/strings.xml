@@ -51,4 +51,23 @@
     <string name="require_permission">为确保应用的正常运行，需要获取一些权限</string>
     <string name="required_permission_denied_title">权限被拒绝</string>
     <string name="required_permission_denied_content">如果不打开权限可能会影响应用的正常运行</string>
+    <string name="user_name">用户名</string>
+    <string name="height">身高</string>
+    <string name="weight">体重</string>
+    <string name="age">年龄</string>
+    <string name="gender">性别</string>
+    <string name="user_info">个人信息修改</string>
+    <string name="favorite_success">收藏成功</string>
+    <string name="favorite_failed">收藏失败</string>
+    <string name="cancel_favorite_success">取消收藏成功</string>
+    <string name="cancel_favorite_failed">取消收藏失败</string>
+    <string name="year_ago">%d年前</string>
+    <string name="month_ago">%d个月前</string>
+    <string name="day_ago">%d天前</string>
+    <string name="hour_ago">%d小时前</string>
+    <string name="minute_ago">%d分钟前</string>
+    <string name="just">刚刚</string>
+    <string name="yesterday">昨天</string>
+    <string name="hot_key">热搜</string>
+    <string name="search_history">历史搜索</string>
 </resources>

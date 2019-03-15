@@ -1,4 +1,4 @@
-package com.example.bob.health_helper.Bean;
+package com.example.bob.health_helper.Data.Bean;
 
 import java.io.Serializable;
 

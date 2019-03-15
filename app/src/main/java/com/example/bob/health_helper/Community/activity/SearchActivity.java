@@ -1,14 +1,24 @@
 package com.example.bob.health_helper.Community.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.internal.FlowLayout;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.bob.health_helper.Base.BaseActivity;
+import com.example.bob.health_helper.Community.adapter.SearchHistoryAdapter;
+import com.example.bob.health_helper.Community.fragment.SearchResultFragment;
+import com.example.bob.health_helper.Data.Bean.SearchHistory;
+import com.example.bob.health_helper.Data.Dao.SearchHistoryDao;
 import com.example.bob.health_helper.R;
 import com.example.bob.health_helper.Util.JsonParser;
+import com.example.bob.health_helper.Util.RandomColorUtil;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerResult;
@@ -21,23 +31,33 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Random;;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends BaseActivity {
     @BindView(R.id.search_view)
     SearchView searchView;
-    @BindView(R.id.search_result)
-    FrameLayout searchResult;
+    @BindView(R.id.search)
+    LinearLayout search;
+    @BindView(R.id.flow_layout)
+    FlowLayout flowLayout;
+    @BindView(R.id.search_history)
+    RecyclerView searchHistoryView;
 
-    //语音听写UI
-    private RecognizerDialog recognizerDialog;
-    //听写结果
-    private HashMap<String,String> recognizeResults=new LinkedHashMap<>();
+    private List<String> hotKeyList=new ArrayList<>(Arrays.asList("饮食","健身","慢性病","预防","药品",
+            "高血压防治","检查","危险因素"));
+
+    private SearchHistoryDao searchHistoryDao;
+    private List<SearchHistory> searchHistoryList;
+    private SearchHistoryAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +65,74 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
+        searchHistoryDao=new SearchHistoryDao(this);
 
+        //搜索框
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override //当点击搜索按钮时触发
+            public boolean onQueryTextSubmit(String query) {
+                if(query.length()>0){
+                    Logger.e("search");
+                    SearchHistory history=new SearchHistory(query);
+                    searchHistoryDao.addHistory(history);
+                    searchHistoryList.add(history);
+                    adapter.notifyDataSetChanged();
+                    //带参数创建碎片
+                    SearchResultFragment fragment=new SearchResultFragment();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("search_question",query);
+                    fragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.search_result,fragment).commit();
+                    search.setVisibility(View.GONE);
+                    searchView.setIconified(true);//防止数据两次加载
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Logger.e("text change");
+                return false;
+            }
+        });
+
+        //热搜词添加
+        Random random=new Random();
+        for(int i=0;i<hotKeyList.size();i++){
+            View child=View.inflate(this,R.layout.item_hotkey,null);
+            TextView textView=child.findViewById(R.id.tag);
+            textView.setText(hotKeyList.get(i));
+            textView.setTextColor(RandomColorUtil.getRandomColor(random));
+            child.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    searchView.setQuery(textView.getText(),false);
+                }
+            });
+            flowLayout.addView(child);
+        }
+
+        //搜索历史列表设置
+        searchHistoryList=searchHistoryDao.queryAllSearchHistory();
+        adapter=new SearchHistoryAdapter(searchHistoryList);
+        adapter.setOnDeleteClickListener(new SearchHistoryAdapter.OnDeleteClickListener() {
+            @Override
+            public void onClick(int position) {
+                searchHistoryDao.deleteHistoryById(searchHistoryList.get(position));
+                searchHistoryList.remove(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        searchHistoryView.setLayoutManager(new LinearLayoutManager(this));
+        searchHistoryView.setAdapter(adapter);
+        searchHistoryView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
+
+
+    //语音听写UI
+    private RecognizerDialog recognizerDialog;
+    //听写结果
+    private HashMap<String,String> recognizeResults=new LinkedHashMap<>();
 
     @OnClick(R.id.recorder)
     public void onClicked(){
@@ -109,9 +195,5 @@ public class SearchActivity extends AppCompatActivity {
         for(String key:recognizeResults.keySet())
             resultBuffer.append(recognizeResults.get(key));
         searchView.setQuery(resultBuffer,false);
-    }
-
-    private void showTips(String str){
-        Toast.makeText(SearchActivity.this,str,Toast.LENGTH_SHORT).show();
     }
 }

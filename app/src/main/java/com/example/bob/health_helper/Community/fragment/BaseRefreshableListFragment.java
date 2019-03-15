@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Base.BaseMvpContract;
 import com.example.bob.health_helper.Base.BaseMvpFragment;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
@@ -25,12 +26,6 @@ public abstract class BaseRefreshableListFragment<T extends BaseMvpContract.Base
     public SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.data_list)
     public RecyclerView dataList;
-    @OnClick(R.id.error)
-    public void onClicked(View view){
-        view.setVisibility(View.GONE);
-        swipeRefreshLayout.setRefreshing(true);
-        startRefresh();
-    }
 
     protected LoadingMoreAdapter<T1> adapter;
 
@@ -75,12 +70,14 @@ public abstract class BaseRefreshableListFragment<T extends BaseMvpContract.Base
                 startRefresh();//刷新逻辑的实现
             }
         });
-        Logger.e("base fragments created successful");
+
+        startRefresh();
     }
 
     //屏幕中最后一个条目是数据列表最后一项时-加载更多
     private boolean shouldLoadMore(){
         LinearLayoutManager linearLayoutManager=(LinearLayoutManager)dataList.getLayoutManager();
-        return linearLayoutManager.findLastVisibleItemPosition()==dataList.getAdapter().getItemCount()-1;
+        return (linearLayoutManager.findLastVisibleItemPosition()==dataList.getAdapter().getItemCount()-1
+                && dataList.getAdapter().getItemCount()>= AppConstant.DEFAULT_PAGE_SIZE);
     }
 }

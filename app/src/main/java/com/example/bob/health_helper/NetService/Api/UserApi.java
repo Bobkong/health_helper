@@ -1,7 +1,7 @@
 package com.example.bob.health_helper.NetService.Api;
 
-import com.example.bob.health_helper.Bean.Response;
-import com.example.bob.health_helper.Bean.User;
+import com.example.bob.health_helper.Data.Bean.Response;
+import com.example.bob.health_helper.Data.Bean.User;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;

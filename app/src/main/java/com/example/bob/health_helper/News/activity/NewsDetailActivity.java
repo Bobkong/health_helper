@@ -2,6 +2,7 @@ package com.example.bob.health_helper.News.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -28,13 +29,26 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     private void showNews() {
         webView.loadUrl("http://www.baidu.com");
-        webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                if(TextUtils.isEmpty(view.getTitle())){
+                    //todo
+                }
+            }
+        });
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if(newProgress==100)
                     progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String title) {
+                super.onReceivedTitle(view, title);
             }
         });
 

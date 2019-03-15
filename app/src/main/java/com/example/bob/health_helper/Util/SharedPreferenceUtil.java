@@ -3,7 +3,7 @@ package com.example.bob.health_helper.Util;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.bob.health_helper.Bean.User;
+import com.example.bob.health_helper.Data.Bean.User;
 import com.example.bob.health_helper.MyApplication;
 import com.google.gson.Gson;
 

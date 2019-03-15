@@ -5,7 +5,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,14 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
-
+import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Base.BaseMvpActivity;
-import com.example.bob.health_helper.Bean.Comment;
+import com.example.bob.health_helper.Data.Bean.Comment;
 import com.example.bob.health_helper.Community.adapter.CommentListAdapter;
 import com.example.bob.health_helper.Community.contract.CommentContract;
 import com.example.bob.health_helper.Community.presenter.CommentPresenter;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +44,7 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
 
     private List<Comment> comments=new ArrayList<>();
     private CommentListAdapter commentListAdapter;
+    private int answerId;
 
     @Override
     protected CommentContract.Presenter bindPresenter() {
@@ -58,14 +58,19 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
         ButterKnife.bind(this);
 
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.comment);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar!=null){
+            actionBar.setTitle(R.string.comment);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
+        answerId=getIntent().getIntExtra("answer_id",0);
+
+        swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //to do----mPresenter.loadComments();
+                mPresenter.loadComments(answerId);
             }
         });
 
@@ -78,7 +83,7 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
                 super.onScrollStateChanged(recyclerView, newState);
                 //分页刷新
                 if(newState==RecyclerView.SCROLL_STATE_IDLE && shouldLoadMore()){
-                    //to do---mPresenter.loadMoreComments();
+                    mPresenter.loadMoreComments(answerId);
                 }
             }
         });
@@ -89,11 +94,13 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
             @Override
             public void onClick(View view) {
                 String content=sendEdit.getText().toString().trim();
-                //to do-----mPresenter.sendComment();
+                mPresenter.sendComment(answerId,sendEdit.getText().toString().trim(),
+                        SharedPreferenceUtil.getUser().getUid());
             }
         });
 
-        startLoadComments();
+        //进入时加载数据
+        mPresenter.loadComments(answerId);
     }
 
     @Override
@@ -117,30 +124,27 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
     //屏幕中最后一个条目是数据列表最后一项时-加载更多
     private boolean shouldLoadMore(){
         LinearLayoutManager linearLayoutManager=(LinearLayoutManager)commentList.getLayoutManager();
-        return linearLayoutManager.findLastVisibleItemPosition()==commentList.getAdapter().getItemCount()-1;
-    }
-
-    //加载评论
-    private void startLoadComments() {
-        swipeRefreshLayout.setRefreshing(true);
-        // to do-----mPresenter.loadComments();
+        return (linearLayoutManager.findLastVisibleItemPosition()==commentList.getAdapter().getItemCount()-1
+                && commentList.getAdapter().getItemCount()>= AppConstant.DEFAULT_PAGE_SIZE);
     }
 
     @Override
-    public void onLoadCommentsSuccess(List<Comment> comments) {
+    public void onLoadCommentsSuccess(List<Comment> comments,boolean hasMore) {
         swipeRefreshLayout.setRefreshing(false);
-        //to do update
+        this.comments=comments;
+        commentListAdapter.updateDatas(this.comments,hasMore);
     }
 
     @Override
     public void onLoadCommentFailed() {
         swipeRefreshLayout.setRefreshing(false);
-        Toast.makeText(CommentActivity.this,R.string.load_comment_error,Toast.LENGTH_SHORT);
+        showTips(getString(R.string.load_comment_error));
     }
 
     @Override
-    public void onLoadMoreCommentsSuccess() {
-        // to do
+    public void onLoadMoreCommentsSuccess(List<Comment> comments,boolean hasMore) {
+        this.comments.addAll(comments);
+        commentListAdapter.updateDatas(this.comments,hasMore);
     }
 
     @Override
@@ -152,7 +156,9 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
     public void onSendCommentSuccess() {
         Snackbar.make(coordinatorLayout,R.string.send_comment_success,Snackbar.LENGTH_SHORT);
         sendEdit.getEditableText().clear();
-        startLoadComments();//发布评论成功后重新加载评论
+        //发布评论成功后重新加载评论
+        swipeRefreshLayout.setRefreshing(true);
+        mPresenter.loadComments(answerId);
     }
 
     @Override

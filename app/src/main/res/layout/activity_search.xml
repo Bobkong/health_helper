@@ -9,7 +9,8 @@
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
         <android.support.v7.widget.SearchView
             android:id="@+id/search_view"
             android:layout_width="0dp"
@@ -21,6 +22,7 @@
             android:id="@+id/recorder"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_margin="5dp"
             android:layout_gravity="right|center_vertical"
             android:src="@drawable/recorder" />
     </LinearLayout>
@@ -29,6 +31,42 @@
         android:id="@+id/search_result"
        android:layout_below="@id/search_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/search"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/hot_key"
+                android:textSize="16dp" />
+
+            <android.support.design.internal.FlowLayout
+                android:id="@+id/flow_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingHorizontal="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:text="@string/search_history"
+                android:textSize="16dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/search_history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dp"
+                android:overScrollMode="never"/>
+
+        </LinearLayout>
+    </FrameLayout>
 </RelativeLayout>

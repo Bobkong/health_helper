@@ -6,17 +6,17 @@ import com.example.bob.health_helper.Community.contract.CommentContract;
 public class CommentPresenter extends BaseMvpPresenter<CommentContract.View>
             implements CommentContract.Presenter{
     @Override
-    public void loadComments(String answerId) {
+    public void loadComments(int answerId) {
 
     }
 
     @Override
-    public void loadMoreComments(String answerId) {
+    public void loadMoreComments(int answerId) {
 
     }
 
     @Override
-    public void sendComment(String answer, String replayTo, String comment) {
+    public void sendComment(int answerId,String comment,String uid) {
 
     }
 }

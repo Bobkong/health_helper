@@ -8,11 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.bob.health_helper.Bean.News;
+import com.example.bob.health_helper.Data.Bean.News;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
-import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
 
 import java.util.List;

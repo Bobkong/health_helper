@@ -3,12 +3,13 @@ package com.example.bob.health_helper.News.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.example.bob.health_helper.Bean.News;
+import com.example.bob.health_helper.Data.Bean.News;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
 import com.example.bob.health_helper.Community.fragment.BaseRefreshableListFragment;
 import com.example.bob.health_helper.News.adapter.NewsListAdapter;
 import com.example.bob.health_helper.News.contract.NewsPieceContract;
 import com.example.bob.health_helper.News.presenter.NewsPiecePresenter;
+import com.example.bob.health_helper.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,24 +58,27 @@ public class NewsPieceFragment extends BaseRefreshableListFragment<NewsPieceCont
     }
 
     @Override
-    public void onLoadNewsSuccess(List<News> articleList) {
+    public void onLoadNewsSuccess(List<News> datas,boolean hasMore) {
         swipeRefreshLayout.setRefreshing(false);
-        //更新数据
+        newsList=datas;
+        adapter.updateDatas(newsList,hasMore);
     }
 
     @Override
     public void onLoadNewsFailed() {
         swipeRefreshLayout.setRefreshing(false);
-        //错误提示
+        showTips(getString(R.string.network_error));
     }
 
     @Override
-    public void onLoadMoreNewsSuccess() {
-
+    public void onLoadMoreNewsSuccess(List<News> datas,boolean hasMore) {
+        swipeRefreshLayout.setRefreshing(false);
+        newsList.addAll(datas);
+        adapter.updateDatas(newsList,hasMore);
     }
 
     @Override
     public void onLoadMoreNewsFailed() {
-
+        showTips(getString(R.string.network_error));
     }
 }

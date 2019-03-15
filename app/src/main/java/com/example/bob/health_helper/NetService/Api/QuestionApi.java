@@ -1,78 +1,74 @@
 package com.example.bob.health_helper.NetService.Api;
 
-import com.example.bob.health_helper.Bean.Question;
+import com.example.bob.health_helper.Data.Bean.Answer;
+import com.example.bob.health_helper.Data.Bean.Question;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 
 import retrofit2.Response;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface QuestionApi {
-    //获取最新提问列表（分页）
+    //获取最新提问列表
     @GET("api/questions/recent")
     Observable<Response<List<Question>>> getRecentQuestions(
-            @Query("page") int page,
-            @Query("per_page") int per_page,
-            @Query("sort_by") String date,
-            @Query("order") String order
+            @Query("start") int start
     );
-    //获取热门提问列表（分页）
+    //获取热门提问列表
     @GET("api/questions/hot")
     Observable<Response<List<Question>>> getHotQuestions(
-            @Query("page") String page,
-            @Query("per_page") String per_page,
-            @Query("sort_by") String favorite_count,
-            @Query("order") String order
+            @Query("start") int start
     );
-    //获取最新被回答的提问列表（分页）
-    @GET("api/questions/new_answer")
-    Observable<Response<List<Question>>> getNewAnswerQuestions(
-            @Query("page") String page,
-            @Query("per_page") String per_page,
-            @Query("sort_by") String new_answer,
-            @Query("order") String order
+    //获取某个用户提问的问题列表
+    @GET("api/questions/user")
+    Observable<Response<List<Question>>> getQuestionsByUserId(
+            @Query("user_id") String UserId,
+            @Query("start") int start
     );
-    //获取某个用户提问的所有问题
-    @GET("api/questions")
-    Observable<Response<Question>> getQuestionsByUserId(
-            @Query("user_id") String UserId
-    );
-    //获取某个问题
-    @GET("api/questions/{id}")
-    Observable<Response<Question>> getQuestionById(
-            @Path("id") String questionId
+    //获取某个用户收藏的问题列表
+    @GET("api/questions/user_favorite")
+    Observable<Response<List<Question>>> getFavoriteQuestionsByUserId(
+            @Query("user_id") String UserId,
+            @Query("start") int start
     );
     //发表问题
     @POST("api/questions")
+    @FormUrlEncoded
     Observable<Response<String>> publishQuestion(
-            @Body Question question
-    );
-    //更新某个问题的统计数据（收藏数/回答数）
-    @PUT("api/questions/{id}")
-    Observable<Response<String>> updateQuestionStatisticsCountById(
-            @Path("id") String questionId,
-            @Query("user_id") String userId,
-            @Query("favorite_count") String favoriteCount,
-            @Query("answer_count") String answerCount
-    );
-    //更新某个问题的内容
-    @PUT("api/questions/{id}")
-    Observable<Response<String>> updateQuestionContentById(
-            @Path("id") String questionId,
-            @Query("title") String title,
-            @Query("description") String description
+           @Field("title") String title,
+           @Field("description") String description,
+           @Field("author_id") String authorId
     );
     //删除某个问题
     @DELETE("api/questions/{id}")
     Observable<Response<String>> deleteQuestionById(
-            @Path("id") String questionId
+            @Path("question_id") String questionId
+    );
+    //搜索问题
+    @GET("api/questions/search")
+    Observable<Response<List<Question>>> getSearchResult(
+            @Query("q") String searchKey,
+            @Query("start") int start
+    );
+    //用户收藏问题
+    @POST("api/questions/favorite")
+    @FormUrlEncoded
+    Observable<Response<String>> publishFavorite(
+            @Field("uid") String uid,
+            @Field("question_id") int questionId
+    );
+    //用户取消收藏问题
+    @POST("api/questions/unfavorite")
+    Observable<Response<String>> publishUnfavorite(
+            @Field("uid") String uid,
+            @Field("question_id") int questionId
     );
 }

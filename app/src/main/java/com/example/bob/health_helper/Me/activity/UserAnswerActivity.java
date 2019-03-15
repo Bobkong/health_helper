@@ -1,9 +1,7 @@
 package com.example.bob.health_helper.Me.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.example.bob.health_helper.Bean.Answer;
+import com.example.bob.health_helper.Data.Bean.Answer;
 import com.example.bob.health_helper.Me.adapter.UserAnswerAdapter;
 import com.example.bob.health_helper.R;
 
@@ -13,17 +11,14 @@ import java.util.List;
 public class UserAnswerActivity extends BaseRefreshableListActivity {
 
     private List<Answer> answerList=new ArrayList<>();
-    private String userId;
+    private UserAnswerAdapter adapter=new UserAnswerAdapter(answerList);
+
+    private int currentPage=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataList.setAdapter(new UserAnswerAdapter(answerList));
-        startLoadData();
-    }
-
-    public void startLoadData() {
-
+        dataList.setAdapter(adapter);
     }
 
     @Override
@@ -34,5 +29,23 @@ public class UserAnswerActivity extends BaseRefreshableListActivity {
     @Override
     void startLoadMoreData() {
 
+    }
+
+    public void onRefreshSuccess(){
+        swipeRefreshLayout.setRefreshing(false);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void onRefreshFailed(){
+        swipeRefreshLayout.setRefreshing(false);
+        showTips(getString(R.string.network_error));
+    }
+
+    public void onLoadMoreDataSuccess(){
+        adapter.notifyDataSetChanged();
+    }
+
+    public void onLoadMoreDataFailed(){
+        showTips(getString(R.string.network_error));
     }
 }

@@ -24,4 +24,14 @@ public class QuestionDetailPresenter extends BaseMvpPresenter<QuestionDetailCont
     public void LoadMoreHotAnswer() {
 
     }
+
+    @Override
+    public void Favorite(String uid, int questionId) {
+
+    }
+
+    @Override
+    public void CancelFavorite(String uid, int questionId) {
+
+    }
 }

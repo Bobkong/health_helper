@@ -11,7 +11,7 @@ import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import com.example.bob.health_helper.Base.AppConstant;
-import com.example.bob.health_helper.Bean.User;
+import com.example.bob.health_helper.Data.Bean.User;
 import com.example.bob.health_helper.Util.AgeUtil;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;

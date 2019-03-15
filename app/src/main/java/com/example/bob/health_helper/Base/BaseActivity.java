@@ -2,6 +2,7 @@ package com.example.bob.health_helper.Base;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 public class BaseActivity extends AppCompatActivity {
     public void navigateForResultTo(Class to, int requestCode) {
@@ -13,5 +14,9 @@ public class BaseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, to);
         startActivity(intent);
         finish();
+    }
+
+    public void showTips(String str){
+        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
     }
 }

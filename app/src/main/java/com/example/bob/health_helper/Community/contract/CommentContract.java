@@ -1,16 +1,16 @@
 package com.example.bob.health_helper.Community.contract;
 
 import com.example.bob.health_helper.Base.BaseMvpContract;
-import com.example.bob.health_helper.Bean.Comment;
+import com.example.bob.health_helper.Data.Bean.Comment;
 
 import java.util.List;
 
 public interface CommentContract extends BaseMvpContract {
     interface View extends BaseView{
-        void onLoadCommentsSuccess(List<Comment> comments);
+        void onLoadCommentsSuccess(List<Comment> comments,boolean hasMore);
         void onLoadCommentFailed();
 
-        void onLoadMoreCommentsSuccess();
+        void onLoadMoreCommentsSuccess(List<Comment> comments,boolean hasMore);
         void onLoadMoreCommentFailed();
 
         void onSendCommentSuccess();
@@ -18,8 +18,8 @@ public interface CommentContract extends BaseMvpContract {
     }
 
     interface Presenter extends BasePresenter<View>{
-        void loadComments(String answerId);
-        void loadMoreComments(String answerId);
-        void sendComment(String answer, String replayTo, String comment);
+        void loadComments(int answerId);
+        void loadMoreComments(int answerId);
+        void sendComment(int answerId,String comment,String uid);
     }
 }

@@ -1,17 +1,18 @@
 package com.example.bob.health_helper.Community.fragment;
 
-import com.example.bob.health_helper.Bean.Question;
+import com.example.bob.health_helper.Data.Bean.Question;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
 import com.example.bob.health_helper.Community.adapter.QuestionListAdapter;
 import com.example.bob.health_helper.Community.contract.HotQuestionContract;
 import com.example.bob.health_helper.Community.presenter.HotQuestionPresenter;
+import com.example.bob.health_helper.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HotQuestionFragment extends BaseRefreshableListFragment<HotQuestionContract.Presenter, Question>
         implements HotQuestionContract.View  {
-    private List<Question> datas=new ArrayList<>();
+    private List<Question> hotQuestionList=new ArrayList<>();
 
     @Override
     protected HotQuestionContract.Presenter bindPresenter() {
@@ -20,7 +21,7 @@ public class HotQuestionFragment extends BaseRefreshableListFragment<HotQuestion
 
     @Override
     protected LoadingMoreAdapter<Question> createAdapter() {
-        return new QuestionListAdapter(datas);
+        return new QuestionListAdapter(hotQuestionList);
     }
 
     @Override
@@ -34,22 +35,26 @@ public class HotQuestionFragment extends BaseRefreshableListFragment<HotQuestion
     }
 
     @Override
-    public void onLoadHotQuestionSuccess(List<Question> datas) {
-
+    public void onLoadHotQuestionSuccess(List<Question> datas,boolean hasMore) {
+        swipeRefreshLayout.setRefreshing(false);
+        this.hotQuestionList=datas;
+        adapter.updateDatas(hotQuestionList,hasMore);
     }
 
     @Override
     public void onLoadHotQuestionFailed() {
-
+        swipeRefreshLayout.setRefreshing(false);
+        showTips(getString(R.string.network_error));
     }
 
     @Override
-    public void onLoadMoreHotQuestionSuccess() {
-
+    public void onLoadMoreHotQuestionSuccess(List<Question> datas,boolean hasMore) {
+        this.hotQuestionList.addAll(datas);
+        adapter.updateDatas(hotQuestionList,hasMore);
     }
 
     @Override
     public void onLoadMoreHotQuestionFailed() {
-
+        showTips(getString(R.string.network_error));
     }
 }

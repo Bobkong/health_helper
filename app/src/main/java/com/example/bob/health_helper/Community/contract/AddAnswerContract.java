@@ -8,6 +8,6 @@ public interface AddAnswerContract extends BaseMvpContract {
         void onPublishAnswerFailed();
     }
     interface Presenter extends BasePresenter<View>{
-        void publishAnswer(String answer,String questionId,String QestionTitle);
+        void publishAnswer(String answer,int questionId,String authorId);
     }
 }

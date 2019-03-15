@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.Community.activity.QuestionDetailActivity;
+import com.example.bob.health_helper.Data.Bean.Question;
 import com.example.bob.health_helper.R;
 
 import java.util.List;
@@ -48,14 +48,6 @@ public class UserQuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_question,parent,false);
         UserQuestionViewHolder viewHolder=new UserQuestionViewHolder(view);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(parent.getContext(), QuestionDetailActivity.class);
-                // data to do
-                parent.getContext().startActivity(intent);
-            }
-        });
         return viewHolder;
     }
 
@@ -68,6 +60,14 @@ public class UserQuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.favoriteCount.setText(question.getFavoriteCount());
         holder.answerCount.setText(question.getAnswerCount());
         holder.publishDate.setText(question.getDate());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(view.getContext(), QuestionDetailActivity.class);
+                intent.putExtra("question",question);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

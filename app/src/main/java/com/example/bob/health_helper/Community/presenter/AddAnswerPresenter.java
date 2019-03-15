@@ -7,7 +7,8 @@ public class AddAnswerPresenter extends BaseMvpPresenter<AddAnswerContract.View>
         implements AddAnswerContract.Presenter{
 
     @Override
-    public void publishAnswer(String answer, String questionId, String QestionTitle) {
-
+    public void publishAnswer(String answer, int questionId, String authorId) {
+        mView.onPublishAnswerSuccess();
+        //to do
     }
 }

@@ -12,6 +12,7 @@ import com.example.bob.health_helper.Base.BaseMvpActivity;
 import com.example.bob.health_helper.Community.contract.AddQuestionContract;
 import com.example.bob.health_helper.Community.presenter.AddQuestionPresenter;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,10 +36,13 @@ public class AddQuestionActivity extends BaseMvpActivity<AddQuestionContract.Pre
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_question);
         ButterKnife.bind(this);
+
         //actionBar设置
         ActionBar actionBar=getSupportActionBar();
-        actionBar.setTitle(R.string.add_question);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if(actionBar!=null){
+            actionBar.setTitle(R.string.add_question);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -55,19 +59,16 @@ public class AddQuestionActivity extends BaseMvpActivity<AddQuestionContract.Pre
                 break;
             case R.id.publish:
                 String title=questionTitle.getText().toString().trim();
-                if(title.length()==0)//问题标题为空判断
+                if(title.length()==0)
                     Snackbar.make(scrollView,R.string.question_title_empty,Snackbar.LENGTH_SHORT).show();
                 else {
-                    String descrption=R.string.question_description+questionDescription.getText().toString().trim();
-                    mPresenter.publishQuestion(title,descrption);
+                    String description=questionDescription.getText().toString().trim();
+                    mPresenter.publishQuestion(title,description, SharedPreferenceUtil.getUser().getUid());
                 }
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * 发布成功
-     */
     @Override
     public void onPublishQuestionSuccess() {
         Snackbar.make(scrollView,R.string.publish_success,Snackbar.LENGTH_SHORT)
@@ -79,9 +80,6 @@ public class AddQuestionActivity extends BaseMvpActivity<AddQuestionContract.Pre
                 }).show();
     }
 
-    /**
-     * 发布失败
-     */
     @Override
     public void onPublishQuestionFailed() {
         Snackbar.make(scrollView,R.string.pubish_failed,Snackbar.LENGTH_SHORT);

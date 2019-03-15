@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.bob.health_helper.Bean.Question;
+import com.example.bob.health_helper.Data.Bean.Question;
 import com.example.bob.health_helper.Community.activity.QuestionDetailActivity;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
@@ -54,17 +54,6 @@ public class QuestionListAdapter extends LoadingMoreAdapter<Question> {
     protected RecyclerView.ViewHolder onCreateNormalViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_question,parent,false);
         QuestionItemViewHolder questionItemViewHolder=new QuestionItemViewHolder(view);
-        //点击跳转事件设置
-        questionItemViewHolder.questionItemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(parent.getContext(), QuestionDetailActivity.class);
-                int postion=questionItemViewHolder.getAdapterPosition();
-                intent.putExtra("question",datas.get(postion));
-                parent.getContext().startActivity(intent);
-                Logger.e("questionList to questionDeatil");
-            }
-        });
         return questionItemViewHolder;
     }
 
@@ -84,11 +73,20 @@ public class QuestionListAdapter extends LoadingMoreAdapter<Question> {
             holder.questionDescription.setVisibility(View.GONE);
         }else {
             holder.questionDescription.setVisibility(View.VISIBLE);
-            holder.questionDescription.setText(question.getDescription());
+            holder.questionDescription.setText("问题描述："+question.getDescription());
         }
         holder.favoriteCount.setText(question.getFavoriteCount());
         holder.answerCount.setText(question.getAnswerCount());
         holder.publishDate.setText(question.getDate());
-        Logger.e("onBindViewHolder");
+
+        //点击跳转事件设置
+        holder.questionItemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(view.getContext(), QuestionDetailActivity.class);
+                intent.putExtra("question",question);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 }

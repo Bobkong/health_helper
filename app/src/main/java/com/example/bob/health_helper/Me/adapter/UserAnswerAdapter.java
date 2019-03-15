@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bob.health_helper.Bean.Answer;
+import com.example.bob.health_helper.Data.Bean.Answer;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Widget.ExpandableTextView;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class UserAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.question_title)
         TextView questionTitle;
         @BindView(R.id.answer)
-        TextView answer;
+        ExpandableTextView answer;
         @BindView(R.id.like_count)
         TextView likeCount;
         @BindView(R.id.comment_count)
@@ -45,12 +46,6 @@ public class UserAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_answer,parent,false);
         UserAnswerViewHolder viewHolder=new UserAnswerViewHolder(view);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //to do
-            }
-        });
         return viewHolder;
     }
 
@@ -59,7 +54,7 @@ public class UserAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         Answer answer=answers.get(i);
         UserAnswerViewHolder holder=(UserAnswerViewHolder)viewHolder;
         holder.questionTitle.setText(answer.getQuestionTitle());
-        holder.answer.setText(answer.getContent());
+        holder.answer.setContent(answer.getContent());
         holder.likeCount.setText(answer.getLikeCount());
         holder.commentCount.setText(answer.getCommentCount());
         holder.publishDate.setText(answer.getDate());

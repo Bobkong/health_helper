@@ -19,9 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".News.activity.NewsDetailActivity">
-
-        </activity>
+        <activity android:name=".News.activity.NewsDetailActivity"></activity>
         <activity android:name=".Me.activity.EditUserInfoActivity" />
         <activity android:name=".Me.activity.SettingActivity" />
         <activity
@@ -38,7 +36,9 @@
             android:label="@string/my_question" />
         <activity android:name=".Community.activity.CommentActivity" />
         <activity android:name=".Community.activity.AddAnswerActivity" />
-        <activity android:name=".Community.activity.QuestionDetailActivity" />
+        <activity
+            android:name=".Community.activity.QuestionDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Community.activity.AddQuestionActivity" />
         <activity android:name=".Community.activity.SearchActivity" />
         <activity android:name=".SplashActivity">
@@ -49,17 +49,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-
-        <!-- 注册QQ Activity -->
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- 注册QQ Activity -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent101553511" />
             </intent-filter>
         </activity>
