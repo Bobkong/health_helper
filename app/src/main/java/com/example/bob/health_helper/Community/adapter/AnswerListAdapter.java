@@ -87,7 +87,8 @@ public class AnswerListAdapter extends LoadingMoreAdapter<Answer> {
         answerItemViewHolder.likeCount.setText(answer.getLikeCount());
         answerItemViewHolder.commentCount.setText(answer.getCommentCount());
 
-        if(likeDao.queryIsLike(uid,answer.getId())!=null){
+        if(likeDao.queryIsLike(uid,answer.getId())!=null
+        &&likeDao.queryIsLike(uid,answer.getId()).size()!=0){
             answerItemViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.colorPrimary));
         }
         else{
@@ -98,14 +99,15 @@ public class AnswerListAdapter extends LoadingMoreAdapter<Answer> {
         answerItemViewHolder.likeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(likeDao.queryIsLike(uid,answer.getId())==null){//点赞
+                if(likeDao.queryIsLike(uid,answer.getId())==null
+                        ||likeDao.queryIsLike(uid,answer.getId()).size()==0){//点赞
                     answerItemViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.colorPrimary));
-                    answerItemViewHolder.likeCount.setText((Integer.valueOf(answerItemViewHolder.likeCount.getText().toString())+1));
+                    answerItemViewHolder.likeCount.setText((Integer.valueOf(answerItemViewHolder.likeCount.getText().toString())+1)+"");
                     likeDao.addLike(new Like(uid,answer.getId()));
                     //todo server logic
                 }else{//取消点赞
                     answerItemViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.primary_light));
-                    answerItemViewHolder.likeCount.setText((Integer.valueOf(answerItemViewHolder.likeCount.getText().toString())-1));
+                    answerItemViewHolder.likeCount.setText((Integer.valueOf(answerItemViewHolder.likeCount.getText().toString())-1)+"");
                     likeDao.deleteLike(likeDao.queryIsLike(uid,answer.getId()).get(0));
                     //todo server logic
                 }

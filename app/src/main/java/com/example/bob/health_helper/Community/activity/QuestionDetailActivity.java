@@ -72,6 +72,8 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
         setContentView(R.layout.activity_question_detail);
         ButterKnife.bind(this);
 
+        question=(Question)getIntent().getSerializableExtra("question");
+
         setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null){
@@ -82,14 +84,14 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
         //问题收藏
         uid=SharedPreferenceUtil.getUser().getUid();
         favoriteDao=new FavoriteDao(this);
-        if(favoriteDao.queryIsFavorite(uid,question.getId())==null)
+        if(favoriteDao.queryIsFavorite(uid,question.getId())==null
+        ||favoriteDao.queryIsFavorite(uid,question.getId()).size()==0)
             isFavorite=false;
         else
             isFavorite=true;
         favoriteButton.setSelected(isFavorite);
 
         //问题标题和描述
-        question=(Question)getIntent().getSerializableExtra("question");
         questionTitle.setText(question.getTitle());
         if(question.getDescription()==null || question.getDescription().length()==0){
             questionDescription.setVisibility(View.GONE);

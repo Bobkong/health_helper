@@ -14,11 +14,6 @@ public abstract class BaseMvpActivity<T extends BaseMvpContract.BasePresenter> e
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter=bindPresenter();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         mPresenter.attachView(this);
     }
 

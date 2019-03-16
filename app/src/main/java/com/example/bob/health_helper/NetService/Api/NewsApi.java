@@ -1,6 +1,6 @@
 package com.example.bob.health_helper.NetService.Api;
 
-import com.example.bob.health_helper.Local.LocalBean.News;
+import com.example.bob.health_helper.Bean.News;
 import com.example.bob.health_helper.Bean.Response;
 
 import java.util.List;

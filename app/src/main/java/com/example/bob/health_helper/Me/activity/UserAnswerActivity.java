@@ -1,7 +1,8 @@
 package com.example.bob.health_helper.Me.activity;
 
 import android.os.Bundle;
-import com.example.bob.health_helper.Local.LocalBean.Answer;
+
+import com.example.bob.health_helper.Bean.Answer;
 import com.example.bob.health_helper.Me.adapter.UserAnswerAdapter;
 import com.example.bob.health_helper.R;
 
