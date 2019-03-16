@@ -49,7 +49,7 @@ public interface QuestionApi {
     //删除某个问题
     @DELETE("api/questions/{id}")
     Observable<Response<String>> deleteQuestionById(
-            @Path("question_id") String questionId
+            @Path("id") String questionId
     );
     //搜索问题
     @GET("api/questions/search")
