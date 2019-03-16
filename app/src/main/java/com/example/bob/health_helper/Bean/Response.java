@@ -6,7 +6,7 @@ public class Response<T> {
     @SerializedName("success")
     private boolean success;
     @SerializedName("err")
-    private java.lang.Error err;
+    private Error err;
     @SerializedName("data")
     private T data;
 
@@ -14,7 +14,7 @@ public class Response<T> {
         return success;
     }
 
-    public java.lang.Error getErr() {
+    public Error getErr() {
         return err;
     }
 
