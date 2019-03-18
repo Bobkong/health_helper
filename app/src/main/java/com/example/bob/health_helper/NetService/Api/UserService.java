@@ -26,4 +26,11 @@ public class UserService {
 				.addUser(user)
 				.subscribeOn(Schedulers.io());
 	}
+
+	public Observable<Response<String>> getSig(String userName){
+		return ServiceManager.getInstance()
+				.create(UserApi.class)
+				.getSig(userName)
+				.subscribeOn(Schedulers.io());
+	}
 }

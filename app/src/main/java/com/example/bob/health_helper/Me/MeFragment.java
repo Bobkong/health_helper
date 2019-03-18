@@ -90,22 +90,16 @@ public class MeFragment extends BaseFragment {
 			case R.id.me_login_out:
 				AlertDialog dialog=new AlertDialog.Builder(getActivity())
 						.setMessage(getResources().getString(R.string.logout_confirm))
-						.setPositiveButton(R.string.confirm,new DialogInterface.OnClickListener(){
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
-								//退出账户
-								MyApplication.getTencent().logout(MyApplication.getContext());
-								Toast.makeText(getActivity(), "已退出当前账户",Toast.LENGTH_LONG).show();
-								Intent intent=new Intent(getActivity(),LoginActivity.class);
-								startActivity(intent);
-								EventBus.getDefault().post(LogoutEvent.class);
-							}
+						.setPositiveButton(R.string.confirm, (dialogInterface, i) -> {
+							//退出账户
+							MyApplication.getTencent().logout(MyApplication.getContext());
+							Toast.makeText(getActivity(), "已退出当前账户",Toast.LENGTH_LONG).show();
+							Intent intent=new Intent(getActivity(),LoginActivity.class);
+							startActivity(intent);
+							EventBus.getDefault().post(LogoutEvent.class);
 						})
-						.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialogInterface, int i) {
+						.setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
 
-							}
 						})
 						.create();
 				dialog.show();
