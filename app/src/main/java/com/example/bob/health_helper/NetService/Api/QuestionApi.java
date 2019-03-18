@@ -1,12 +1,13 @@
 package com.example.bob.health_helper.NetService.Api;
 
 import com.example.bob.health_helper.Bean.Question;
+import com.example.bob.health_helper.Bean.Response;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 
-import retrofit2.Response;
+
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -49,7 +50,7 @@ public interface QuestionApi {
     //删除某个问题
     @DELETE("api/questions/{id}")
     Observable<Response<String>> deleteQuestionById(
-            @Path("question_id") String questionId
+            @Path("id") String questionId
     );
     //搜索问题
     @GET("api/questions/search")
@@ -66,6 +67,7 @@ public interface QuestionApi {
     );
     //用户取消收藏问题
     @POST("api/questions/unfavorite")
+    @FormUrlEncoded
     Observable<Response<String>> publishUnfavorite(
             @Field("uid") String uid,
             @Field("question_id") int questionId

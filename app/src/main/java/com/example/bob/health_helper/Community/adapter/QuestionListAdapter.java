@@ -15,6 +15,7 @@ import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.Community.activity.QuestionDetailActivity;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.DateUtil;
 
 import java.util.List;
 import butterknife.BindView;
@@ -76,7 +77,7 @@ public class QuestionListAdapter extends LoadingMoreAdapter<Question> {
         }
         holder.favoriteCount.setText(question.getFavoriteCount());
         holder.answerCount.setText(question.getAnswerCount());
-        holder.publishDate.setText(question.getDate());
+        holder.publishDate.setText(DateUtil.dateTransform(question.getDate()));
 
         //点击跳转事件设置
         holder.questionItemView.setOnClickListener(new View.OnClickListener() {

@@ -37,13 +37,13 @@ public interface AnswerApi {
     //获取某个用户的回答列表
     @GET("api/answers/user")
     Observable<Response<List<Answer>>> getAnswersByUserId(
-            @Query("user_id") String user_id,
+            @Query("user_id") String uid,
             @Query("start") int start
     );
     //获取某个用户点赞的回答列表
     @GET("api/answers/user_like")
     Observable<Response<List<Answer>>> getLikeAnswersByUserId(
-            @Query("user_id") String user_id,
+            @Query("user_id") String uid,
             @Query("start") int start
     );
     //发表回答
@@ -57,7 +57,7 @@ public interface AnswerApi {
     //删除某个回答
     @DELETE("api/answers/{id}")
     Observable<Response<String>> deleteAnswerById(
-            @Path("id") String answerId
+            @Path("id") int answerId
     );
     //用户点赞回答
     @POST("api/answers/like")
@@ -68,6 +68,7 @@ public interface AnswerApi {
     );
     //用户取消点赞回答
     @POST("api/answers/unlike")
+    @FormUrlEncoded
     Observable<Response<String>> publishUnlike(
             @Field("uid") String uid,
             @Field("answer_id") int answerId

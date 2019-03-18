@@ -8,17 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.bob.health_helper.Bean.Answer;
 import com.example.bob.health_helper.Community.activity.CommentActivity;
-import com.example.bob.health_helper.Local.LocalBean.Like;
 import com.example.bob.health_helper.Local.Dao.LikeDao;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.DateUtil;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.example.bob.health_helper.Widget.ExpandableTextView;
 
@@ -38,16 +37,12 @@ public class AnswerListAdapter extends LoadingMoreAdapter<Answer> {
         ExpandableTextView answerText;
         @BindView(R.id.publish_date)
         TextView publishDate;
-        @BindView(R.id.like_layout)
-        LinearLayout likeLayout;
         @BindView(R.id.like)
-        ImageButton like;
+        ImageView like;
         @BindView(R.id.like_count)
         TextView likeCount;
-        @BindView(R.id.comment_layout)
-        LinearLayout commentLayout;
         @BindView(R.id.comment)
-        ImageButton comment;
+        ImageView comment;
         @BindView(R.id.comment_count)
         TextView commentCount;
         public AnswerItemViewHolder(@NonNull View itemView) {
@@ -58,11 +53,12 @@ public class AnswerListAdapter extends LoadingMoreAdapter<Answer> {
 
     private String uid;
     private LikeDao likeDao;
+    private OnLikeClickListener onLikeClickListener;
 
-    public AnswerListAdapter(List<Answer> datas) {
+    public AnswerListAdapter(List<Answer> datas,LikeDao likeDao) {
         super(datas);
         uid= SharedPreferenceUtil.getUser().getUid();
-        likeDao=new LikeDao(MyApplication.getContext());
+        this.likeDao=likeDao;
     }
 
     @Override
@@ -83,10 +79,11 @@ public class AnswerListAdapter extends LoadingMoreAdapter<Answer> {
                 .into(answerItemViewHolder.userIcon);
         answerItemViewHolder.userName.setText(answer.getAuthorName());
         answerItemViewHolder.answerText.setContent(answer.getContent());
-        answerItemViewHolder.publishDate.setText(answer.getDate());
+        answerItemViewHolder.publishDate.setText(DateUtil.dateTransform(answer.getDate()));
         answerItemViewHolder.likeCount.setText(answer.getLikeCount());
         answerItemViewHolder.commentCount.setText(answer.getCommentCount());
 
+        //用户本身点赞情况设置
         if(likeDao.queryIsLike(uid,answer.getId())!=null
         &&likeDao.queryIsLike(uid,answer.getId()).size()!=0){
             answerItemViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.colorPrimary));
@@ -96,25 +93,11 @@ public class AnswerListAdapter extends LoadingMoreAdapter<Answer> {
         }
 
         //点击事件设置
-        answerItemViewHolder.likeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(likeDao.queryIsLike(uid,answer.getId())==null
-                        ||likeDao.queryIsLike(uid,answer.getId()).size()==0){//点赞
-                    answerItemViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.colorPrimary));
-                    answerItemViewHolder.likeCount.setText((Integer.valueOf(answerItemViewHolder.likeCount.getText().toString())+1)+"");
-                    likeDao.addLike(new Like(uid,answer.getId()));
-                    //todo server logic
-                }else{//取消点赞
-                    answerItemViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.primary_light));
-                    answerItemViewHolder.likeCount.setText((Integer.valueOf(answerItemViewHolder.likeCount.getText().toString())-1)+"");
-                    likeDao.deleteLike(likeDao.queryIsLike(uid,answer.getId()).get(0));
-                    //todo server logic
-                }
-            }
+        answerItemViewHolder.like.setOnClickListener((likeView)->{
+            onLikeClickListener.onClick(answerItemViewHolder.getAdapterPosition(),likeView,answerItemViewHolder.likeCount);
         });
 
-        answerItemViewHolder.commentLayout.setOnClickListener(new View.OnClickListener() {
+        answerItemViewHolder.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(view.getContext(), CommentActivity.class);
@@ -124,5 +107,12 @@ public class AnswerListAdapter extends LoadingMoreAdapter<Answer> {
         });
     }
 
+    public interface OnLikeClickListener{
+        void onClick(int position,View likeView,TextView likeCountView);
+    }
+
+    public void setOnLikeClickListener(OnLikeClickListener listener){
+        this.onLikeClickListener=listener;
+    }
 
 }

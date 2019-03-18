@@ -1,39 +1,47 @@
 package com.example.bob.health_helper.Me.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 
 import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.Me.adapter.UserQuestionAdapter;
+import com.example.bob.health_helper.NetService.Api.QuestionService;
 import com.example.bob.health_helper.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
 public class UserFavoriteQuestionActivity extends BaseRefreshableListActivity {
     private List<Question> questionList=new ArrayList<>();
-    private UserQuestionAdapter adapter=new UserQuestionAdapter(questionList);
-
-    private int currentPage=0;
+    private int curPage=0;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        dataList.setAdapter(adapter);
-
+    RecyclerView.Adapter<RecyclerView.ViewHolder> createAdapter() {
+        return new UserQuestionAdapter(questionList);
     }
 
     @Override
     void startRefresh() {
-
+        curPage=0;
+        QuestionService.getInstance().getUserFavoriteQuestions(uid,curPage++)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(datas->this.onRefreshSuccess(datas),
+                        throwable -> this.onRefreshFailed());
     }
 
     @Override
     void startLoadMoreData() {
-
+        QuestionService.getInstance().getUserFavoriteQuestions(uid,curPage++)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(datas->this.onLoadMoreDataSuccess(datas),
+                        throwable -> this.onLoadMoreDataFailed());
     }
 
-    public void onRefreshSuccess(){
+    public void onRefreshSuccess( List<Question> datas){
         swipeRefreshLayout.setRefreshing(false);
+        questionList=datas;
         adapter.notifyDataSetChanged();
     }
 
@@ -42,7 +50,8 @@ public class UserFavoriteQuestionActivity extends BaseRefreshableListActivity {
         showTips(getString(R.string.network_error));
     }
 
-    public void onLoadMoreDataSuccess(){
+    public void onLoadMoreDataSuccess(List<Question> datas){
+        questionList.addAll(datas);
         adapter.notifyDataSetChanged();
     }
 

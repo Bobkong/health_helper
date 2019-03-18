@@ -11,10 +11,20 @@ public interface NewAnsweredQuestionContract extends BaseMvpContract {
         void onLoadNewAnsweredQuestionFailed();
         void onLoadMoreNewAnsweredQuestionSuccess(List<Answer> datas,boolean hasMore);
         void onLoadMoreNewAnsweredQuestionFailed();
+
+        void onLikeSuccess(String result);
+        void onLikeFailed();
+        void onCancelLikeSuccess(String result);
+        void onCancelLikeFailed();
+
     }
 
     interface Presenter extends BasePresenter<View>{
         void loadNewAnsweredQuestion();
         void loadMoreNewAnsweredQuestion();
+
+        //点赞/取消点赞回答
+        void Like(String uid,int answerId);
+        void CancelLike(String uid,int answerId);
     }
 }

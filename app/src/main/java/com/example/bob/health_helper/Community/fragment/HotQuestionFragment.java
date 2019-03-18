@@ -6,6 +6,7 @@ import com.example.bob.health_helper.Community.adapter.QuestionListAdapter;
 import com.example.bob.health_helper.Community.contract.HotQuestionContract;
 import com.example.bob.health_helper.Community.presenter.HotQuestionPresenter;
 import com.example.bob.health_helper.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

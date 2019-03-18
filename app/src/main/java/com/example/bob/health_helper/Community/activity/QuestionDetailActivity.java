@@ -11,18 +11,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Base.BaseMvpActivity;
 import com.example.bob.health_helper.Bean.Answer;
+import com.example.bob.health_helper.Local.Dao.LikeDao;
 import com.example.bob.health_helper.Local.LocalBean.Favorite;
 import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.Community.adapter.AnswerListAdapter;
 import com.example.bob.health_helper.Community.contract.QuestionDetailContract;
 import com.example.bob.health_helper.Community.presenter.QuestionDetailPresenter;
 import com.example.bob.health_helper.Local.Dao.FavoriteDao;
+import com.example.bob.health_helper.Local.LocalBean.Like;
 import com.example.bob.health_helper.R;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 
@@ -59,7 +62,8 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     private boolean isFavorite=false;
     private int filterType=TIME_TYPE;//默认按回答创建时间排序
     private List<Answer> answerList=new ArrayList<>();
-    private AnswerListAdapter answerListAdapter=new AnswerListAdapter(answerList);
+    private AnswerListAdapter answerListAdapter;
+    private LikeDao likeDao;
 
     @Override
     protected QuestionDetailContract.Presenter bindPresenter() {
@@ -73,6 +77,10 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
         ButterKnife.bind(this);
 
         question=(Question)getIntent().getSerializableExtra("question");
+        uid=SharedPreferenceUtil.getUser().getUid();
+        favoriteDao=new FavoriteDao(this);
+        likeDao=new LikeDao(this);
+        answerListAdapter=new AnswerListAdapter(answerList,likeDao);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
@@ -82,8 +90,6 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
         }
 
         //问题收藏
-        uid=SharedPreferenceUtil.getUser().getUid();
-        favoriteDao=new FavoriteDao(this);
         if(favoriteDao.queryIsFavorite(uid,question.getId())==null
         ||favoriteDao.queryIsFavorite(uid,question.getId()).size()==0)
             isFavorite=false;
@@ -102,16 +108,30 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
 
         //回答列表
         refreshLayout.setColorSchemeResources(R.color.colorPrimary);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
+        refreshLayout.setOnRefreshListener(()->{
                 if(filterType==TIME_TYPE)
-                    mPresenter.LoadRecentAnswer();
+                    mPresenter.LoadRecentAnswer(question.getId());
                 else if(filterType==HOT_TYPE)
-                    mPresenter.LoadHotAnswer();
-            }
+                    mPresenter.LoadHotAnswer(question.getId());
         });
         refreshLayout.setRefreshing(true);
+
+        //点赞回答
+        answerListAdapter.setOnLikeClickListener((position,likeView,likeCountView)->{
+                Answer answer=answerList.get(position);
+                if(likeDao.queryIsLike(uid,answer.getId())==null
+                        ||likeDao.queryIsLike(uid,answer.getId()).size()==0){//点赞
+                    ((ImageView)likeView).setColorFilter(getResources().getColor(R.color.colorPrimary));
+                    likeCountView.setText((Integer.valueOf(likeCountView.getText().toString())+1)+"");
+                    likeDao.addLike(new Like(uid,answer.getId()));
+                    mPresenter.Like(uid,answer.getId());
+                }else{//取消点赞
+                    ((ImageView)likeView).setColorFilter(getResources().getColor(R.color.primary_light));
+                    likeCountView.setText((Integer.valueOf(likeCountView.getText().toString())-1)+"");
+                    likeDao.deleteLike(likeDao.queryIsLike(uid,answer.getId()).get(0));
+                    mPresenter.CancelLike(uid,answer.getId());
+                }
+        });
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(answerListAdapter);
@@ -121,15 +141,15 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
                 super.onScrollStateChanged(recyclerView, newState);
                 if(newState==RecyclerView.SCROLL_STATE_IDLE&&shouldLoadMore()){
                     if(filterType==TIME_TYPE)
-                        mPresenter.LoadMoreRecentAnswer();
+                        mPresenter.LoadMoreRecentAnswer(question.getId());
                     else if(filterType==HOT_TYPE)
-                        mPresenter.LoadMoreHotAnswer();
+                        mPresenter.LoadMoreHotAnswer(question.getId());
                 }
             }
         });
 
         //进入时加载数据
-        mPresenter.LoadRecentAnswer();
+        mPresenter.LoadRecentAnswer(question.getId());
     }
 
     @OnClick({R.id.favorite_question,R.id.filter,R.id.add_answer})
@@ -165,21 +185,18 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     private void showPopupMenu(View view){
         PopupMenu popupMenu=new PopupMenu(this,view);
         popupMenu.inflate(R.menu.answer_filter);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.filter_time:
-                        filterType=TIME_TYPE;
-                        mPresenter.LoadRecentAnswer();
-                        return true;
-                    case R.id.filter_hot:
-                        filterType=HOT_TYPE;
-                        mPresenter.LoadHotAnswer();
-                        return true;
-                }
-                return false;
+        popupMenu.setOnMenuItemClickListener((menuItem)->{
+            switch (menuItem.getItemId()){
+                case R.id.filter_time:
+                    filterType=TIME_TYPE;
+                    mPresenter.LoadRecentAnswer(question.getId());
+                    return true;
+                case R.id.filter_hot:
+                    filterType=HOT_TYPE;
+                    mPresenter.LoadHotAnswer(question.getId());
+                    return true;
             }
+            return false;
         });
         popupMenu.show();
     }
@@ -226,7 +243,7 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     }
 
     @Override
-    public void onFavoriteSuccess() {
+    public void onFavoriteSuccess(String result) {
         showTips(getString(R.string.favorite_success));
     }
 
@@ -236,13 +253,33 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     }
 
     @Override
-    public void onCancelFavoriteSuccess() {
+    public void onCancelFavoriteSuccess(String result) {
         showTips(getString(R.string.cancel_favorite_success));
     }
 
     @Override
     public void onCancelFavoriteFailed() {
         showTips(getString(R.string.cancel_favorite_failed));
+    }
+
+    @Override
+    public void onLikeSuccess(String result) {
+        showTips(getString(R.string.like_success));
+    }
+
+    @Override
+    public void onLikeFailed() {
+        showTips(getString(R.string.like_failed));
+    }
+
+    @Override
+    public void onCancelLikeSuccess(String result) {
+        showTips(getString(R.string.cancel_like_success));
+    }
+
+    @Override
+    public void onCancelLikeFailed() {
+        showTips(getString(R.string.cancel_like_failed));
     }
 }
 

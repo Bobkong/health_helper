@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center">
-                <ImageButton
+                <ImageView
                     android:id="@+id/like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/primary_light"
-                    android:text="0"/>
+                    android:text="0" />
             </LinearLayout>
 
             <LinearLayout
@@ -81,13 +81,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center">
-                <ImageButton
+                <ImageView
                     android:id="@+id/comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:background="?selectableItemBackground"
-                    android:src="@drawable/ic_comment"/>
+                    android:src="@drawable/ic_comment" />
                 <TextView
                     android:id="@+id/comment_count"
                     android:layout_width="wrap_content"

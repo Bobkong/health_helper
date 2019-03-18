@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.bob.health_helper.Community.activity.QuestionDetailActivity;
 import com.example.bob.health_helper.Bean.Question;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.DateUtil;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class UserQuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         holder.questionDescription.setText(question.getDescription());
         holder.favoriteCount.setText(question.getFavoriteCount());
         holder.answerCount.setText(question.getAnswerCount());
-        holder.publishDate.setText(question.getDate());
+        holder.publishDate.setText(DateUtil.dateTransform(question.getDate()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

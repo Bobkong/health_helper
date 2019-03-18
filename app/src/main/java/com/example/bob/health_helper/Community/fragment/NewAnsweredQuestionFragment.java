@@ -1,12 +1,16 @@
 package com.example.bob.health_helper.Community.fragment;
 
-
+import android.widget.ImageView;
 import com.example.bob.health_helper.Bean.Answer;
 import com.example.bob.health_helper.Community.adapter.LoadingMoreAdapter;
 import com.example.bob.health_helper.Community.adapter.NewAnsweredQuestionListAdapter;
 import com.example.bob.health_helper.Community.contract.NewAnsweredQuestionContract;
 import com.example.bob.health_helper.Community.presenter.NewAnsweredQuestionPresenter;
+import com.example.bob.health_helper.Local.Dao.LikeDao;
+import com.example.bob.health_helper.Local.LocalBean.Like;
+import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +19,28 @@ public class NewAnsweredQuestionFragment extends BaseRefreshableListFragment<New
         implements NewAnsweredQuestionContract.View {
 
     private List<Answer> newAnsweredQuestionList=new ArrayList<>();
+    private LikeDao likeDao;
 
     @Override
     protected LoadingMoreAdapter<Answer> createAdapter() {
-        return new NewAnsweredQuestionListAdapter(newAnsweredQuestionList);
+        likeDao=new LikeDao(getActivity());
+        String uid= SharedPreferenceUtil.getUser().getUid();
+        NewAnsweredQuestionListAdapter adapter=new NewAnsweredQuestionListAdapter(newAnsweredQuestionList,likeDao);
+        adapter.setOnLikeClickListener((position,likeView,likeCountView)->{
+            Answer answer=newAnsweredQuestionList.get(position);
+            if(likeDao.queryIsLike(uid,answer.getId())==null||likeDao.queryIsLike(uid,answer.getId()).size()==0){//点赞
+                ((ImageView)likeView).setColorFilter(MyApplication.getContext().getResources().getColor(R.color.colorPrimary));
+                likeCountView.setText((Integer.valueOf(likeCountView.getText().toString())+1)+"");
+                likeDao.addLike(new Like(uid,answer.getId()));
+                mPresenter.Like(uid,answer.getId());
+            }else{//取消点赞
+                ((ImageView)likeView).setColorFilter(MyApplication.getContext().getResources().getColor(R.color.primary_light));
+                likeCountView.setText((Integer.valueOf(likeCountView.getText().toString())-1)+"");
+                likeDao.deleteLike(likeDao.queryIsLike(uid,answer.getId()).get(0));
+                mPresenter.CancelLike(uid,answer.getId());
+            }
+        });
+        return adapter;
     }
 
     @Override
@@ -58,5 +80,25 @@ public class NewAnsweredQuestionFragment extends BaseRefreshableListFragment<New
     @Override
     public void onLoadMoreNewAnsweredQuestionFailed() {
         showTips(getString(R.string.network_error));
+    }
+
+    @Override
+    public void onLikeSuccess(String result) {
+        showTips(getString(R.string.like_success));
+    }
+
+    @Override
+    public void onLikeFailed() {
+        showTips(getString(R.string.like_failed));
+    }
+
+    @Override
+    public void onCancelLikeSuccess(String result) {
+        showTips(getString(R.string.cancel_like_success));
+    }
+
+    @Override
+    public void onCancelLikeFailed() {
+        showTips(getString(R.string.cancel_like_failed));
     }
 }

@@ -1,6 +1,7 @@
 package com.example.bob.health_helper.NetService;
 
 import com.example.bob.health_helper.MyApplication;
+import com.example.bob.health_helper.Util.NetworkUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,14 +48,13 @@ public class ServiceManager {
             public Response intercept(Chain chain) throws IOException {
                 Request request=chain.request();
                 //没有网络连接时设为强制缓存
-                /**
-                if(!NetworkUtils.isConnected()){
+                if(!NetworkUtil.isNetworkAvailable()){
                     request=request.newBuilder()
                             .cacheControl(CacheControl.FORCE_CACHE)
                             .build();
                 }
                 Response response=chain.proceed(request);
-                if(NetworkUtils.isConnected()){
+                if(NetworkUtil.isNetworkAvailable()){
                     response.newBuilder()
                             .header("Cache-Control","public,max-age="+MAX_AGE)
                             .removeHeader("Pragma")
@@ -65,8 +65,6 @@ public class ServiceManager {
                             .removeHeader("Pragma")
                             .build();
                 }
-                 **/
-                Response response=chain.proceed(request);
                 return response;
             }
         };

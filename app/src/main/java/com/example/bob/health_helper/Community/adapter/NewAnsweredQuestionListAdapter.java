@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.example.bob.health_helper.Local.LocalBean.Like;
 import com.example.bob.health_helper.Local.Dao.LikeDao;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.DateUtil;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.example.bob.health_helper.Widget.ExpandableTextView;
 
@@ -33,16 +35,12 @@ public class NewAnsweredQuestionListAdapter extends LoadingMoreAdapter<Answer> {
         ExpandableTextView answer;
         @BindView(R.id.publish_date)
         TextView publishDate;
-        @BindView(R.id.like_layout)
-        LinearLayout likeLayout;
         @BindView(R.id.like)
-        ImageButton like;
+        ImageView like;
         @BindView(R.id.like_count)
         TextView likeCount;
-        @BindView(R.id.comment_layout)
-        LinearLayout commentLayout;
         @BindView(R.id.comment)
-        ImageButton comment;
+        ImageView comment;
         @BindView(R.id.comment_count)
         TextView commentCount;
         public NewAnsweredQuestionViewHolder(@NonNull View itemView) {
@@ -53,11 +51,12 @@ public class NewAnsweredQuestionListAdapter extends LoadingMoreAdapter<Answer> {
 
     private String uid;
     private LikeDao likeDao;
+    private OnLikeClickListener onLikeClickListener;
 
-    public NewAnsweredQuestionListAdapter(List datas) {
+    public NewAnsweredQuestionListAdapter(List datas,LikeDao likeDao) {
         super(datas);
         uid= SharedPreferenceUtil.getUser().getUid();
-        likeDao=new LikeDao(MyApplication.getContext());
+        this.likeDao=likeDao;
     }
 
     @Override
@@ -70,45 +69,35 @@ public class NewAnsweredQuestionListAdapter extends LoadingMoreAdapter<Answer> {
     @Override
     protected void onBindNormalViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
         Answer answer=datas.get(position);
-        NewAnsweredQuestionViewHolder newAnsweredQuestionViewHolder=(NewAnsweredQuestionViewHolder)viewHolder;
-        newAnsweredQuestionViewHolder.title.setText(answer.getQuestionTitle());
-        newAnsweredQuestionViewHolder.answer.setContent(answer.getAuthorName()+" : "+answer.getContent());
-        newAnsweredQuestionViewHolder.likeCount.setText(answer.getLikeCount());
-        newAnsweredQuestionViewHolder.commentCount.setText(answer.getCommentCount());
-        newAnsweredQuestionViewHolder.publishDate.setText(answer.getDate());
+        NewAnsweredQuestionViewHolder holder=(NewAnsweredQuestionViewHolder)viewHolder;
+        holder.title.setText(answer.getQuestionTitle());
+        holder.answer.setContent(answer.getAuthorName()+" : "+answer.getContent());
+        holder.likeCount.setText(answer.getLikeCount());
+        holder.commentCount.setText(answer.getCommentCount());
+        holder.publishDate.setText(DateUtil.dateTransform(DateUtil.dateTransform(answer.getDate())));
 
-        if(likeDao.queryIsLike(uid,answer.getId())!=null){
-            newAnsweredQuestionViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.colorPrimary));
+        if(likeDao.queryIsLike(uid,answer.getId())!=null&&likeDao.queryIsLike(uid,answer.getId()).size()!=0){
+            holder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.colorPrimary));
         }
         else{
-            newAnsweredQuestionViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.primary_light));
+            holder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.primary_light));
         }
 
         //点击事件设置
-        newAnsweredQuestionViewHolder.likeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(likeDao.queryIsLike(uid,answer.getId())==null){//点赞
-                    newAnsweredQuestionViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.colorPrimary));
-                    newAnsweredQuestionViewHolder.likeCount.setText((Integer.valueOf(newAnsweredQuestionViewHolder.likeCount.getText().toString())+1));
-                    likeDao.addLike(new Like(uid,answer.getId()));
-                    //todo server logic
-                }else{//取消点赞
-                    newAnsweredQuestionViewHolder.like.setColorFilter(MyApplication.getContext().getResources().getColor(R.color.primary_light));
-                    newAnsweredQuestionViewHolder.likeCount.setText((Integer.valueOf(newAnsweredQuestionViewHolder.likeCount.getText().toString())-1));
-                    likeDao.deleteLike(likeDao.queryIsLike(uid,answer.getId()).get(0));
-                    //todo server logic
-                }
-            }
-        });
-
-        newAnsweredQuestionViewHolder.commentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.like.setOnClickListener((view)->
+                onLikeClickListener.onClick(holder.getAdapterPosition(),view,holder.likeCount));
+        holder.comment.setOnClickListener((view)->{
                 Intent intent=new Intent(view.getContext(), CommentActivity.class);
                 intent.putExtra("answer_id",answer.getId());
                 view.getContext().startActivity(intent);
-            }
         });
+    }
+
+    public interface OnLikeClickListener{
+        void onClick(int position,View likeView,TextView likeCountView);
+    }
+
+    public void setOnLikeClickListener(OnLikeClickListener listener){
+        this.onLikeClickListener=listener;
     }
 }

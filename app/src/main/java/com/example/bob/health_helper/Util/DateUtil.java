@@ -3,12 +3,28 @@ package com.example.bob.health_helper.Util;
 import android.content.Context;
 
 import com.example.bob.health_helper.R;
+import com.orhanobut.logger.Logger;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateUtil {
+
+
+    public static String dateTransform(String str){
+        Date date=new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.CHINA);
+        try{
+            date=sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        DateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return sdf2.format(date);
+    }
 
     public static final String DATETIME_DEFAULT_FORMAT = "yyyy-MM-dd HH:mm:ss";
 

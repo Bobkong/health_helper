@@ -56,8 +56,9 @@ public abstract class BaseRefreshableListFragment<T extends BaseMvpContract.Base
                 super.onScrollStateChanged(recyclerView, newState);
                 /*new state:SCROLL_STATE_IDLE 滑动静止状态 */
                 //分页加载
-                if(newState==RecyclerView.SCROLL_STATE_IDLE&&shouldLoadMore())
+                if(newState==RecyclerView.SCROLL_STATE_IDLE&&shouldLoadMore()){
                     startLoadMore();
+                }
             }
         });
 
@@ -70,7 +71,11 @@ public abstract class BaseRefreshableListFragment<T extends BaseMvpContract.Base
                 startRefresh();//刷新逻辑的实现
             }
         });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         startRefresh();
     }
 

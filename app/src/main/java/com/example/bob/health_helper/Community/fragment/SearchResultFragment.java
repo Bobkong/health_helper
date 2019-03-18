@@ -20,7 +20,7 @@ public class SearchResultFragment extends BaseRefreshableListFragment<SearchResu
     private List<Question> questionList=new ArrayList<>();
 
     @Override
-    protected LoadingMoreAdapter createAdapter() {
+    protected LoadingMoreAdapter<Question> createAdapter() {
         return new QuestionListAdapter(questionList);
     }
 

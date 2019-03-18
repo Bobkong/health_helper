@@ -77,9 +77,6 @@ dependencies {
     //logger
     implementation 'com.orhanobut:logger:2.2.0'
 
-    //banner
-    implementation 'com.youth.banner:banner:1.4.10'
-
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'

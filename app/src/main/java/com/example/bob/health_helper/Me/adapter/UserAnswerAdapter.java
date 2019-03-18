@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.bob.health_helper.Bean.Answer;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.DateUtil;
 import com.example.bob.health_helper.Widget.ExpandableTextView;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class UserAnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.answer.setContent(answer.getContent());
         holder.likeCount.setText(answer.getLikeCount());
         holder.commentCount.setText(answer.getCommentCount());
-        holder.publishDate.setText(answer.getDate());
+        holder.publishDate.setText(DateUtil.dateTransform(answer.getDate()));
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.bob.health_helper.Bean.Comment;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Util.DateUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -46,7 +47,6 @@ public class CommentListAdapter extends LoadingMoreAdapter<Comment>  {
     protected RecyclerView.ViewHolder onCreateNormalViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment,parent,false);
         CommentItemViewHolder commentItemViewHolder=new CommentItemViewHolder(view);
-        Logger.e("comment viewHolder created");
         return commentItemViewHolder;
     }
 
@@ -61,7 +61,6 @@ public class CommentListAdapter extends LoadingMoreAdapter<Comment>  {
                 .into(commentItemViewHolder.userIcon);
         commentItemViewHolder.userName.setText(comment.getAuthorName());
         commentItemViewHolder.comment.setText(comment.getContent());
-        commentItemViewHolder.publishDate.setText(comment.getDate());
-        Logger.e("comment viewHolder binded");
+        commentItemViewHolder.publishDate.setText(DateUtil.dateTransform(comment.getDate()));
     }
 }

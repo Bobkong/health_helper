@@ -94,8 +94,7 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
             @Override
             public void onClick(View view) {
                 String content=sendEdit.getText().toString().trim();
-                mPresenter.sendComment(answerId,sendEdit.getText().toString().trim(),
-                        SharedPreferenceUtil.getUser().getUid());
+                mPresenter.sendComment(answerId,content,SharedPreferenceUtil.getUser().getUid());
             }
         });
 
@@ -149,7 +148,7 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
 
     @Override
     public void onLoadMoreCommentFailed() {
-        Snackbar.make(coordinatorLayout,R.string.load_comment_error,Snackbar.LENGTH_SHORT);
+        Snackbar.make(coordinatorLayout,R.string.load_comment_error,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -163,6 +162,6 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
 
     @Override
     public void onSendCommentFailed() {
-        Snackbar.make(coordinatorLayout,R.string.send_comment_failed,Snackbar.LENGTH_SHORT);
+        Snackbar.make(coordinatorLayout,R.string.send_comment_failed,Snackbar.LENGTH_SHORT).show();
     }
 }

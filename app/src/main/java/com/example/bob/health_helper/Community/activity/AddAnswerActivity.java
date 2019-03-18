@@ -62,7 +62,7 @@ public class AddAnswerActivity extends BaseMvpActivity<AddAnswerContract.Present
             case R.id.publish:
                 String answer=answerInput.getText().toString().trim();
                 if(answer.length()==0)
-                    Snackbar.make(scrollView,R.string.answer_empty,Snackbar.LENGTH_SHORT);
+                    Snackbar.make(scrollView,R.string.answer_empty,Snackbar.LENGTH_SHORT).show();
                 else{
                     mPresenter.publishAnswer(answer,questionId, SharedPreferenceUtil.getUser().getUid());
                 }
@@ -84,6 +84,6 @@ public class AddAnswerActivity extends BaseMvpActivity<AddAnswerContract.Present
 
     @Override
     public void onPublishAnswerFailed() {
-        Snackbar.make(scrollView,R.string.pubish_failed,Snackbar.LENGTH_SHORT);
+        Snackbar.make(scrollView,R.string.pubish_failed,Snackbar.LENGTH_SHORT).show();
     }
 }
