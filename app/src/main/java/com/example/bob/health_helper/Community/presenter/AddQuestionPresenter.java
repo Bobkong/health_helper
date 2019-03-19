@@ -12,7 +12,7 @@ public class AddQuestionPresenter extends BaseMvpPresenter<AddQuestionContract.V
     @Override
     public void publishQuestion(String title, String descriiption,String uid) {
         QuestionService.getInstance().publishQuestion(title,descriiption,uid)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->mView.onPublishQuestionSuccess(),
                         throwable -> mView.onPublishQuestionFailed());
     }

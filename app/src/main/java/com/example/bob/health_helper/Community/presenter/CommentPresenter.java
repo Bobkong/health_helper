@@ -13,7 +13,7 @@ public class CommentPresenter extends BaseMvpPresenter<CommentContract.View>
     public void loadComments(int answerId) {
         curPage=0;
         CommentService.getInstance().getComments(answerId,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas -> mView.onLoadCommentsSuccess(datas,!(datas.size()==0||datas==null)),
                         throwable -> mView.onLoadCommentFailed());
     }
@@ -21,7 +21,7 @@ public class CommentPresenter extends BaseMvpPresenter<CommentContract.View>
     @Override
     public void loadMoreComments(int answerId) {
         CommentService.getInstance().getComments(answerId,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas -> mView.onLoadMoreCommentsSuccess(datas,!(datas.size()==0||datas==null)),
                         throwable -> mView.onLoadMoreCommentFailed());
     }
@@ -29,7 +29,7 @@ public class CommentPresenter extends BaseMvpPresenter<CommentContract.View>
     @Override
     public void sendComment(int answerId,String comment,String uid) {
         CommentService.getInstance().publishComment(comment,uid,answerId)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->mView.onSendCommentSuccess(),
                         throwable -> mView.onSendCommentFailed());
     }

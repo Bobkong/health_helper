@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
 	BottomNavigationView bottomNavigationView;
 	@BindView(R.id.main_content)
 	ViewPager viewPager;
-	private ArrayList<Fragment> fragments=new ArrayList<>(Arrays.asList(new MeasureFragment(),new ChatFragment(),
-			new NewsFragment(),new CommunityFragment(),new MeFragment()));
 	private MenuItem preMenuItem;
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +86,14 @@ public class MainActivity extends AppCompatActivity {
 		FragmentStatePagerAdapter adapter=new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 			@Override
 			public Fragment getItem(int i) {
-				return fragments.get(i);
+				switch (i){
+					case 0:return new MeasureFragment();
+					case 1:return new ChatFragment();
+					case 2:return new NewsFragment();
+					case 3:return new CommunityFragment();
+					case 4:return new MeFragment();
+					default:return new MeasureFragment();
+				}
 			}
 
 			@Override

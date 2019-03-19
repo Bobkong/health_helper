@@ -18,7 +18,7 @@ public class NewsService {
 
     private NewsApi newsApi= ServiceManager.getInstance().create(NewsApi.class);
 
-    Observable<List<News>> getNews(String tag,int start){
+    public Observable<List<News>> getNews(String tag,int start){
         return newsApi.getNews(tag,start)
                 .map(new ResponseFunc<>())
                 .subscribeOn(Schedulers.io());

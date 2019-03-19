@@ -10,6 +10,7 @@ public class News implements Serializable {
     public static final int TAG_HYPERLIPIDEMIA=3;//高血脂
     public static final int TAG_STROKE=4;//脑卒中
     public static final int TAG_CORONARY_HEART_DISEASE=5;//冠心病
+    public static final String[] TAGS=new String[]{"发现","高血压","糖尿病","高血脂","脑卒中","冠心病"};
 
     private int id;
     private String title;

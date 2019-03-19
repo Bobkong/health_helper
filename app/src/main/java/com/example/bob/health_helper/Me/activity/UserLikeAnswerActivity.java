@@ -22,7 +22,7 @@ public class UserLikeAnswerActivity extends BaseRefreshableListActivity {
     void startRefresh() {
         curPage=0;
         AnswerService.getInstance().getUserLikeAnswers(uid,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->this.onRefreshSuccess(datas),
                         throwable -> this.onRefreshFailed());
     }
@@ -30,7 +30,7 @@ public class UserLikeAnswerActivity extends BaseRefreshableListActivity {
     @Override
     void startLoadMoreData() {
         AnswerService.getInstance().getUserLikeAnswers(uid,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->this.onLoadMoreDataSuccess(datas),
                         throwable -> this.onLoadMoreDataFailed());
     }

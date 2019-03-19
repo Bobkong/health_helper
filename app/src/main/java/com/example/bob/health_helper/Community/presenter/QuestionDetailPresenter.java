@@ -63,7 +63,7 @@ public class QuestionDetailPresenter extends BaseMvpPresenter<QuestionDetailCont
     @Override
     public void Like(String uid, int answerId) {
         AnswerService.getInstance().publishLike(uid,answerId)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->mView.onLikeSuccess(datas),
                         throwable -> mView.onLikeFailed());
     }
@@ -71,7 +71,7 @@ public class QuestionDetailPresenter extends BaseMvpPresenter<QuestionDetailCont
     @Override
     public void CancelLike(String uid, int answerId) {
         AnswerService.getInstance().publishUnlike(uid,answerId)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->mView.onCancelLikeSuccess(datas),
                         throwable -> mView.onCancelLikeFailed());
     }

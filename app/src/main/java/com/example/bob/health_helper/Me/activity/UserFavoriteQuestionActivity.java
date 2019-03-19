@@ -26,7 +26,7 @@ public class UserFavoriteQuestionActivity extends BaseRefreshableListActivity {
     void startRefresh() {
         curPage=0;
         QuestionService.getInstance().getUserFavoriteQuestions(uid,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->this.onRefreshSuccess(datas),
                         throwable -> this.onRefreshFailed());
     }
@@ -34,7 +34,7 @@ public class UserFavoriteQuestionActivity extends BaseRefreshableListActivity {
     @Override
     void startLoadMoreData() {
         QuestionService.getInstance().getUserFavoriteQuestions(uid,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->this.onLoadMoreDataSuccess(datas),
                         throwable -> this.onLoadMoreDataFailed());
     }

@@ -27,7 +27,7 @@ public class UserQuestionActivity extends BaseRefreshableListActivity {
     void startRefresh() {
         curPage=0;
         QuestionService.getInstance().getUserQuestions(uid,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->this.onRefreshSuccess(datas),
                         throwable -> this.onRefreshFailed());
     }
@@ -35,7 +35,7 @@ public class UserQuestionActivity extends BaseRefreshableListActivity {
     @Override
     void startLoadMoreData() {
         QuestionService.getInstance().getUserQuestions(uid,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->this.onLoadMoreDataSuccess(datas),
                         throwable -> this.onLoadMoreDataFailed());
     }

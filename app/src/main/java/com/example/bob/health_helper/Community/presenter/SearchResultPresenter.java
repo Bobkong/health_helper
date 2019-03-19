@@ -14,7 +14,7 @@ public class SearchResultPresenter extends BaseMvpPresenter<SearchResultContract
     public void loadSearchResult(String to_search) {
         curPage=0;
         QuestionService.getInstance().searchQuestion(to_search,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->mView.onLoadSearchResultSuccess(datas,!(datas.size()==0||datas==null)),
                         throwable -> mView.onLoadSearchResultFailed());
     }
@@ -22,7 +22,7 @@ public class SearchResultPresenter extends BaseMvpPresenter<SearchResultContract
     @Override
     public void loadMoreSearchResult(String to_search) {
         QuestionService.getInstance().searchQuestion(to_search,curPage++)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->mView.onLoadMoreSearchResultSuccess(datas,!(datas.size()==0||datas==null)),
                         throwable -> mView.onLoadMoreSearchResultFailed());
     }

@@ -12,7 +12,7 @@ public class AddAnswerPresenter extends BaseMvpPresenter<AddAnswerContract.View>
     @Override
     public void publishAnswer(String answer, int questionId, String authorId) {
         AnswerService.getInstance().publishAnswer(answer,authorId,questionId)
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->mView.onPublishAnswerSuccess(),
                         throwable -> mView.onPublishAnswerFailed());
     }
