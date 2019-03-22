@@ -14,12 +14,16 @@ import android.widget.Toast;
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Bean.User;
 import com.example.bob.health_helper.NetService.Api.UserService;
+import com.example.bob.health_helper.Receiver.MiPushMessageReceiver;
 import com.example.bob.health_helper.Util.AgeUtil;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMOfflinePushToken;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -206,14 +210,24 @@ public class LoginActivity extends AppCompatActivity {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			//持久化保存用户个人信息
-			SharedPreferenceUtil.saveUser(user);
 			dialog.dismiss();
-			Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-			startActivity(intent);
-            addUser2Server();
+            saveUser();
 		});
         dialog.show();
+    }
+
+    private void saveUser() {
+        UserService.getUserService().getSig(user.getName())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(res -> {
+                    if (res.getSuccess() && res.getData() != null) {
+                        //持久化保存用户个人信息
+                        user.setSig(res.getData());
+                        SharedPreferenceUtil.saveUser(user);
+                        addUser2Server();
+                    }
+                },Throwable::printStackTrace);
+
     }
 
     private void addUser2Server() {
@@ -222,6 +236,9 @@ public class LoginActivity extends AppCompatActivity {
                 .subscribe(response -> {
                             if (response.getSuccess()){
                                 Log.d(TAG,"add user success : user = " + user.toString());
+                                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                                startActivity(intent);
+                                finish();
                             }else {
                                 Log.d(TAG,"add user failed : err = " + response.getErr().toString());
                             }

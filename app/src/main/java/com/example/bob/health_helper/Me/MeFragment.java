@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMManager;
 
 import org.greenrobot.eventbus.EventBus;
 import java.util.Map;
@@ -40,6 +43,7 @@ import butterknife.OnClick;
  */
 
 public class MeFragment extends BaseFragment {
+	private final static String TAG = "MeFragment";
 	@BindView(R.id.user_icon)
 	ImageView userIcon;
 	@BindView(R.id.user_name)
@@ -94,6 +98,7 @@ public class MeFragment extends BaseFragment {
 							//退出账户
 							MyApplication.getTencent().logout(MyApplication.getContext());
 							Toast.makeText(getActivity(), "已退出当前账户",Toast.LENGTH_LONG).show();
+							tencentLogout();
 							Intent intent=new Intent(getActivity(),LoginActivity.class);
 							startActivity(intent);
 							EventBus.getDefault().post(LogoutEvent.class);
@@ -105,5 +110,23 @@ public class MeFragment extends BaseFragment {
 				dialog.show();
 				break;
 		}
+	}
+	public static void tencentLogout(){
+		//登出
+		TIMManager.getInstance().logout(new TIMCallBack() {
+			@Override
+			public void onError(int code, String desc) {
+
+				//错误码 code 和错误描述 desc，可用于定位请求失败原因
+				//错误码 code 列表请参见错误码表
+				Log.d(TAG, "logout failed. code: " + code + " errmsg: " + desc);
+			}
+
+			@Override
+			public void onSuccess() {
+				//登出成功
+				Log.d(TAG, "logout success");
+			}
+		});
 	}
 }

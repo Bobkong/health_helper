@@ -1,13 +1,12 @@
 package com.example.bob.health_helper.Chat.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bob.health_helper.Chat.Constants;
+import com.example.bob.health_helper.Constants;
 import com.example.bob.health_helper.R;
 import com.tencent.qcloud.uikit.business.chat.c2c.view.C2CChatPanel;
 import com.tencent.qcloud.uikit.common.BaseFragment;

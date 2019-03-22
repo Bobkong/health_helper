@@ -11,21 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.bob.health_helper.Chat.Constants;
+import com.example.bob.health_helper.Constants;
 import com.example.bob.health_helper.Chat.activity.ChatActivity;
 import com.example.bob.health_helper.NetService.Api.UserService;
 import com.example.bob.health_helper.R;
+import com.example.bob.health_helper.Receiver.MiPushMessageReceiver;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMOfflinePushToken;
 import com.tencent.qcloud.uikit.business.session.model.SessionInfo;
 import com.tencent.qcloud.uikit.business.session.view.SessionPanel;
 import com.tencent.qcloud.uikit.business.session.view.wedgit.SessionClickListener;
 
-import butterknife.BindView;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-
-import static com.example.bob.health_helper.R2.id.tag;
 
 
 /**
@@ -97,27 +96,6 @@ public class ChatFragment extends Fragment  implements SessionClickListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-		UserService.getUserService().getSig(SharedPreferenceUtil.getUser().getName())
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(res ->{
-					if (res.getSuccess() && res.getData() != null){
-						// identifier为用户名，userSig 为用户登录凭证
-						TIMManager.getInstance().login(SharedPreferenceUtil.getUser().getName(), res.getData(), new TIMCallBack() {
-							@Override
-							public void onError(int code, String desc) {
-								//错误码 code 和错误描述 desc，可用于定位请求失败原因
-								//错误码 code 列表请参见错误码表
-								Log.d(TAG, "login failed. code: " + code + " errmsg: " + desc);
-							}
-							@Override
-							public void onSuccess() {
-								Log.d(TAG, "login succ");
-							}
-						});
-					}else{
-						Toast.makeText(getActivity(),getString(R.string.im_failed),Toast.LENGTH_SHORT).show();
-					}
-				},Throwable::printStackTrace);
-
 	}
+
 }

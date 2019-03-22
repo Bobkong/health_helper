@@ -8,11 +8,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.bob.health_helper.Base.AppConstant;
 import com.example.bob.health_helper.Base.BaseActivity;
+import com.example.bob.health_helper.Receiver.MiPushMessageReceiver;
+import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMOfflinePushToken;
 
 import java.util.List;
 
@@ -22,6 +28,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 
 public class SplashActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks {
+    private static final String TAG = "SplashActivity";
     private Handler handler=new Handler();
     private static final int DELAY_TIME = 2000;
 
@@ -35,8 +42,43 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
         setContentView(R.layout.activity_splash);
         //权限处理
         checkpermissions();
+        if (TIMManager.getInstance().getLoginUser().equals("")) {
+            tencentIMLogin();
+        }
     }
 
+    public static void tencentIMLogin() {
+        if (SharedPreferenceUtil.getUser() == null){
+            return;
+        }
+        TIMManager.getInstance().login(SharedPreferenceUtil.getUser().getName(), SharedPreferenceUtil.getUser().getSig(), new TIMCallBack() {
+            @Override
+            public void onError(int code, String desc) {
+                //错误码 code 和错误描述 desc，可用于定位请求失败原因
+                //错误码 code 列表请参见错误码表
+                Log.d(TAG, "login failed. code: " + code + " errmsg: " + desc);
+            }
+            @Override
+            public void onSuccess() {
+
+                Log.d(TAG,"login success");
+                //登录成功后，上报证书 ID 及设备 token
+                TIMOfflinePushToken param = new TIMOfflinePushToken(com.example.bob.health_helper.Constants.MI_PUSH_BUSS_ID, MiPushMessageReceiver.mRegId);
+                TIMManager.getInstance().setOfflinePushToken(param, new TIMCallBack() {
+                    @Override
+                    public void onError(int i, String s) {
+
+                    }
+
+                    @Override
+                    public void onSuccess() {
+
+                    }
+                });
+            }
+        });
+
+    }
     private void checkpermissions() {
         if(EasyPermissions.hasPermissions(this,PERMISSIONS))
             processLogic();
