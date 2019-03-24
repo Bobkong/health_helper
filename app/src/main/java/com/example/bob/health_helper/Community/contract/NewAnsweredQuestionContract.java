@@ -8,14 +8,14 @@ import java.util.List;
 public interface NewAnsweredQuestionContract extends BaseMvpContract {
     interface View extends BaseView{
         void onLoadNewAnsweredQuestionSuccess(List<Answer> datas, boolean hasMore);
-        void onLoadNewAnsweredQuestionFailed();
+        void onLoadNewAnsweredQuestionFailed(String msg);
         void onLoadMoreNewAnsweredQuestionSuccess(List<Answer> datas,boolean hasMore);
-        void onLoadMoreNewAnsweredQuestionFailed();
+        void onLoadMoreNewAnsweredQuestionFailed(String msg);
 
         void onLikeSuccess(String result);
-        void onLikeFailed();
+        void onLikeFailed(String msg);
         void onCancelLikeSuccess(String result);
-        void onCancelLikeFailed();
+        void onCancelLikeFailed(String msg);
 
     }
 

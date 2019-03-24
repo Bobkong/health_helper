@@ -3,10 +3,12 @@ package com.example.bob.health_helper.Community.activity;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ScrollView;
+
 
 import com.example.bob.health_helper.Base.BaseMvpActivity;
 import com.example.bob.health_helper.Community.contract.AddAnswerContract;
@@ -24,7 +26,8 @@ public class AddAnswerActivity extends BaseMvpActivity<AddAnswerContract.Present
     EditText answerInput;
     @BindView(R.id.scroll_view)
     ScrollView scrollView;
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private int questionId;
 
     @Override
@@ -38,6 +41,7 @@ public class AddAnswerActivity extends BaseMvpActivity<AddAnswerContract.Present
         setContentView(R.layout.activity_add_answer);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);//显示返回键

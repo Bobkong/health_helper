@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -107,7 +108,7 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
         }
 
         //回答列表
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        refreshLayout.setColorSchemeResources(R.color.colorAccent);
         refreshLayout.setOnRefreshListener(()->{
                 if(filterType==TIME_TYPE)
                     mPresenter.LoadRecentAnswer(question.getId());
@@ -135,6 +136,7 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(answerListAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -226,9 +228,9 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     }
 
     @Override
-    public void onLoadAnswerFailed() {
+    public void onLoadAnswerFailed(String msg) {
         refreshLayout.setRefreshing(false);
-        showTips(getString(R.string.network_error));
+        showTips(msg);
     }
 
     @Override
@@ -238,8 +240,8 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     }
 
     @Override
-    public void onLoadMoreAnswerFailed() {
-        showTips(getString(R.string.network_error));
+    public void onLoadMoreAnswerFailed(String msg) {
+        showTips(msg);
     }
 
     @Override
@@ -248,8 +250,8 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     }
 
     @Override
-    public void onFavoriteFailed() {
-        showTips(getString(R.string.favorite_failed));
+    public void onFavoriteFailed(String msg) {
+        showTips(msg);
     }
 
     @Override
@@ -258,8 +260,8 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     }
 
     @Override
-    public void onCancelFavoriteFailed() {
-        showTips(getString(R.string.cancel_favorite_failed));
+    public void onCancelFavoriteFailed(String msg) {
+        showTips(msg);
     }
 
     @Override
@@ -268,8 +270,8 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     }
 
     @Override
-    public void onLikeFailed() {
-        showTips(getString(R.string.like_failed));
+    public void onLikeFailed(String msg) {
+        showTips((msg));
     }
 
     @Override
@@ -278,8 +280,8 @@ public class QuestionDetailActivity extends BaseMvpActivity<QuestionDetailContra
     }
 
     @Override
-    public void onCancelLikeFailed() {
-        showTips(getString(R.string.cancel_like_failed));
+    public void onCancelLikeFailed(String msg) {
+        showTips(msg);
     }
 }
 

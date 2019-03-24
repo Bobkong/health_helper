@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="5dp">
+        android:layout_margin="10dp">
         <android.support.v7.widget.SearchView
             android:id="@+id/search_view"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             app:iconifiedByDefault="false"
             app:queryHint="@string/search_hint"/>
@@ -22,7 +22,6 @@
             android:id="@+id/recorder"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_margin="5dp"
             android:layout_gravity="right|center_vertical"
             android:src="@drawable/recorder" />
     </LinearLayout>
@@ -37,34 +36,38 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp">
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
                 android:text="@string/hot_key"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_source"
+                android:layout_marginTop="10dp"
                 android:textSize="16dp" />
 
             <android.support.design.internal.FlowLayout
                 android:id="@+id/flow_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingHorizontal="5dp"/>
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/search_history"
+                android:background="@drawable/bg_source"
+                android:textColor="@color/white"
                 android:textSize="16dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/search_history"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="10dp"
+                android:layout_marginTop="10dp"
                 android:overScrollMode="never"/>
 
         </LinearLayout>

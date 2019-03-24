@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.bob.health_helper.Local.LocalBean.Favorite;
 import com.example.bob.health_helper.Local.LocalBean.Like;
+import com.example.bob.health_helper.Local.LocalBean.Reminder;
 import com.example.bob.health_helper.Local.LocalBean.SearchHistory;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
@@ -40,6 +41,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, Favorite.class);
             TableUtils.createTableIfNotExists(connectionSource, Like.class);
             TableUtils.createTableIfNotExists(connectionSource, SearchHistory.class);
+            TableUtils.createTableIfNotExists(connectionSource, Reminder.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -52,6 +54,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource,Favorite.class,true);
             TableUtils.dropTable(connectionSource,Like.class,true);
             TableUtils.dropTable(connectionSource,SearchHistory.class,true);
+            TableUtils.dropTable(connectionSource,Reminder.class,true);
             onCreate(sqLiteDatabase,connectionSource);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -4,8 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.example.bob.health_helper.Base.AppConstant;
@@ -16,6 +18,8 @@ import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public abstract class BaseRefreshableListActivity extends BaseActivity {
 
@@ -23,9 +27,11 @@ public abstract class BaseRefreshableListActivity extends BaseActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.data_list)
     RecyclerView recyclerView;
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     protected String uid;
     protected RecyclerView.Adapter<RecyclerView.ViewHolder> adapter;
+    protected CompositeDisposable compositeDisposable;
 
     //子类需要实现的方法
     abstract void startRefresh();//刷新
@@ -48,12 +54,13 @@ public abstract class BaseRefreshableListActivity extends BaseActivity {
         uid= SharedPreferenceUtil.getUser().getUid();
 
         //actionBar统一初始化
+        setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null)
             actionBar.setDisplayHomeAsUpEnabled(true);
 
         //下拉刷新
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -64,6 +71,7 @@ public abstract class BaseRefreshableListActivity extends BaseActivity {
 
         //上拉分页加载
        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+       recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
        adapter=createAdapter();
        recyclerView.setAdapter(adapter);
        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -86,5 +94,16 @@ public abstract class BaseRefreshableListActivity extends BaseActivity {
                 && recyclerView.getAdapter().getItemCount()>= AppConstant.DEFAULT_PAGE_SIZE);
     }
 
+    public void addSubscribe(Disposable disposable){
+        if(compositeDisposable==null)
+            compositeDisposable=new CompositeDisposable();
+        compositeDisposable.add(disposable);
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(compositeDisposable!=null)
+            compositeDisposable.dispose();
+    }
 }

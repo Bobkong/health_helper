@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@android:color/white"
-        app:menu="@menu/navigation"/>
-
+        app:menu="@menu/navigation"
+        app:itemTextColor="@drawable/sel_navigation"
+        app:itemIconTint="@drawable/sel_navigation"/>
 </LinearLayout>

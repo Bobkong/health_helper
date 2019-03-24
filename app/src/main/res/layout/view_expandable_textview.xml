@@ -18,6 +18,6 @@
         android:background="@drawable/sel_text_touch"
         android:clickable="true"
         android:focusable="true"
-        android:textColor="@color/expansion"
+        android:textColor="@color/colorAccent"
         android:text="@string/full_text"/>
 </LinearLayout>

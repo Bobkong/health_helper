@@ -21,23 +21,53 @@
             android:src="@mipmap/ic_launcher"
             android:layout_centerVertical="true"/>
 
-        <TextView
-            android:id="@+id/user_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="用户名"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@id/user_icon"
-            android:textColor="@android:color/black"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="5dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/fruit"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="健康果 : "
+                    android:textSize="15sp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/deepgray"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50"
+                    android:textSize="15sp"
+                    android:textColor="@color/deepgray"/>
 
-        <Button
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
             android:id="@+id/edit_user_info"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@mipmap/edit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/edit"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"/>

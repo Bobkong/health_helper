@@ -44,9 +44,9 @@ public class RecentQuestionFragment extends BaseRefreshableListFragment<RecentQu
     }
 
     @Override
-    public void onLoadRecentQuestionFailed() {
+    public void onLoadRecentQuestionFailed(String msg) {
         swipeRefreshLayout.setRefreshing(false);
-        showTips(getString(R.string.network_error));
+        showTips(msg);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class RecentQuestionFragment extends BaseRefreshableListFragment<RecentQu
     }
 
     @Override
-    public void onLoadMoreRecentQuestionFailed() {
-        showTips(getString(R.string.network_error));
+    public void onLoadMoreRecentQuestionFailed(String msg) {
+        showTips(msg);
     }
 }

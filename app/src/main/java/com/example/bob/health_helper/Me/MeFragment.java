@@ -20,6 +20,7 @@ import com.example.bob.health_helper.Base.BaseFragment;
 import com.example.bob.health_helper.Event.LogoutEvent;
 import com.example.bob.health_helper.LoginActivity;
 import com.example.bob.health_helper.Me.activity.EditUserInfoActivity;
+import com.example.bob.health_helper.Me.activity.ReminderActivity;
 import com.example.bob.health_helper.Me.activity.SettingActivity;
 import com.example.bob.health_helper.Me.activity.UserAnswerActivity;
 import com.example.bob.health_helper.Me.activity.UserFavoriteQuestionActivity;
@@ -68,7 +69,7 @@ public class MeFragment extends BaseFragment {
 		userName.setText(SharedPreferenceUtil.getUser().getName());
 	}
 
-	@OnClick({R.id.my_question,R.id.my_answer,R.id.my_favorite,R.id.my_like,R.id.settings,R.id.share,R.id.edit_user_info,R.id.me_login_out})
+	@OnClick({R.id.my_question,R.id.my_answer,R.id.my_favorite,R.id.my_like,R.id.my_reminder,R.id.settings,R.id.share,R.id.edit_user_info,R.id.me_login_out})
 	public void onClicked(View view){
 		switch (view.getId()){
 			case R.id.edit_user_info:
@@ -86,6 +87,9 @@ public class MeFragment extends BaseFragment {
 			case R.id.my_like:
 				navigateTo(UserLikeAnswerActivity.class);
 				break;
+			case R.id.my_reminder:
+				navigateTo(ReminderActivity.class);
+				break;
 			case R.id.settings:
 				navigateTo(SettingActivity.class);
 				break;
@@ -101,7 +105,7 @@ public class MeFragment extends BaseFragment {
 							tencentLogout();
 							Intent intent=new Intent(getActivity(),LoginActivity.class);
 							startActivity(intent);
-							EventBus.getDefault().post(LogoutEvent.class);
+							EventBus.getDefault().post(new LogoutEvent());
 						})
 						.setNegativeButton(R.string.cancel, (dialogInterface, i) -> {
 

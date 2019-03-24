@@ -18,13 +18,14 @@ import com.example.bob.health_helper.Event.LogoutEvent;
 import com.example.bob.health_helper.Me.MeFragment;
 import com.example.bob.health_helper.NetService.Api.UserService;
 import com.example.bob.health_helper.News.NewsFragment;
+
 import com.example.bob.health_helper.Receiver.MiPushMessageReceiver;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.TIMOfflinePushToken;
-
-import org.greenrobot.eventbus.Logger;
+import com.orhanobut.logger.Logger;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
 			SplashActivity.tencentIMLogin();
 		}
 		ButterKnife.bind(this);
+		EventBus.getDefault().register(this);
 		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 			@Override
 			public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -122,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
 	@Subscribe(threadMode = ThreadMode.MAIN)
 	public void onLogout(LogoutEvent logoutEvent){
+		Logger.e("finish");
 		finish();
 	}
 

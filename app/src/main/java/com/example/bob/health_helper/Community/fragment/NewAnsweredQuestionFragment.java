@@ -11,9 +11,11 @@ import com.example.bob.health_helper.Local.LocalBean.Like;
 import com.example.bob.health_helper.MyApplication;
 import com.example.bob.health_helper.R;
 import com.example.bob.health_helper.Util.SharedPreferenceUtil;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class NewAnsweredQuestionFragment extends BaseRefreshableListFragment<NewAnsweredQuestionContract.Presenter, Answer>
         implements NewAnsweredQuestionContract.View {
@@ -66,9 +68,9 @@ public class NewAnsweredQuestionFragment extends BaseRefreshableListFragment<New
     }
 
     @Override
-    public void onLoadNewAnsweredQuestionFailed() {
+    public void onLoadNewAnsweredQuestionFailed(String msg) {
         swipeRefreshLayout.setRefreshing(false);
-        showTips(getString(R.string.network_error));
+        showTips(msg);
     }
 
     @Override
@@ -78,8 +80,8 @@ public class NewAnsweredQuestionFragment extends BaseRefreshableListFragment<New
     }
 
     @Override
-    public void onLoadMoreNewAnsweredQuestionFailed() {
-        showTips(getString(R.string.network_error));
+    public void onLoadMoreNewAnsweredQuestionFailed(String msg) {
+        showTips(msg);
     }
 
     @Override
@@ -88,8 +90,8 @@ public class NewAnsweredQuestionFragment extends BaseRefreshableListFragment<New
     }
 
     @Override
-    public void onLikeFailed() {
-        showTips(getString(R.string.like_failed));
+    public void onLikeFailed(String msg) {
+        showTips(msg);
     }
 
     @Override
@@ -98,7 +100,7 @@ public class NewAnsweredQuestionFragment extends BaseRefreshableListFragment<New
     }
 
     @Override
-    public void onCancelLikeFailed() {
-        showTips(getString(R.string.cancel_like_failed));
+    public void onCancelLikeFailed(String msg) {
+        showTips(msg);
     }
 }

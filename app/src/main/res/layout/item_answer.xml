@@ -22,6 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:text="用户名"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
 
@@ -37,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@color/primary_light"
+        android:textColor="@color/deepgray"
         android:text="publish date"/>
 
     <android.support.v7.widget.CardView
@@ -70,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/primary_light"
+                    android:textColor="@color/deepgray"
                     android:text="0" />
             </LinearLayout>
 
@@ -94,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/primary_light"
+                    android:textColor="@color/deepgray"
                     android:text="0"/>
             </LinearLayout>
 

@@ -19,10 +19,10 @@
             <ImageView
                 style="@style/MeIconStyle"
                 android:src="@drawable/my_question" />
-            <Button
+            <TextView
                 android:id="@+id/my_question"
                 style="@style/MeButtonStyle"
-                android:text="@string/my_question"/>
+                android:text="@string/my_question" />
         </LinearLayout>
 
         <View style="@style/MeDividerStyle"/>
@@ -34,7 +34,7 @@
             <ImageView
                 style="@style/MeIconStyle"
                 android:src="@drawable/my_answer" />
-            <Button
+            <TextView
                 android:id="@+id/my_answer"
                 style="@style/MeButtonStyle"
                 android:text="@string/my_answer"/>
@@ -48,8 +48,8 @@
             android:orientation="horizontal">
             <ImageView
                 style="@style/MeIconStyle"
-                android:src="@drawable/my_favorite" />
-            <Button
+                android:src="@drawable/favorite" />
+            <TextView
                 android:id="@+id/my_favorite"
                 style="@style/MeButtonStyle"
                 android:text="@string/my_favorite"/>
@@ -63,8 +63,8 @@
             android:orientation="horizontal">
             <ImageView
                 style="@style/MeIconStyle"
-                android:src="@drawable/my_like" />
-            <Button
+                android:src="@drawable/like" />
+            <TextView
                 android:id="@+id/my_like"
                 style="@style/MeButtonStyle"
                 android:text="@string/my_like"/>

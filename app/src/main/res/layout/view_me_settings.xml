@@ -19,8 +19,8 @@
             android:orientation="horizontal">
             <ImageView
                 style="@style/MeIconStyle"
-                android:src="@mipmap/settings" />
-            <Button
+                android:src="@drawable/settings" />
+            <TextView
                 android:id="@+id/settings"
                 style="@style/MeButtonStyle"
                 android:text="@string/settings"/>
@@ -34,8 +34,8 @@
             android:orientation="horizontal">
             <ImageView
                 style="@style/MeIconStyle"
-                android:src="@mipmap/share" />
-            <Button
+                android:src="@drawable/share" />
+            <TextView
                 android:id="@+id/share"
                 style="@style/MeButtonStyle"
                 android:text="@string/share"/>

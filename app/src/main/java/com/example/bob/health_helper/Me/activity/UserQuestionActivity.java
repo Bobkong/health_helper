@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class UserQuestionActivity extends BaseRefreshableListActivity {
 
@@ -26,18 +27,20 @@ public class UserQuestionActivity extends BaseRefreshableListActivity {
     @Override
     void startRefresh() {
         curPage=0;
-        QuestionService.getInstance().getUserQuestions(uid,curPage++)
+        Disposable disposable=QuestionService.getInstance().getUserQuestions(uid,curPage++)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->this.onRefreshSuccess(datas),
-                        throwable -> this.onRefreshFailed());
+                        throwable -> this.onRefreshFailed(throwable.getMessage()));
+        addSubscribe(disposable);
     }
 
     @Override
     void startLoadMoreData() {
-        QuestionService.getInstance().getUserQuestions(uid,curPage++)
+        Disposable disposable=QuestionService.getInstance().getUserQuestions(uid,curPage++)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(datas->this.onLoadMoreDataSuccess(datas),
-                        throwable -> this.onLoadMoreDataFailed());
+                        throwable -> this.onLoadMoreDataFailed(throwable.getMessage()));
+        addSubscribe(disposable);
     }
 
     public void onRefreshSuccess(List<Question> datas){
@@ -46,9 +49,9 @@ public class UserQuestionActivity extends BaseRefreshableListActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public void onRefreshFailed(){
+    public void onRefreshFailed(String msg){
         swipeRefreshLayout.setRefreshing(false);
-        showTips(getString(R.string.network_error));
+        showTips(msg);
     }
 
     public void onLoadMoreDataSuccess(List<Question> datas){
@@ -56,8 +59,8 @@ public class UserQuestionActivity extends BaseRefreshableListActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public void onLoadMoreDataFailed(){
-        showTips(getString(R.string.network_error));
+    public void onLoadMoreDataFailed(String msg){
+        showTips(msg);
     }
 
 

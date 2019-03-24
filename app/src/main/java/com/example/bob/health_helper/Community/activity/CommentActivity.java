@@ -6,8 +6,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -41,7 +43,8 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
     EditText sendEdit;
     @BindView(R.id.send_button)
     ImageButton sendButton;
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     private List<Comment> comments=new ArrayList<>();
     private CommentListAdapter commentListAdapter;
     private int answerId;
@@ -57,6 +60,7 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
         setContentView(R.layout.activity_comment);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null){
             actionBar.setTitle(R.string.comment);
@@ -66,7 +70,7 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
         answerId=getIntent().getIntExtra("answer_id",0);
 
         swipeRefreshLayout.setRefreshing(true);
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -75,6 +79,7 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
         });
 
         commentList.setLayoutManager(new LinearLayoutManager(this));
+        commentList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         commentListAdapter=new CommentListAdapter(comments);
         commentList.setAdapter(commentListAdapter);
         commentList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -135,9 +140,9 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
     }
 
     @Override
-    public void onLoadCommentFailed() {
+    public void onLoadCommentFailed(String msg) {
         swipeRefreshLayout.setRefreshing(false);
-        showTips(getString(R.string.load_comment_error));
+        showTips(msg);
     }
 
     @Override
@@ -147,8 +152,8 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
     }
 
     @Override
-    public void onLoadMoreCommentFailed() {
-        Snackbar.make(coordinatorLayout,R.string.load_comment_error,Snackbar.LENGTH_SHORT).show();
+    public void onLoadMoreCommentFailed(String msg) {
+        Snackbar.make(coordinatorLayout,msg,Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

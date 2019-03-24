@@ -127,6 +127,7 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
                 @Override
                 public void run() {
                     navigateTo(LoginActivity.class);
+                    finish();
                 }
             },DELAY_TIME);
         }else {
@@ -135,6 +136,7 @@ public class SplashActivity extends BaseActivity implements EasyPermissions.Perm
                 @Override
                 public void run() {
                     navigateTo(MainActivity.class);
+                    finish();
                 }
             },DELAY_TIME);
         }

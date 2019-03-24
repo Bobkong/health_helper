@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bob.health_helper.Base.AppConstant;
@@ -27,8 +29,6 @@ import com.tencent.imsdk.TIMOfflinePushToken;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -50,12 +51,22 @@ public class LoginActivity extends AppCompatActivity {
     private UserInfo mUserInfo;//qq登录得到的用户信息
     private final String TAG = "LoginActivity";
 
+    @BindView(R.id.text)
+    TextView text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         tencent=MyApplication.getTencent();
+
+        //文本
+        String content=getString(R.string.login_attention1)
+                +"<u><font color=\"#515151\">"
+                +getString(R.string.login_attention2)
+                +"</font></u>";
+        text.setText(Html.fromHtml(content));
     }
 
     @OnClick(R.id.qq_login)

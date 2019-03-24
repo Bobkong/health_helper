@@ -19,9 +19,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/alphaWhite"
-                app:tabIndicatorColor="@color/white"
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextColor="@color/alphaColorAccent"
+                app:tabIndicatorColor="@color/colorAccent"
                 app:tabMode="fixed"
                 app:tabGravity="fill">
             </android.support.design.widget.TabLayout>
@@ -39,11 +39,11 @@
         android:id="@+id/add_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/add"
-        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/add"
+        android:backgroundTint="@color/colorAccent"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="15dp"
-        />
+        app:borderWidth="0dp"
+        android:layout_margin="15dp" />
 
 </RelativeLayout>

@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- SD卡读写的权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -23,8 +24,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".News.activity.NewsDetailActivity">
-        </activity>
+        <receiver android:name=".Me.ReminderReceiver">
+            <intent-filter>
+                <action android:name="com.example.bob.health_helper.alarm"/>
+            </intent-filter>
+        </receiver>
+        <activity android:name=".Me.activity.ReminderDetailActivity"></activity>
+        <activity android:name=".Me.activity.ReminderActivity" />
+        <activity android:name=".News.activity.NewsDetailActivity" />
         <activity android:name=".Me.activity.EditUserInfoActivity" />
         <activity android:name=".Me.activity.SettingActivity" />
         <activity
@@ -45,7 +52,7 @@
             android:name=".Community.activity.QuestionDetailActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Community.activity.AddQuestionActivity" />
-        <activity android:name=".Community.activity.SearchActivity" />
+        <activity android:name=".Community.activity.SearchActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,6 +82,7 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="behind"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity android:name=".Chat.activity.ChatActivity"/>
 
         <!--  消息收发 service -->
@@ -147,6 +155,7 @@
                 <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
         </receiver>
+
 
     </application>
 

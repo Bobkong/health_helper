@@ -43,9 +43,9 @@ public class HotQuestionFragment extends BaseRefreshableListFragment<HotQuestion
     }
 
     @Override
-    public void onLoadHotQuestionFailed() {
+    public void onLoadHotQuestionFailed(String msg) {
         swipeRefreshLayout.setRefreshing(false);
-        showTips(getString(R.string.network_error));
+        showTips(msg);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class HotQuestionFragment extends BaseRefreshableListFragment<HotQuestion
     }
 
     @Override
-    public void onLoadMoreHotQuestionFailed() {
-        showTips(getString(R.string.network_error));
+    public void onLoadMoreHotQuestionFailed(String msg) {
+        showTips(msg);
     }
 }

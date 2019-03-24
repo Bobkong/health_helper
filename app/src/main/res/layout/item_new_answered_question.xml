@@ -16,7 +16,7 @@
         android:maxLines="2"
         android:text="Question"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:layout_marginTop="10dp"/>
 
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@color/primary_light"
+        android:textColor="@color/deepgray"
         android:text="publish date"/>
 
     <android.support.v7.widget.CardView
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/primary_light"
+                    android:textColor="@color/deepgray"
                     android:text="0"/>
             </LinearLayout>
 
@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical"
-                    android:textColor="@color/primary_light"
+                    android:textColor="@color/deepgray"
                     android:text="0"/>
             </LinearLayout>
         </LinearLayout>

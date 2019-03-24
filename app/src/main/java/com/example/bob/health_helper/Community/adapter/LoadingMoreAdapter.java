@@ -60,11 +60,9 @@ public abstract class LoadingMoreAdapter<T> extends RecyclerView.Adapter<Recycle
         else{
             if(hasMore==true){
                 ((LoadingViewHolder)viewHolder).tips.setText(R.string.loading_more);
-                Logger.e("bind load more");
             }
             else{
                 ((LoadingViewHolder)viewHolder).tips.setText(R.string.no_more);
-                Logger.e("bind no more");
             }
 
         }

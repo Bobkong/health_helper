@@ -19,9 +19,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/alphaWhite"
-                app:tabIndicatorColor="@color/white"
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextColor="@color/alphaColorAccent"
+                app:tabIndicatorColor="@color/colorAccent"
                 app:tabMode="scrollable"
                 app:tabGravity="fill">
             </android.support.design.widget.TabLayout>

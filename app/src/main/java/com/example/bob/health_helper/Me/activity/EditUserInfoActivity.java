@@ -3,6 +3,7 @@ package com.example.bob.health_helper.Me.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,8 @@ public class EditUserInfoActivity extends BaseActivity {
     TextView userWeight;
     @BindView(R.id.user_age)
     TextView userAge;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private User user=SharedPreferenceUtil.getUser();
 
@@ -49,6 +52,7 @@ public class EditUserInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_edit_user_info);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);//显示返回键

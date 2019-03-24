@@ -13,6 +13,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <include layout="@layout/view_me_header"/>
+            <include layout="@layout/view_me_service"/>
             <include layout="@layout/view_me_own"/>
             <include layout="@layout/view_me_settings"/>
             <Button
@@ -21,7 +22,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/logout"
                 android:layout_marginTop="10dp"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
                 android:padding="16dp" />
 
         </LinearLayout>

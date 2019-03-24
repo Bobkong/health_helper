@@ -86,4 +86,6 @@ dependencies {
     //腾讯即时通信
     implementation project(':tuikit')
     implementation files('libs/MiPush_SDK_Client_3_6_15.jar')
+    //流式布局
+    implementation 'com.google.android:flexbox:1.0.0'
 }

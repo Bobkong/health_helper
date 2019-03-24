@@ -10,9 +10,11 @@ import com.example.bob.health_helper.News.adapter.NewsListAdapter;
 import com.example.bob.health_helper.News.contract.NewsPieceContract;
 import com.example.bob.health_helper.News.presenter.NewsPiecePresenter;
 import com.example.bob.health_helper.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class NewsPieceFragment extends BaseRefreshableListFragment<NewsPieceContract.Presenter, News>
             implements NewsPieceContract.View {
@@ -65,9 +67,9 @@ public class NewsPieceFragment extends BaseRefreshableListFragment<NewsPieceCont
     }
 
     @Override
-    public void onLoadNewsFailed() {
+    public void onLoadNewsFailed(String msg) {
         swipeRefreshLayout.setRefreshing(false);
-        showTips(getString(R.string.network_error));
+        showTips(msg);
     }
 
     @Override
@@ -78,7 +80,8 @@ public class NewsPieceFragment extends BaseRefreshableListFragment<NewsPieceCont
     }
 
     @Override
-    public void onLoadMoreNewsFailed() {
-        showTips(getString(R.string.network_error));
+    public void onLoadMoreNewsFailed(String msg) {
+        showTips(msg);
     }
+
 }

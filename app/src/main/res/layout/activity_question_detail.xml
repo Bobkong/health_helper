@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,15 +14,40 @@
             android:id="@+id/collapsing_tool_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="16dp"
+                android:layout_marginTop="?android:actionBarSize"
+                android:orientation="vertical"
+                android:background="@color/colorAccent">
+
+                <TextView
+                    android:id="@+id/question_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Question Title"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/question_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Question description"
+                    android:textColor="@color/white" />
+            </LinearLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/tool_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
-                android:background="@color/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:background="@color/white"
                 app:layout_collapseMode="pin">
 
                 <LinearLayout
@@ -45,36 +69,9 @@
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:src="@drawable/filter"
-                        android:tint="@color/white"
                         android:background="?selectableItemBackgroundBorderless"/>
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="?android:actionBarSize"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/question_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="Question Title"
-                    android:textColor="@android:color/white"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/question_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="Question description"
-                    android:textColor="@android:color/white" />
-            </LinearLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -95,10 +92,11 @@
         android:id="@+id/add_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/white"
-        android:src="@mipmap/add"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|end"/>
+        android:layout_margin="40dp"
+        app:borderWidth="0dp"
+        android:src="@drawable/add"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_gravity="bottom|right"
+        android:elevation="8dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

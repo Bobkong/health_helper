@@ -1,7 +1,8 @@
 package com.example.bob.health_helper.NetService.Api;
 
 import com.example.bob.health_helper.Bean.Answer;
-import com.example.bob.health_helper.NetService.ResponseFunc;
+import com.example.bob.health_helper.NetService.HttpResultFunc;
+import com.example.bob.health_helper.NetService.ServerResultFunc;
 import com.example.bob.health_helper.NetService.ServiceManager;
 
 import java.util.List;
@@ -21,55 +22,64 @@ public class AnswerService {
 
     public Observable<List<Answer>> getNewestAnswers(int start){
         return answerApi.getNewestAnswers(start)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<List<Answer>> getRecentAnswers(int questionId,int start){
         return answerApi.getRecentAnswers(questionId,start)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<List<Answer>> getHotAnswers(int questionId,int start){
         return answerApi.getHotAnswers(questionId,start)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<List<Answer>> getUserAnswers(String uid,int start){
         return answerApi.getAnswersByUserId(uid,start)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<List<Answer>> getUserLikeAnswers(String uid,int start){
         return answerApi.getLikeAnswersByUserId(uid,start)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<String> publishAnswer(String answer,String uid,int questionId){
         return answerApi.publishAnswer(answer,uid,questionId)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<String> deleteAnswer(int answerId){
         return answerApi.deleteAnswerById(answerId)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<String> publishLike(String uid,int answerId){
         return answerApi.publishLike(uid,answerId)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<String> publishUnlike(String uid,int answerId){
         return answerApi.publishUnlike(uid,answerId)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 }

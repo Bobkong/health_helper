@@ -84,4 +84,19 @@ public class Question implements Serializable {
     public void setDate(String date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", authorId='" + authorId + '\'' +
+                ", authorName='" + authorName + '\'' +
+                ", authorIcon='" + authorIcon + '\'' +
+                ", favoriteCount='" + favoriteCount + '\'' +
+                ", answerCount='" + answerCount + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }

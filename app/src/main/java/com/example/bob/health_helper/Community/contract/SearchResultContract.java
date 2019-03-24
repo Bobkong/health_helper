@@ -8,9 +8,9 @@ import java.util.List;
 public interface SearchResultContract extends BaseMvpContract {
     interface View extends BaseView {
         void onLoadSearchResultSuccess(List<Question> datas, boolean hasMore);
-        void onLoadSearchResultFailed();
+        void onLoadSearchResultFailed(String msg);
         void onLoadMoreSearchResultSuccess(List<Question> datas, boolean hasMore);
-        void onLoadMoreSearchResultFailed();
+        void onLoadMoreSearchResultFailed(String msg);
     }
 
     interface Presenter extends BasePresenter<View> {

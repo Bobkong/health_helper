@@ -1,7 +1,8 @@
 package com.example.bob.health_helper.NetService.Api;
 
 import com.example.bob.health_helper.Bean.Comment;
-import com.example.bob.health_helper.NetService.ResponseFunc;
+import com.example.bob.health_helper.NetService.HttpResultFunc;
+import com.example.bob.health_helper.NetService.ServerResultFunc;
 import com.example.bob.health_helper.NetService.ServiceManager;
 
 import java.util.List;
@@ -21,13 +22,15 @@ public class CommentService {
 
     public Observable<List<Comment>> getComments(int answerId,int start){
         return commentApi.getCommentsByAnswerId(answerId,start)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<String> publishComment(String comment,String uid,int answerId){
         return commentApi.publishComment(comment,uid,answerId)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 }

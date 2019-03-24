@@ -2,29 +2,30 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
+        <include layout="@layout/toolbar"/>
         <EditText
+            android:layout_marginTop="10dp"
             android:id="@+id/question_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="start"
-            android:background="@null"
             android:padding="8dp"
+            android:background="@null"
             android:hint="@string/add_question_title"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/primary_light"/>
+            android:background="@color/transparent_divider"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
 
         <EditText
             android:id="@+id/question_description"
@@ -33,6 +34,7 @@
             android:gravity="start"
             android:background="@null"
             android:padding="8dp"
+            android:textSize="14sp"
             android:hint="@string/add_question_description"
             android:inputType="textMultiLine"
             android:imeOptions="actionDone"

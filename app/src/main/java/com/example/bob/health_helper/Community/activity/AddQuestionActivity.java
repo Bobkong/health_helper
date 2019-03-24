@@ -3,6 +3,7 @@ package com.example.bob.health_helper.Community.activity;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -25,7 +26,8 @@ public class AddQuestionActivity extends BaseMvpActivity<AddQuestionContract.Pre
     EditText questionDescription;
     @BindView(R.id.scroll_view)
     ScrollView scrollView;
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @Override
     protected AddQuestionContract.Presenter bindPresenter() {
         return new AddQuestionPresenter();
@@ -38,6 +40,7 @@ public class AddQuestionActivity extends BaseMvpActivity<AddQuestionContract.Pre
         ButterKnife.bind(this);
 
         //actionBar设置
+        setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null){
             actionBar.setTitle(R.string.add_question);

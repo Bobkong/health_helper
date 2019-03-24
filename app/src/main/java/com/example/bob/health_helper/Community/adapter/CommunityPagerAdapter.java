@@ -3,11 +3,12 @@ package com.example.bob.health_helper.Community.adapter;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
+
 
 import java.util.ArrayList;
 
-public class CommunityPagerAdapter extends FragmentStatePagerAdapter {
+public class CommunityPagerAdapter extends FragmentPagerAdapter {
     private final String[] titles;
     private final ArrayList<Fragment> fragments;
 

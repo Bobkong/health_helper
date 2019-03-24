@@ -1,17 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:paddingHorizontal="20dp"
-    android:orientation="vertical"
-    android:gravity="center">
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/qq_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/qq"
+        android:drawablePadding="10dp"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:background="@drawable/bg_login"
+        android:text="@string/qq_login"
+        android:textSize="21sp"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:layout_above="@id/qq_login"
+       android:gravity="center">
+       <ImageView
+           android:id="@+id/logo"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:src="@drawable/health"
+           android:layout_marginBottom="10dp" />
+
+       <TextView
+           android:id="@+id/name"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="20sp"
+           android:textStyle="bold"
+           android:text="Health Helper"
+           android:layout_marginBottom="50dp"
+           android:textColor="@color/colorAccent" />
+   </LinearLayout>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/qq_login"/>
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/grey" />
 
-</LinearLayout>
+</RelativeLayout>

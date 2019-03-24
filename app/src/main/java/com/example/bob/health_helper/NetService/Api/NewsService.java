@@ -1,6 +1,7 @@
 package com.example.bob.health_helper.NetService.Api;
 import com.example.bob.health_helper.Bean.News;
-import com.example.bob.health_helper.NetService.ResponseFunc;
+import com.example.bob.health_helper.NetService.HttpResultFunc;
+import com.example.bob.health_helper.NetService.ServerResultFunc;
 import com.example.bob.health_helper.NetService.ServiceManager;
 
 import java.util.List;
@@ -20,7 +21,8 @@ public class NewsService {
 
     public Observable<List<News>> getNews(String tag,int start){
         return newsApi.getNews(tag,start)
-                .map(new ResponseFunc<>())
+                .map(new ServerResultFunc<>())
+                .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 }

@@ -54,9 +54,9 @@ public class SearchResultFragment extends BaseRefreshableListFragment<SearchResu
     }
 
     @Override
-    public void onLoadSearchResultFailed() {
+    public void onLoadSearchResultFailed(String msg) {
         swipeRefreshLayout.setRefreshing(false);
-        showTips(getString(R.string.network_error));
+        showTips(msg);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class SearchResultFragment extends BaseRefreshableListFragment<SearchResu
     }
 
     @Override
-    public void onLoadMoreSearchResultFailed() {
-        showTips(getString(R.string.network_error));
+    public void onLoadMoreSearchResultFailed(String msg) {
+        showTips(msg);
     }
 }

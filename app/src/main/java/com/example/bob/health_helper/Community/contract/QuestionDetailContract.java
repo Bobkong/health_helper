@@ -9,20 +9,20 @@ public interface QuestionDetailContract extends BaseMvpContract {
     interface View extends BaseView{
         //最新回答
         void onLoadAnswerSuccess(List<Answer> answers, boolean hasMore);
-        void onLoadAnswerFailed();
+        void onLoadAnswerFailed(String msg);
         void onLoadMoreAnswerSuccess(List<Answer> answers,boolean hasMore);
-        void onLoadMoreAnswerFailed();
+        void onLoadMoreAnswerFailed(String msg);
 
         //收藏/取消收藏问题
         void onFavoriteSuccess(String result);
-        void onFavoriteFailed();
+        void onFavoriteFailed(String msg);
         void onCancelFavoriteSuccess(String result);
-        void onCancelFavoriteFailed();
+        void onCancelFavoriteFailed(String msg);
 
         void onLikeSuccess(String result);
-        void onLikeFailed();
+        void onLikeFailed(String msg);
         void onCancelLikeSuccess(String result);
-        void onCancelLikeFailed();
+        void onCancelLikeFailed(String msg);
 
     }
     interface Presenter extends BasePresenter<View>{

@@ -13,7 +13,6 @@ public class BaseActivity extends AppCompatActivity {
     public void navigateTo(Class to) {
         Intent intent = new Intent(this, to);
         startActivity(intent);
-        finish();
     }
 
     public void showTips(String str){

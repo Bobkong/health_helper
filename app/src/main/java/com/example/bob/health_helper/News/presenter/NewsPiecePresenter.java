@@ -6,24 +6,34 @@ import com.example.bob.health_helper.NetService.Api.NewsService;
 import com.example.bob.health_helper.News.contract.NewsPieceContract;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class NewsPiecePresenter extends BaseMvpPresenter<NewsPieceContract.View>
             implements NewsPieceContract.Presenter{
     private int curPage=0;
+    private boolean hasMore=false;
     @Override
     public void loadNewsByTag(int tag) {
         curPage=0;
-        NewsService.getInstance().getNews(News.TAGS[tag],curPage++)
+        Disposable disposable=NewsService.getInstance().getNews(News.TAGS[tag],curPage++)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(datas -> mView.onLoadNewsSuccess(datas,!(datas.size()==0||datas==null)),
-                        throwable -> mView.onLoadNewsFailed());
+                .subscribe(datas -> {
+                    hasMore=!(datas.size()<10);
+                    mView.onLoadNewsSuccess(datas,hasMore);
+                        },
+                        throwable -> mView.onLoadNewsFailed(throwable.getMessage()));
+        addSubscribe(disposable);
     }
 
     @Override
     public void loadMoreNewsByTag(int tag) {
-        NewsService.getInstance().getNews(News.TAGS[tag],curPage++)
+        Disposable disposable=NewsService.getInstance().getNews(News.TAGS[tag],curPage++)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(datas -> mView.onLoadMoreNewsSuccess(datas,!(datas.size()==0||datas==null)),
-                        throwable -> mView.onLoadMoreNewsFailed());
+                .subscribe(datas -> {
+                    hasMore=!(datas.size()<10);
+                    mView.onLoadMoreNewsSuccess(datas,hasMore);
+                        },
+                        throwable -> mView.onLoadMoreNewsFailed(throwable.getMessage()));
+        addSubscribe(disposable);
     }
 }

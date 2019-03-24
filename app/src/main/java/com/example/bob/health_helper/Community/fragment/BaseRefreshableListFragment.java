@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ public abstract class BaseRefreshableListFragment<T extends BaseMvpContract.Base
     public RecyclerView dataList;
 
     protected LoadingMoreAdapter<T1> adapter;
+    protected boolean isViewInit;
+    protected boolean isVisibleToUser;
 
     //子类需要实现的方法
     protected abstract LoadingMoreAdapter<T1> createAdapter();
@@ -49,6 +52,7 @@ public abstract class BaseRefreshableListFragment<T extends BaseMvpContract.Base
         adapter=createAdapter();
 
         dataList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        dataList.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         dataList.setAdapter(adapter);
         dataList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -62,7 +66,7 @@ public abstract class BaseRefreshableListFragment<T extends BaseMvpContract.Base
             }
         });
 
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);//刷新圈圈颜色
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);//刷新圈圈颜色
         swipeRefreshLayout.setProgressViewOffset(true,200,300);//刷新圈圈出来的位置
         swipeRefreshLayout.setRefreshing(true);//刚进入时刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -76,7 +80,21 @@ public abstract class BaseRefreshableListFragment<T extends BaseMvpContract.Base
     @Override
     public void onResume() {
         super.onResume();
-        startRefresh();
+        isViewInit=true;
+        prepareLoadData();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser=isVisibleToUser;
+        prepareLoadData();
+    }
+
+    //viewPager懒加载
+    private void prepareLoadData(){
+        if(isViewInit&&isVisibleToUser)
+            startRefresh();
     }
 
     //屏幕中最后一个条目是数据列表最后一项时-加载更多

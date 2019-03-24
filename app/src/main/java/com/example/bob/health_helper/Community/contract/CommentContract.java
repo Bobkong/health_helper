@@ -9,10 +9,10 @@ import java.util.List;
 public interface CommentContract extends BaseMvpContract {
     interface View extends BaseView{
         void onLoadCommentsSuccess(List<Comment> comments, boolean hasMore);
-        void onLoadCommentFailed();
+        void onLoadCommentFailed(String msg);
 
         void onLoadMoreCommentsSuccess(List<Comment> comments,boolean hasMore);
-        void onLoadMoreCommentFailed();
+        void onLoadMoreCommentFailed(String msg);
 
         void onSendCommentSuccess();
         void onSendCommentFailed();

@@ -8,9 +8,9 @@ import java.util.List;
 public interface RecentQuestionContract extends BaseMvpContract {
     interface View extends BaseView{
         void onLoadRecentQuestionSuccess(List<Question> datas,boolean hasMore);
-        void onLoadRecentQuestionFailed();
+        void onLoadRecentQuestionFailed(String msg);
         void onLoadMoreRecentQuestionSuccess(List<Question> datas,boolean hasMore);
-        void onLoadMoreRecentQuestionFailed();
+        void onLoadMoreRecentQuestionFailed(String msg);
     }
 
     interface Presenter extends BasePresenter<View>{

@@ -1,11 +1,13 @@
 package com.example.bob.health_helper.Community.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.internal.FlowLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ import com.orhanobut.logger.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -66,7 +69,18 @@ public class SearchActivity extends BaseActivity {
 
         searchHistoryDao=new SearchHistoryDao(this);
 
-        //搜索框
+        //搜索框背景无下划线
+        try{
+            Class<?> argClass=searchView.getClass();
+            Field ownField=argClass.getDeclaredField("mSearchPlate");
+            ownField.setAccessible(true);
+            View view=(View)ownField.get(searchView);
+            view.setBackgroundResource(R.drawable.searchview_line);//设置背景，去掉下划线
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        TextView tv=searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override //当点击搜索按钮时触发
             public boolean onQueryTextSubmit(String query) {
