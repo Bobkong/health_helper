@@ -8,14 +8,23 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.bob.health_helper.Chat.fragment.ChatFragment;
 import com.example.bob.health_helper.Community.CommunityFragment;
 import com.example.bob.health_helper.Event.LogoutEvent;
 import com.example.bob.health_helper.Me.MeFragment;
+import com.example.bob.health_helper.NetService.Api.UserService;
 import com.example.bob.health_helper.News.NewsFragment;
+import com.example.bob.health_helper.Receiver.MiPushMessageReceiver;
+import com.example.bob.health_helper.Util.SharedPreferenceUtil;
+import com.tencent.imsdk.TIMCallBack;
+import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.TIMOfflinePushToken;
 
+import org.greenrobot.eventbus.Logger;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -24,6 +33,9 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static com.example.bob.health_helper.Me.MeFragment.tencentLogout;
 
 public class MainActivity extends AppCompatActivity {
 	@BindView(R.id.main_navigation)
@@ -31,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
 	@BindView(R.id.main_content)
 	ViewPager viewPager;
 	private MenuItem preMenuItem;
+	private final static String TAG = "MainActivity";
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		if (TIMManager.getInstance().getLoginUser().equals("")) {
+			SplashActivity.tencentIMLogin();
+		}
 		ButterKnife.bind(this);
-
 		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 			@Override
 			public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -109,6 +124,13 @@ public class MainActivity extends AppCompatActivity {
 	public void onLogout(LogoutEvent logoutEvent){
 		finish();
 	}
+
+	@Override
+	protected void onDestroy() {
+		tencentLogout();
+		super.onDestroy();
+	}
+
 }
 
 

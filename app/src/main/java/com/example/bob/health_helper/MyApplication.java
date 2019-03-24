@@ -2,19 +2,26 @@ package com.example.bob.health_helper;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 
 import com.example.bob.health_helper.Base.AppConstant;
-import com.example.bob.health_helper.Chat.Constants;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.tencent.imsdk.TIMManager;
 import com.tencent.imsdk.session.SessionWrapper;
 import com.tencent.qcloud.uikit.BaseUIKitConfigs;
 import com.tencent.qcloud.uikit.IMEventListener;
 import com.tencent.qcloud.uikit.TUIKit;
 import com.tencent.qcloud.uikit.common.utils.UIUtils;
 import com.tencent.tauth.Tencent;
+import com.xiaomi.mipush.sdk.MiPushClient;
+
+import java.util.Locale;
+
+import static com.example.bob.health_helper.Constants.MI_PUSH_APP_ID;
+import static com.example.bob.health_helper.Constants.MI_PUSH_APP_KEY;
 
 public class MyApplication extends Application {
     private static Context context;
@@ -30,7 +37,7 @@ public class MyApplication extends Application {
         SpeechUtility.createUtility(this, SpeechConstant.APPID+"="+AppConstant.IFLYKE_APPID);
         //Logger
         Logger.addLogAdapter(new AndroidLogAdapter());
-
+        registerPush();
         //初始化 SDK 基本配置
         //判断是否是在主线程
         if (SessionWrapper.isMainProcess(getApplicationContext())) {
@@ -47,6 +54,8 @@ public class MyApplication extends Application {
             //添加自定初始化配置
             customConfig();
             System.out.println(">>>>>>>>>>>>>>>>>>"+(System.currentTimeMillis()-current));
+            // 设置离线推送监听器
+            TIMManager.getInstance().setOfflinePushListener(notification -> notification.doNotify(getApplicationContext(), R.drawable.ic_launcher));
         }
     }
 
@@ -66,6 +75,17 @@ public class MyApplication extends Application {
                 }
             });
 
+        }
+    }
+
+    public void registerPush(){
+        String vendor = Build.MANUFACTURER;
+        if(vendor.toLowerCase(Locale.ENGLISH).contains("xiaomi")) {
+            //注册小米推送服务
+            MiPushClient.registerPush(this, MI_PUSH_APP_ID, MI_PUSH_APP_KEY);
+        }else if(vendor.toLowerCase(Locale.ENGLISH).contains("huawei")) {
+            //请求华为推送设备 token
+            //PushManager.requestToken(this);
         }
     }
 }

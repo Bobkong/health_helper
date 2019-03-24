@@ -19,6 +19,16 @@ public class User implements Serializable {
     private float weight;//kg
     @SerializedName("age")
     private int age;
+    @SerializedName("sig")
+    private String sig;
+
+    public String getSig() {
+        return sig;
+    }
+
+    public void setSig(String sig) {
+        this.sig = sig;
+    }
 
     public String getUid() {
         return uid;
@@ -86,6 +96,7 @@ public class User implements Serializable {
                 ", height=" + height +
                 ", weight=" + weight +
                 ", age=" + age +
+                ", sig='" + sig + '\'' +
                 '}';
     }
 }
