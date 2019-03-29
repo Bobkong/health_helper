@@ -1,40 +1,35 @@
 package com.example.bob.health_helper;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.bob.health_helper.Chat.fragment.ChatFragment;
 import com.example.bob.health_helper.Community.CommunityFragment;
 import com.example.bob.health_helper.Event.LogoutEvent;
 import com.example.bob.health_helper.Me.MeFragment;
-import com.example.bob.health_helper.NetService.Api.UserService;
+import com.example.bob.health_helper.Measure.MeasureFragment;
 import com.example.bob.health_helper.News.NewsFragment;
 
-import com.example.bob.health_helper.Receiver.MiPushMessageReceiver;
-import com.example.bob.health_helper.Util.SharedPreferenceUtil;
-import com.tencent.imsdk.TIMCallBack;
 import com.tencent.imsdk.TIMManager;
-import com.tencent.imsdk.TIMOfflinePushToken;
+
 import com.orhanobut.logger.Logger;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.example.bob.health_helper.Me.MeFragment.tencentLogout;
 
@@ -45,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 	ViewPager viewPager;
 	private MenuItem preMenuItem;
 	private final static String TAG = "MainActivity";
+	@SuppressLint("RestrictedApi")
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,6 +49,26 @@ public class MainActivity extends AppCompatActivity {
 			SplashActivity.tencentIMLogin();
 		}
 		ButterKnife.bind(this);
+		bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+					switch (menuItem.getItemId()) {
+						case R.id.navigation_measure:
+							viewPager.setCurrentItem(0);
+							break;
+						case R.id.navigation_chat:
+							viewPager.setCurrentItem(1);
+							break;
+						case R.id.navigation_news:
+							viewPager.setCurrentItem(2);
+							break;
+						case R.id.navigation_community:
+							viewPager.setCurrentItem(3);
+							break;
+						case R.id.navigation_me:
+							viewPager.setCurrentItem(4);
+							break;
+					}
+					return false;
+		});
 		EventBus.getDefault().register(this);
 		bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 			@Override
@@ -77,7 +93,12 @@ public class MainActivity extends AppCompatActivity {
 				return false;
 			}
 		});
-
+		BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNavigationView.getChildAt(0);
+		for (int i = 0; i < menuView.getChildCount(); i++) {
+			BottomNavigationItemView itemView = (BottomNavigationItemView) menuView.getChildAt(i);
+			itemView.setShifting(false);
+			itemView.setChecked(false);
+		}
 		viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageScrolled(int i, float v, int i1) {
@@ -132,6 +153,14 @@ public class MainActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		tencentLogout();
 		super.onDestroy();
+	}
+	//重写的Activity返回
+	@Override
+	public void onBackPressed() {
+		Intent intent = new Intent();
+		intent.setAction("android.intent.action.MAIN");
+		intent.addCategory("android.intent.category.HOME");
+		startActivity(intent);
 	}
 
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="400dp">
+    <GridView
+        android:id="@+id/data_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchMode="columnWidth"
+        android:columnWidth="180dp"
+        android:numColumns="4"
+        android:horizontalSpacing="2dp"
+        android:verticalSpacing="2dp"
+        />
+</android.support.constraint.ConstraintLayout>

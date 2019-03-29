@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="128dp"
+    android:layout_marginBottom="4dp"
+    android:background="@drawable/bg_score"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.example.bob.health_helper.Widget.NoPaddingTextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="72"
+        android:textColor="@color/white"
+        android:textSize="80sp" />
+
+    <com.example.bob.health_helper.Widget.NoPaddingTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/grade"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_toRightOf="@+id/score"
+        android:layout_alignBottom="@+id/score"
+        android:layout_toEndOf="@+id/score" />
+</RelativeLayout>

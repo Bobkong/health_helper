@@ -21,4 +21,11 @@
     <color name="colorOrange">#E16235</color>
     <color name="colorGray">#EFEFEF</color>
     <color name="deepgray">#515151</color>
+
+    <color name="super_low">#793BA2</color>
+    <color name="low">#0997F7</color>
+    <color name="perfect">#1AE61A</color>
+    <color name="standard">#0C6B0C</color>
+    <color name="high">#EF9D21</color>
+    <color name="super_high">#DD5800</color>
 </resources>

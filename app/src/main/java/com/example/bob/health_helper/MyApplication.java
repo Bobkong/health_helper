@@ -7,6 +7,7 @@ import android.os.Build;
 import com.example.bob.health_helper.Base.AppConstant;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import com.lifesense.ble.LsBleManager;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.tencent.imsdk.TIMManager;
@@ -56,6 +57,11 @@ public class MyApplication extends Application {
             System.out.println(">>>>>>>>>>>>>>>>>>"+(System.currentTimeMillis()-current));
             // 设置离线推送监听器
             TIMManager.getInstance().setOfflinePushListener(notification -> notification.doNotify(getApplicationContext(), R.drawable.ic_launcher));
+
+            //init LsBleManager
+            LsBleManager.getInstance().initialize(getApplicationContext());
+            //register bluetooth broadacst receiver
+            LsBleManager.getInstance().registerBluetoothBroadcastReceiver(getApplicationContext());
         }
     }
 

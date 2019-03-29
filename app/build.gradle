@@ -15,6 +15,7 @@ android {
             abiFilters.addAll(rootProject.ext.abiFilters)
         }
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -88,4 +89,6 @@ dependencies {
     implementation files('libs/MiPush_SDK_Client_3_6_15.jar')
     //流式布局
     implementation 'com.google.android:flexbox:1.0.0'
+    //LS bluetooth module
+    implementation files('libs/lifesense_ble_module_v1.4.4.jar')
 }
