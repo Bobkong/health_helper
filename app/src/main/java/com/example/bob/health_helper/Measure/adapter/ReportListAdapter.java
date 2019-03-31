@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bob.health_helper.Bean.MeasureBean;
 import com.example.bob.health_helper.Bean.MeasureData;
 import com.example.bob.health_helper.Util.MeasureGridUtils;
 import com.example.bob.health_helper.Measure.viewHolder.ReportScoreHolder;
@@ -28,9 +29,9 @@ public class ReportListAdapter extends RecyclerView.Adapter {
 	private static final int TYPE_SCORE = 0;
 	private static final int TYPE_DATA = 1;
 	Context mContext;
-	MeasureData mMeasureData;
+	MeasureBean mMeasureData;
 
-	public ReportListAdapter(Context context, MeasureData measureData) {
+	public ReportListAdapter(Context context, MeasureBean measureData) {
 		mContext = context;
 		mMeasureData = measureData;
 		MeasureGridUtils.getInstance(measureData);

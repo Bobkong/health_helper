@@ -1,6 +1,7 @@
 package com.example.bob.health_helper.Util;
 
 
+import com.example.bob.health_helper.Bean.MeasureBean;
 import com.example.bob.health_helper.Bean.MeasureData;
 import com.example.bob.health_helper.Bean.MeasureGridItem;
 import com.example.bob.health_helper.R;
@@ -18,7 +19,7 @@ public class MeasureGridUtils {
 	private static MeasureGridUtils instance;
 	public static int INDEX_NUM = 15;
 	public static ArrayList<MeasureGridItem> STANDARD = new ArrayList<>();
-	public static void getInstance(MeasureData data){
+	public static void getInstance(MeasureBean data){
 		if (instance == null){
 			instance = new MeasureGridUtils();
 		}

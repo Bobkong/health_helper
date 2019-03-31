@@ -1,71 +1,43 @@
 package com.example.bob.health_helper.Bean;
 
-import android.content.Context;
-
+import com.example.bob.health_helper.Util.SharedPreferenceUtil;
 import com.google.gson.annotations.SerializedName;
 import com.lifesense.ble.bean.WeightAppendData;
-import com.litesuits.orm.db.annotation.Column;
-import com.litesuits.orm.db.annotation.PrimaryKey;
-import com.litesuits.orm.db.assit.QueryBuilder;
-import com.litesuits.orm.db.enums.AssignType;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Created by Bob on 2019/3/23.
  */
 
 public class MeasureData implements Serializable {
+
 	/*
-    sex:0-female,1-male
-    */
-	@Column("bodyScore")
+		sex:0-female,1-male
+		*/
 	private double bodyScore;//身体得分
-	@Column("bmi")
 	private double Bmi;//BMI指数
-	@Column("bodyAge")
 	private int bodyAge;//身体年龄
-	@Column("visceralFat")
 	private double visceralFat;//内脏脂肪
-	@Column("baselMetabolism")
 	private double baselMetabolism;//基础代谢
-	@Column("bodyFatRatio")
 	private double bodyFatRatio;//脂肪率
-	@Column("muscleMassRatio")
 	private double muscleMassRatio;//肌肉率
-	@Column("protein")
 	private double protein;//蛋白质
-	@Column("bodyWaterRatio")
 	private double bodyWaterRatio;//水分率
-	@Column("bodyFatMass")
 	private double bodyFatMass;//脂肪量
-	@Column("muscleMass")
 	private double muscleMass;//肌肉量
-	@Column("skeletalMuscleMass")
 	private double skeletalMuscleMass;//骨骼肌
-	@Column("boneMass")
 	private double boneMass;//骨量
-	@Column("fatControl")
 	private double fatControl;//脂肪控制
-	@Column("muscleControl")
 	private double muscleControl;//肌肉控制
-	@Column("fatFreeMass")
 	private double fatFreeMass;//去脂体重
-
-	//private double boneDensity;//骨密度
-
-	private static final String COL_TIME = "time";
-	@PrimaryKey(AssignType.BY_MYSELF)
-	@Column(COL_TIME)
-	private long time;
-	@Column("weight")
+	private String time;
 	private double weight;
 
-	public MeasureData(double bodyScore, double bmi, int bodyAge, double visceralFat, double baselMetabolism, double bodyFatRatio, double muscleMassRatio, double protein, double bodyWaterRatio, double bodyFatMass, double muscleMass, double skeletalMuscleMass, double boneMass, double fatControl, double muscleControl, double fatFreeMass, long time, double weight) {
+	public MeasureData(double bodyScore, double bmi, int bodyAge, double visceralFat, double baselMetabolism, double bodyFatRatio, double muscleMassRatio, double protein, double bodyWaterRatio, double bodyFatMass, double muscleMass, double skeletalMuscleMass, double boneMass, double fatControl, double muscleControl, double fatFreeMass, String time, double weight) {
 		this.bodyScore = bodyScore;
 		Bmi = bmi;
 		this.bodyAge = bodyAge;
@@ -86,10 +58,8 @@ public class MeasureData implements Serializable {
 		this.weight = weight;
 	}
 
-	public MeasureData(WeightAppendData weightAppendData, double height, double weight, int age, int sex, long time) {
+	public MeasureData(WeightAppendData weightAppendData, double height, double weight, int age, int sex) {
 		this.weight = weight;
-		this.time = time;
-		this.bodyScore=dataFormat(calBodyScore(sex,this.bodyFatRatio,this.Bmi));
 
 		this.Bmi= dataFormat(weightAppendData.getBmi());
 		this.bodyAge=calBodyAge(sex,this.bodyFatRatio,age);
@@ -109,11 +79,11 @@ public class MeasureData implements Serializable {
 		this.muscleControl=dataFormat(calControl(sex,this.Bmi,this.bodyFatRatio,height,weight)[0]);
 		this.fatControl=dataFormat(calControl(sex,this.Bmi,this.bodyFatRatio,height,weight)[1]);
 		this.fatFreeMass = dataFormat(weight - this.bodyFatMass);
-		//this.boneDensity=weightAppendData.getBoneDensity();
+		this.bodyScore=dataFormat(calBodyScore(sex,this.bodyFatRatio,this.Bmi));
 	}
 
 	//数据格式
-	DecimalFormat df1=new DecimalFormat("#.#");
+	private DecimalFormat df1=new DecimalFormat("#.#");
 	public double dataFormat(double item){
 		return Double.valueOf(df1.format(item));
 	}
@@ -164,23 +134,23 @@ public class MeasureData implements Serializable {
 		double result=0;
 		switch (sex){
 			case 0:
-				if(bodyFatRatio*100<=28){
-					if(Bmi>=19) result= 90-(bodyFatRatio*100-24)+(Bmi-19)*2;
-					else result= 90-(bodyFatRatio*100-24)*0.5+(Bmi-19)*4;
+				if(bodyFatRatio<=28){
+					if(Bmi>=19) result= 90-(bodyFatRatio-24)+(Bmi-19)*2;
+					else result= 90-(bodyFatRatio-24)*0.5+(Bmi-19)*4;
 				}
 				else{
-					if(Bmi>=21) result= 90-(bodyFatRatio*100-28)*2-(Bmi-21);
-					else result= 90-(bodyFatRatio*100-28)*2-(21-Bmi);
+					if(Bmi>=21) result= 90-(bodyFatRatio-28)*2-(Bmi-21);
+					else result= 90-(bodyFatRatio-28)*2-(21-Bmi);
 				}
 				break;
 			case 1:
-				if(bodyFatRatio*100<=18){
-					if(Bmi>=21) result= 90-(bodyFatRatio*100-14)+(Bmi-21)*2;
-					else result= 90-(bodyFatRatio*100-14)*0.5+(Bmi-21)*4;
+				if(bodyFatRatio<=18){
+					if(Bmi>=21) result= 90-(bodyFatRatio-14)+(Bmi-21)*2;
+					else result= 90-(bodyFatRatio-14)*0.5+(Bmi-21)*4;
 				}
 				else{
-					if(Bmi>=23) result= 90-(bodyFatRatio*100-18)*2-(Bmi-23);
-					else result= 90-(bodyFatRatio*100-18)*2-(23-Bmi);
+					if(Bmi>=23) result= 90-(bodyFatRatio-18)*2-(Bmi-23);
+					else result= 90-(bodyFatRatio-18)*2-(23-Bmi);
 				}
 				break;
 			default:break;
@@ -335,11 +305,11 @@ public class MeasureData implements Serializable {
 		preConOfBodyAge = bodyAge;
 	}
 
-	public long getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(long time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
@@ -349,6 +319,31 @@ public class MeasureData implements Serializable {
 
 	public void setWeight(double weight) {
 		this.weight = weight;
+	}
+
+	@Override
+	public String toString() {
+		return "MeasureData{" +
+				"bodyScore=" + bodyScore +
+				", Bmi=" + Bmi +
+				", bodyAge=" + bodyAge +
+				", visceralFat=" + visceralFat +
+				", baselMetabolism=" + baselMetabolism +
+				", bodyFatRatio=" + bodyFatRatio +
+				", muscleMassRatio=" + muscleMassRatio +
+				", protein=" + protein +
+				", bodyWaterRatio=" + bodyWaterRatio +
+				", bodyFatMass=" + bodyFatMass +
+				", muscleMass=" + muscleMass +
+				", skeletalMuscleMass=" + skeletalMuscleMass +
+				", boneMass=" + boneMass +
+				", fatControl=" + fatControl +
+				", muscleControl=" + muscleControl +
+				", fatFreeMass=" + fatFreeMass +
+				", time=" + time +
+				", weight=" + weight +
+				", df1=" + df1 +
+				'}';
 	}
 
 	/**
@@ -367,4 +362,28 @@ public class MeasureData implements Serializable {
 		}
 		return new ArrayList<>();
 	}*/
+
+	public MeasureBean getMeasureBean(){
+		MeasureBean res = new MeasureBean();
+		res.setBodyScore(bodyScore);
+		res.setBmi(Bmi);
+		res.setBodyAge(bodyAge);
+		res.setVisceralFat(visceralFat);
+		res.setBaselMetabolism(baselMetabolism);
+		res.setBodyFatRatio(bodyFatRatio);
+		res.setMuscleMassRatio(muscleMassRatio);
+		res.setProtein(protein);
+		res.setBodyWaterRatio(bodyWaterRatio);
+		res.setBodyFatMass(bodyFatMass);
+		res.setMuscleMass(muscleMass);
+		res.setSkeletalMuscleMass(skeletalMuscleMass);
+		res.setBoneMass(boneMass);
+		res.setFatControl(fatControl);
+		res.setMuscleControl(muscleControl);
+		res.setFatFreeMass(fatFreeMass);
+		res.setTime(time);
+		res.setWeight(weight);
+		res.setUid(SharedPreferenceUtil.getUser().getUid());
+		return res;
+	}
 }

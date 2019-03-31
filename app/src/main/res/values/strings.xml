@@ -104,7 +104,7 @@
     <string name="name">健康管家</string>
     <string name="slogon">爱生活，爱健康</string>
     <string name="weight_name">乐心体脂秤</string>
-    <string name="pair_ls">匹配乐心体脂秤</string>
+    <string name="pair_ls">匹配</string>
     <string name="open_bluetooth_hint">Please turn on Bluetooth</string>
     <string name="no_device_hint">No devices</string>
     <string name="bmi">BMI</string>
@@ -183,4 +183,6 @@
     <string name="water_ratio_low">你的水分率偏低, 由于人体大部分新陈代谢活动都在体液中进行, 所以缺水会影响身体机能的正常运作, 导致新陈代谢缓慢、加快身体老化。\n\n平时要记得多喝水, 运动时出汗丢失体液, 要记得少量多次及时补水哦。</string>
     <string name="water_ratio_standard">你的水分率标准, 规律的饮食和每天八杯水就可以继续保持理想的身体水分含量啦。\n\n水分率指的是人体水分占体重的百分比。 充足的水分可以促进新陈代谢, 保持皮肤年轻。 运动出汗, 体液丢失时,要记得少量、 多次地及时补充水分和电解质。</string>
     <string name="water_ratio_perfect">你的水分率理想, 规律的饮食和每天八杯水就可以继续保持理想的身体水分含量啦。\n\n水分率指的是人体水分占体重的百分比。充足的水分可以促进新陈代谢, 保持皮肤年轻。 运动时出汗、 体液丢失,要记得少量、 多次及时补水和电解质。</string>
+    <string name="my_device">我的设备</string>
+    <string name="history_weight">历史数据</string>
 </resources>

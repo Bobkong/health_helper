@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.example.bob.health_helper.Bean.MeasureBean;
 import com.example.bob.health_helper.Bean.MeasureData;
 import com.example.bob.health_helper.Util.MeasureGridUtils;
 import com.example.bob.health_helper.Measure.viewHolder.MeasureGridItemHolder;
@@ -20,7 +21,7 @@ import java.text.DecimalFormat;
 public class GridAdapter extends BaseAdapter {
 	private Context mContext;
 
-	public GridAdapter(Context context, MeasureData measureData){
+	public GridAdapter(Context context, MeasureBean measureData){
 		mContext = context;
 		MeasureGridUtils.getInstance(measureData);
 	}

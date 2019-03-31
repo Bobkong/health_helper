@@ -71,12 +71,7 @@ public class CommentActivity extends BaseMvpActivity<CommentContract.Presenter>
 
         swipeRefreshLayout.setRefreshing(true);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.loadComments(answerId);
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> mPresenter.loadComments(answerId));
 
         commentList.setLayoutManager(new LinearLayoutManager(this));
         commentList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.bob.health_helper.Bean.MeasureBean;
 import com.example.bob.health_helper.Bean.MeasureData;
 import com.example.bob.health_helper.Measure.activity.MeasureReportActivity;
 import com.example.bob.health_helper.Measure.adapter.GridAdapter;
@@ -29,7 +30,7 @@ public class MeasureGridHolder extends RecyclerView.ViewHolder{
 		ButterKnife.bind(this, itemView);
 	}
 
-	public void bind(Context context,MeasureData bodyData){
+	public void bind(Context context,MeasureBean bodyData){
 		GridAdapter adapter = new GridAdapter(context, bodyData);
 		mGridView.setAdapter(adapter);
 		mGridView.setOnItemClickListener((adapterView, view, i, l) -> context.startActivity(new Intent(context, MeasureReportActivity.class).putExtra("MEASURE_DATA",bodyData)));
