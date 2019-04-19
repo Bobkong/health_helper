@@ -47,7 +47,7 @@ public class MeasureListAdapter extends RecyclerView.Adapter {
 		switch (viewType){
 			case TYPE_DEVICE:
 				view = LayoutInflater.from(mContext).inflate(R.layout.measure_device,parent,false);
-				return new MeasureDeviceHolder(view);
+				return new MeasureDeviceHolder(mContext,view);
 			case TYPE_WEIGHT:
 				view = LayoutInflater.from(mContext).inflate(R.layout.most_rencent_weight,parent,false);
 				return new MostRecentWeightHolder(view);
@@ -114,4 +114,5 @@ public class MeasureListAdapter extends RecyclerView.Adapter {
 		mWeightListDataList.addAll(bodyDatas);
 		notifyDataSetChanged();
 	}
+
 }

@@ -108,7 +108,6 @@ public class ReportListAdapter extends RecyclerView.Adapter {
 			itemView.setOnClickListener(this);
 			ButterKnife.bind(this, itemView);
 		}
-		Animation mAnimation;
 		public void bind(Context context, int index) {
 			name.setText(MeasureGridUtils.STANDARD.get(index - 1).getName());
 			value.setText(String.valueOf(MeasureGridUtils.STANDARD.get(index - 1).getValue()));
@@ -118,12 +117,8 @@ public class ReportListAdapter extends RecyclerView.Adapter {
 			msgMore.setText((MeasureGridUtils.STANDARD.get(index - 1).getSuggestion()));
 			if (opened == index) {
 				msgLl.setVisibility(View.VISIBLE);
-				/*mAnimation = AnimationUtils.loadAnimation(mContext, R.anim.arrow_anim_open);
-				arrow.startAnimation(mAnimation);*/
 			} else {
-				msgLl.setVisibility(View.GONE);/*
-				mAnimation = AnimationUtils.loadAnimation(mContext, R.anim.arrow_anim_close);
-				arrow.startAnimation(mAnimation);*/
+				msgLl.setVisibility(View.GONE);
 			}
 		}
 

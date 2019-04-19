@@ -57,12 +57,13 @@ public class MyApplication extends Application {
             System.out.println(">>>>>>>>>>>>>>>>>>"+(System.currentTimeMillis()-current));
             // 设置离线推送监听器
             TIMManager.getInstance().setOfflinePushListener(notification -> notification.doNotify(getApplicationContext(), R.drawable.ic_launcher));
-
-            //init LsBleManager
-            LsBleManager.getInstance().initialize(getApplicationContext());
-            //register bluetooth broadacst receiver
-            LsBleManager.getInstance().registerBluetoothBroadcastReceiver(getApplicationContext());
         }
+        //init LsBleManager
+        LsBleManager.getInstance().initialize(getApplicationContext());
+        //register bluetooth broadacst receiver
+        LsBleManager.getInstance().registerBluetoothBroadcastReceiver(getApplicationContext());
+        //register message service if need
+        LsBleManager.getInstance().registerMessageService();
     }
 
     public static Context getContext(){
